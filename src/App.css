@@ -1,3 +1,12 @@
+.b {
+  background-color: #028482;
+  color: white;
+  border-radius: 100px;
+  border-style: none;
+  width: 100%;
+  padding: 0.5em;
+}
+
 .App {
   text-align: center;
 }
@@ -24,15 +33,202 @@
   color: white;
 }
 
-.App-link {
-  color: #61dafb;
+.form-group {
+  margin-bottom: 1em;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.form-group input {
+  border-radius: 30em;
+  padding-left: 2em;
+}
+/* login styles */
+
+.button {
+  background-color: #028482;
+  border-radius: 100px;
+  color: white;
+  border-style: none;
+  padding-top: 0.5em;
+  padding-bottom: 0.5em;
+  width: 100%;
+  height: 100%;
+}
+
+.loginContainer {
+  display: flex;
+  min-height: 100vh;
+  background-color: #ccdfe0;
+  /* position: absolute;
+  width: 100%;
+  height: 100%; */
+}
+
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* width: 100%; */
+  /* transform: "translate(-50%, -50%)"; */
+}
+
+.display-1 {
+  color: #028482;
+}
+
+.box-input {
+  margin-top: 1em;
+  width: 80%;
+  border: transparent;
+}
+
+/* ------End-------------*/
+
+/* side navigation styles */
+
+.sideBar-Container {
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: stretch;
+  min-height: 100vh;
+  background-color: #028482;
+}
+
+.sideBar-Sections {
+  margin: 2em;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+.light-text {
+  color: white;
+}
+
+.sideBar-Sections-UserInfo {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.sideBar-Sections-Nav {
+  margin-top: 4em;
+  display: flex;
+
+  flex-direction: column;
+  justify-content: stretch;
+  align-items: stretch;
+}
+.nav-item {
+  text-decoration: none;
+}
+
+.sideBar-Sections-Nav-Item {
+  margin-top: 2em;
+  display: flex;
+  flex-direction: row;
+}
+.rightspcae-2 {
+  padding-left: 1em;
+}
+
+/* ------End-------------*/
+
+/* dashboard styles */
+
+.dashboard {
+  display: flex;
+  flex-direction: row;
+}
+
+.dashboard-sideBar {
+  /* width: 400px; */
+  /* opacity: 0.5; */
+  flex-grow: 1;
+}
+
+.dashboard-main-routes {
+  display: flex;
+  min-height: 100vh;
+  flex-grow: 12;
+
+  display: flex;
+  justify-content: center;
+  align-items: stretch;
+  /* opacity: 0.5; */
+}
+
+/* ------End-------------*/
+
+/* findResident styles */
+
+.findResident-Container {
+  padding: 1em;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  background-color: #ccdfe0;
+}
+
+.findResident-Container-searchSection {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: space-around;
+}
+.findResident-Container-searchSection-item {
+  padding: 0.5em;
+  flex-grow: 1;
+}
+
+.findResident-Container-resultSection {
+  margin-top: 5em;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.findResident-Container-resultSection-Action {
+  padding-top: 4em;
+  padding-bottom: 4em;
+  padding-left: 1em;
+  padding-right: 1em;
+  margin-top: 10em;
+  background-color: white;
+  border-radius: 10px;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  flex-direction: row;
+}
+.findResident-Container-resultSection-Action-cases {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.findResident-Container-resultSection-Action-Found-text {
+  display: flex;
+  flex-direction: column;
+  justify-content: end;
+  padding-left: 2em;
+}
+
+.findResident-Container-resultSection-Action-Found-userFound-b {
+  margin-left: 2em;
+  padding-left: 2em;
+  padding-right: 2em;
+}
+
+.primary {
+  color: #028482;
+}
+
+/* ------End-------------*/
+
+.App-link {
+  color: #61dafb;
 }

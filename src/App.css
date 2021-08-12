@@ -6,6 +6,29 @@
   width: 100%;
   padding: 0.5em;
 }
+/* Date*/
+.date {
+  align-items: flex-start;
+  margin-top: -15px;
+}
+.date-label {
+  color: #028482;
+  margin-bottom: 8px;
+}
+.date-container {
+  background-color: white;
+  border-radius: 100px;
+  display: flex;
+  justify-content: center;
+}
+.date-item {
+  padding-top: 0.2em;
+  padding-bottom: 0.2em;
+  padding-left: 2em;
+  padding-right: 2em;
+}
+
+/* --------------------*/
 
 .App {
   text-align: center;
@@ -35,12 +58,19 @@
 
 .form-group {
   margin-bottom: 1em;
+  flex-grow: 1;
 }
 
 .form-group input {
   border-radius: 30em;
   padding-left: 2em;
 }
+
+.form-group select {
+  border-radius: 30em;
+  padding-left: 2em;
+}
+
 /* login styles */
 
 .button {
@@ -229,6 +259,120 @@
 
 /* ------End-------------*/
 
+/* createResident styles */
+
+.createResident-Container {
+  padding: 3em;
+  padding-top: 2em;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  background-color: #ccdfe0;
+}
+
+.createResident-Container-headSection {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.CreateForm-Session-Counter {
+  background-color: #028482;
+  display: flex;
+  border-radius: 10px;
+  flex-direction: column;
+  align-items: center;
+  padding: 1em;
+  padding-right: 3em;
+  padding-left: 3em;
+}
+
+.createResident-Container-formSection {
+  padding-top: 2em;
+  display: flex;
+  flex-direction: column;
+  max-width: 1300px;
+  flex-wrap: wrap;
+}
+
+.createResident-Container-formSection-row {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.createResident-Container-formSection-rowItem {
+  display: flex;
+  padding-right: 2em;
+  align-items: center;
+  justify-content: center;
+}
+.createResident-Container-formSection-rowItem-pagination {
+  display: flex;
+  align-items: center;
+}
+.createResident-Container-endSection {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.createResident-Container-formSection-rowItem-nextButton {
+  display: flex;
+  margin-top: 2em;
+  margin-right: 2em;
+}
+.form-pagination {
+  margin-top: 1em;
+}
+
+.inputLabel {
+  padding-bottom: 0.5em;
+  color: #028482;
+}
+
+.form-check {
+  display: flex;
+  justify-content: center;
+}
+
+.form-check-input {
+  padding: 15px;
+}
+
+.form-check-label {
+  padding-left: 1em;
+  padding-top: 0.4em;
+  color: #028482;
+}
+
+.formSection-rowItem-nextButton {
+  padding-left: 2em;
+  padding-right: 2em;
+}
+
+/* ------End-------------*/
+
 .App-link {
   color: #61dafb;
+}
+
+/* Flex grow items */
+
+.grow1 {
+  flex-grow: 1;
+}
+.grow2 {
+  flex-grow: 2;
+}
+.grow3 {
+  flex-grow: 3;
+}
+
+.nowrap {
+  flex-wrap: nowrap;
 }

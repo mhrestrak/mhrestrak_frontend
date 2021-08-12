@@ -1,0 +1,33 @@
+import React from "react";
+import "date-fns";
+import DateFnsUtils from "@date-io/date-fns";
+import {
+  MuiPickersUtilsProvider,
+  KeyboardDatePicker,
+} from "@material-ui/pickers";
+
+const Date = ({ name, label, error, ...rest }) => {
+  return (
+    <div className="date">
+      <p className="date-label">{label}</p>
+      <div className="date-container">
+        <div className="date-item">
+          <MuiPickersUtilsProvider utils={DateFnsUtils}>
+            <KeyboardDatePicker
+              //   margin="normal"
+              id={name}
+              format="MM/dd/yyyy"
+              KeyboardButtonProps={{
+                "aria-label": "change date",
+              }}
+              {...rest}
+            />
+          </MuiPickersUtilsProvider>
+        </div>
+      </div>
+      {error && <div className="alert alert-danger">{error}</div>}
+    </div>
+  );
+};
+
+export default Date;

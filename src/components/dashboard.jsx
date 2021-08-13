@@ -9,16 +9,16 @@ import FindResident from "./dashboardPages/findResident";
 class Dashboard extends Component {
   state = {
     user: {
-      firstName: "Joshua",
-      email: "fernandes.developer@gmail.com",
-      firstName: "Joshua",
+      firstName: "",
+      email: "",
+      lastName: "",
     },
   };
 
-  // componentDidMount() {
-  //   const user = auth.getCurrentUser();
-  //   this.setState({ user });
-  // }
+  componentDidMount() {
+    const user = auth.getCurrentUser();
+    this.setState({ user });
+  }
 
   render() {
     const { user } = this.state;

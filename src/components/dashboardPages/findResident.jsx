@@ -15,7 +15,7 @@ class FindResident extends Component {
   handleChange = ({ currentTarget: input }) => {
     const data = { ...this.state.data };
     data[input.name] = input.value;
-    this.setState({ data });
+    this.setState({ data, search: false });
   };
 
   handleSubmit = async () => {

@@ -25,7 +25,7 @@ class CreateResident extends Component {
       { name: "medication", label: "Medication  Info" },
     ],
     activeSession: "basic",
-    part: 2,
+    part: 1,
     countries: [],
     states: [],
     cities: [],

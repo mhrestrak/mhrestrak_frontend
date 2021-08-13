@@ -22,7 +22,7 @@ class loginForm extends Form {
       const { data } = this.state;
       await auth.login(data.email, data.pass);
       const { state } = this.props.location;
-      window.location = state ? state.from.pathname : "/";
+      window.location = state ? state.from.pathname : "/dashboard";
     } catch (ex) {
       const errors = { ...this.state.errors };
       if (ex.response && ex.response.status === 400) {
@@ -30,15 +30,17 @@ class loginForm extends Form {
         errors.data = ex.response.data;
         this.setState({ errors });
       } else {
+        console.log(ex);
+        console.log("asd");
         errors.message = ex.message;
         this.setState({ errors });
-        // toast.error(errors.message);
+        toast.error(errors.message);
       }
     }
   };
 
   render() {
-    if (auth.getCurrentUser()) return <Redirect to="/" />;
+    if (auth.getCurrentUser()) return <Redirect to="/dashboard" />;
 
     return (
       <div className="loginContainer">

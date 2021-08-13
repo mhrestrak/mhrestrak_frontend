@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import Joi, { errors } from "joi-browser";
 import { toast } from "react-toastify";
 import Input from "../common/input";
+import { findResident } from "../../services/residentService";
+import { Link } from "react-router-dom";
 
 class FindResident extends Component {
   state = {
@@ -16,13 +18,30 @@ class FindResident extends Component {
     this.setState({ data });
   };
 
-  handleSubmit = async () => {};
+  handleSubmit = async () => {
+    try {
+      console.log("sd");
+      let { data } = await findResident(
+        this.state.data.ssn,
+        this.state.data.name
+      );
+      if (this.state.data.ssn && !this.state.data.name) {
+        console.log("filter");
+        data = data.filter((res) => res.IsActive !== true);
+      }
+      console.log(data);
+      this.setState({ res: data, search: true });
+    } catch (ex) {
+      console.log(ex);
+      // toast.error(ex.message);
+    }
+  };
 
-  handleReset = async () => {};
+  handleReset = async () => {
+    this.setState({ search: false, data: { ssn: "", name: "" }, res: [] });
+  };
 
   handleAdmissionRedirect = async () => {};
-
-  handleCreateResident = async () => {};
 
   render() {
     return (
@@ -60,17 +79,16 @@ class FindResident extends Component {
         {this.state.search && (
           <div className="findResident-Container-resultSection">
             <h3 className="primary">{`${this.state.res.length} Result Found`}</h3>
-            <div className="findResident-Container-resultSection-Action">
-              {this.state.res.length > 0 ? (
-                this.state.data.ssn.length > 0 &&
-                this.state.data.name === "" && (
+            {this.state.res.length > 0 ? (
+              this.state.data.ssn.length > 0 && this.state.data.name === "" ? (
+                <div className="findResident-Container-resultSection-Action">
                   <div className="findResident-Container-resultSection-Action-cases">
                     <i
                       className="fa fa-user fa-4x primary"
                       aria-hidden="true"
                     />
                     <div className="findResident-Container-resultSection-Action-Found-text">
-                      <h4>{`${this.state.res[0].ResFisrtName} ${this.state.res[0].ResLastName}`}</h4>
+                      <h4>{`${this.state.res[0].ResFirstName} ${this.state.res[0].ResLastName}`}</h4>
                       <h4 className="primary">{`${this.state.res[0].SSN}`}</h4>
                     </div>
                     <button
@@ -80,22 +98,28 @@ class FindResident extends Component {
                       Create Admission Record
                     </button>
                   </div>
-                )
+                </div>
               ) : (
+                ""
+              )
+            ) : (
+              <div className="findResident-Container-resultSection-Action">
                 <div className="findResident-Container-resultSection-Action-cases">
                   <i className="fa fa-user fa-4x primary" aria-hidden="true" />
                   <div className="findResident-Container-resultSection-Action-Found-text">
                     <h4>Add a resident</h4>
                   </div>
-                  <button
-                    className="findResident-Container-resultSection-Action-Found-userFound-b b "
-                    onClick={this.handleCreateResident}
+                  <Link
+                    to="/dashboard/create-resident"
+                    className="findResident-Container-resultSection-Action-Found-userFound-b"
                   >
-                    create
-                  </button>
+                    <button className="findResident-Container-resultSection-Action-Found-userFound-b b ">
+                      create
+                    </button>
+                  </Link>
                 </div>
-              )}
-            </div>
+              </div>
+            )}
           </div>
         )}
       </div>

@@ -1,0 +1,92 @@
+import React, { Component } from "react";
+import Input from "../common/input";
+import CheckBox from "../common/checkbox";
+import Date from "../common/date";
+import Select from "../common/select";
+
+const InputFieldLayoutRow = (props) => {
+  let data = props.data;
+
+  const renderInput = (item) => {
+    return (
+      <Input
+        type={item.typeName}
+        onChange={(json) => props.onChange(json, item.name)}
+        name={item.name}
+        label={item.label}
+        value={item.value ? item.value : ""}
+        showLabel={true}
+      />
+    );
+  };
+
+  const renderSelect = (item) => {
+    return (
+      <Select
+        onChange={(json) => props.onChange(json, item.name)}
+        name={item.name}
+        label={item.label}
+        options={item.options}
+        // options={item.options.map((option) => ({
+        //   _id: option._id,
+        //   name: option.name,
+        // }))}
+        value={item.value ? item.value : undefined}
+        // error={item.errors["basic_WhereRaisedCountry"]}
+      />
+    );
+  };
+
+  const renderCheckbox = (item) => {
+    return (
+      <CheckBox
+        onChange={(json) => props.onChange(json, item.name)}
+        name={item.name}
+        label={item.label}
+        value={item.value}
+      />
+    );
+  };
+
+  const renderDate = (item) => {
+    return (
+      <Date
+        onChange={(json) => props.onChange(json, item.name)}
+        name={item.name}
+        label={item.label}
+        value={item.value ? item.value : null}
+        // error={this.state.errors["basic_ResBirthDate"]}
+      />
+    );
+  };
+
+  const renderItem = (item) => {
+    switch (item.type) {
+      case "input":
+        return renderInput(item);
+      case "select":
+        return renderSelect(item);
+      case "checkbox":
+        return renderCheckbox(item);
+      case "date":
+        return renderDate(item);
+    }
+  };
+
+  return (
+    <div className="createResident-Container-formSection-row">
+      {data.map((item, i) => (
+        <div
+          className={
+            "createResident-Container-formSection-rowItem " + item.size
+          }
+          key={i.toString()}
+        >
+          {renderItem(item)}
+        </div>
+      ))}
+    </div>
+  );
+};
+
+export default InputFieldLayoutRow;

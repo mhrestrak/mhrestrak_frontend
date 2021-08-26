@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import InputFieldLayoutRow from "../inputFieldLayoutRow";
 
 const AdmissionSection = (props) => {
@@ -13,6 +13,26 @@ const AdmissionSection = (props) => {
       ))}
       <div className="createResident-Container-endSection">
         <h4 className="form-pagination">{props.paginate}</h4>
+      </div>
+      <div className="createResident-Container-endSection">
+        <div className="createResident-Container-formSection-rowItem-nextButton">
+          {props.toPreviousSection && (
+            <button
+              className="formSection-rowItem-nextButton button"
+              onClick={props.toPreviousSection}
+            >
+              Previous
+            </button>
+          )}
+          {props.toNextSection && (
+            <button
+              className="formSection-rowItem-nextButton button"
+              onClick={props.toNextSection}
+            >
+              Next
+            </button>
+          )}
+        </div>
       </div>
     </div>
   );

@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 import Input from "../common/input";
 import CheckBox from "../common/checkbox";
 import Date from "../common/date";
@@ -16,6 +16,7 @@ const InputFieldLayoutRow = (props) => {
         label={item.label}
         value={item.value ? item.value : ""}
         showLabel={true}
+        error={item.error}
       />
     );
   };
@@ -32,7 +33,7 @@ const InputFieldLayoutRow = (props) => {
         //   name: option.name,
         // }))}
         value={item.value ? item.value : undefined}
-        // error={item.errors["basic_WhereRaisedCountry"]}
+        error={item.error}
       />
     );
   };
@@ -44,6 +45,7 @@ const InputFieldLayoutRow = (props) => {
         name={item.name}
         label={item.label}
         value={item.value}
+        error={item.error}
       />
     );
   };
@@ -55,7 +57,7 @@ const InputFieldLayoutRow = (props) => {
         name={item.name}
         label={item.label}
         value={item.value ? item.value : null}
-        // error={this.state.errors["basic_ResBirthDate"]}
+        error={item.error}
       />
     );
   };
@@ -70,6 +72,8 @@ const InputFieldLayoutRow = (props) => {
         return renderCheckbox(item);
       case "date":
         return renderDate(item);
+      default:
+        return renderInput(item);
     }
   };
 

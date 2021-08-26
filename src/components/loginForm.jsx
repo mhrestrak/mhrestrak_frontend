@@ -1,7 +1,7 @@
 import React from "react";
 import { Redirect } from "react-router-dom";
 import auth from "../services/authService";
-import Joi, { errors } from "joi-browser";
+import Joi from "joi-browser";
 import Form from "./common/form";
 import { toast } from "react-toastify";
 

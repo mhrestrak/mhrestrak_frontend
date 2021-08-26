@@ -1,18 +1,20 @@
-import React from "react";
-import Joi, { errors } from "joi-browser";
-import { toast } from "react-toastify";
-import { useEffect } from "react";
-import { useState } from "react";
-import AdmissionSection from "../common/admissionCommonComponents/admissionSection";
+import React, { useEffect, useState } from "react";
+import Joi from "joi-browser";
+// import { toast } from "react-toastify";
 import {
   getCountries,
   getStatesOfCountry,
   getCitiesOfState,
 } from "../../services/dropdownLocationService";
 
+import AdmissionSection from "../common/admissionCommonComponents/admissionSection";
+import { getList } from "../../services/listService";
+import { getobject } from "../../utils/residentObject";
+
 const CreateResident = () => {
   const sessions = [
-    { name: "basic", label: "Basic Info", parts: 2 },
+    { name: "basic", label: "Basic Info" },
+    { name: "church", label: "Church" },
     { name: "family", label: "Family Info" },
     { name: "contact", label: "Emergency Contact" },
     { name: "notes", label: "Notes" },
@@ -26,153 +28,23 @@ const CreateResident = () => {
   ];
 
   const [countries, setCountries] = useState([]);
-  const [formData, setFormData] = useState({ ResCountry: "United States" });
-  const [states, setStates] = useState([]);
-  const [errors, setErrors] = useState({});
-  const [render, setRender] = useState(false);
+  const [formData, setFormData] = useState({
+    basic: { ResCountry: "United States" },
+    family: {},
+    contact: {},
+    notes: {},
+    education: {},
+    employment: {},
+    drugs: {},
+    legal: {},
+    finances: {},
+    medical: {},
+    medication: {},
+  });
   const [activeSession, setActiiveSession] = useState("basic");
   const [activeSessionPart, setActiveSessionPart] = useState(1);
 
-  const [data, setData] = useState({
-    basic: [
-      [
-        {
-          type: "input",
-          typeName: "text",
-          size: "grow2",
-          name: "basic_0_0_ResPictureKey",
-          label: "Image Link",
-          value: "",
-        },
-        {
-          type: "checkbox",
-          size: "grow1",
-          name: "basic_0_1_IsVeteran",
-          label: "Is Veteeran?",
-          value: false,
-        },
-        {
-          type: "checkbox",
-          size: "grow1",
-          name: "basic_0_2_IsChurchAttender",
-          label: "Church Attender?",
-          value: false,
-        },
-        {
-          type: "checkbox",
-          size: "grow1",
-          name: "basic_0_3_HasChildren",
-          label: "Has Children?",
-          value: false,
-        },
-      ],
-      [
-        {
-          type: "input",
-          size: "grow1",
-          typeName: "text",
-          name: "basic_1_0_ResFirstName",
-          label: "Resident First Name",
-          value: "",
-        },
-        {
-          type: "input",
-          size: "grow1",
-          typeName: "text",
-          name: "basic_1_1_ResMiddleName",
-          label: "Resident Middle Name",
-          value: "",
-        },
-        {
-          type: "input",
-          size: "grow1",
-          typeName: "text",
-          name: "basic_1_2_ResLastName",
-          label: "Resident Last Name",
-          value: "",
-        },
-      ],
-      [
-        {
-          type: "input",
-          size: "grow1",
-          typeName: "text",
-          name: "basic_2_0_SSN",
-          label: "SSN",
-          value: "",
-        },
-        {
-          type: "input",
-          size: "grow1",
-          typeName: "text",
-          name: "basic_2_1_PSNumber",
-          label: "PSNumber",
-          value: "",
-        },
-      ],
-      [
-        {
-          type: "input",
-          size: "grow1",
-          typeName: "text",
-          name: "basic_3_0_ResEmailAddr",
-          label: "Email Address",
-          value: "",
-        },
-        {
-          type: "date",
-          size: "grow1",
-          name: "basic_3_1_ResBirthDate",
-          label: "Date of birth",
-          value: null,
-        },
-      ],
-      [
-        {
-          type: "input",
-          size: "grow1",
-          typeName: "number",
-          name: "basic_4_0_ResPhoneNumber",
-          label: "Phone number",
-          value: "",
-        },
-        {
-          type: "input",
-          size: "grow1",
-          typeName: "text",
-          name: "basic_4_1_ResAddress1",
-          label: "Resident Address",
-          value: "",
-        },
-      ],
-      [
-        {
-          type: "select",
-          size: "grow1",
-          name: "basic_5_0_ResCountry",
-          label: "Resident Country",
-          options: [],
-          value: "United States",
-        },
-        {
-          type: "select",
-          size: "grow1",
-          name: "basic_5_1_ResState",
-          label: "Resident State",
-          options: [],
-          value: undefined,
-        },
-        {
-          type: "select",
-          size: "grow1",
-          name: "basic_5_2_ResCity",
-          label: "Resident City",
-          options: [],
-          value: undefined,
-        },
-      ],
-    ],
-  });
+  const [data, setData] = useState(getobject());
 
   // state = {
   //   data: {},
@@ -184,6 +56,25 @@ const CreateResident = () => {
   //   errors: {},
   // };
 
+  useEffect(() => {
+    let countries = getCountries();
+    setCountries(countries);
+    let getListData = async () => {
+      return await getList(7);
+    };
+    let lists = getListData();
+    let data1 = { ...data };
+    data1.church[1][1].options = lists;
+    setData(data1);
+  }, []);
+
+  useEffect(() => {
+    let data1 = { ...data };
+    data1.basic[6][0].options = countries;
+    data1.basic[6][1].options = getStatesOfCountry(data1.basic[6][0].value);
+    setData(data1);
+  }, [countries]);
+
   const handleChange = (json, name) => {
     let itemName = name.split("_");
 
@@ -193,21 +84,28 @@ const CreateResident = () => {
     let updatedData = { ...data };
     let updatedFormData = { ...formData };
 
-    // const errors = { ...this.state.errors };
-    // const errorMessage = this.validateProperty(input);
-    // if (errorMessage) errors[input.name] = errorMessage;
-    // else delete errors[input.name];
-
     if (item.type === "input" || item.type === "select") {
-      item.value = json.currentTarget.value;
-      updatedFormData[itemName[3]] = json.currentTarget.value;
+      item.value =
+        json.currentTarget.value === "" ? undefined : json.currentTarget.value;
+      updatedFormData[itemName[0] === "church" ? "basic" : itemName[0]][
+        itemName[3]
+      ] =
+        json.currentTarget.value === "" ? undefined : json.currentTarget.value;
     } else if (item.type === "checkbox") {
       item.value = json.target.checked;
-      updatedFormData[itemName[3]] = json.target.checked;
+      updatedFormData[itemName[0] === "church" ? "basic" : itemName[0]][
+        itemName[3]
+      ] = json.target.checked;
     } else if (item.type === "date") {
       item.value = json;
-      updatedFormData[itemName[3]] = json;
+      updatedFormData[itemName[0] === "church" ? "basic" : itemName[0]][
+        itemName[3]
+      ] = json;
     }
+
+    const errorMessage = validateProperty(item);
+    if (errorMessage) item.error = errorMessage;
+    else item.error = undefined;
 
     if (itemName[3].endsWith("Country")) {
       let states = getStatesOfCountry(json.currentTarget.value);
@@ -229,58 +127,86 @@ const CreateResident = () => {
 
     setFormData(updatedFormData);
     setData(updatedData);
-
-    // this.setState({ data, errors });
   };
-
-  useEffect(() => {
-    let countries = getCountries();
-    setCountries(countries);
-  }, []);
-
-  useEffect(() => {
-    let data1 = { ...data };
-    data1.basic[5][0].options = countries;
-    data1.basic[5][1].options = getStatesOfCountry(data1.basic[5][0].value);
-    console.log(data1.basic[5][0].value);
-    setData(data1);
-  }, [countries]);
 
   // const doSubmit = async () => {};
 
-  // const validate = () => {
-  //   const options = { abortEarly: false };
-  //   const { error } = Joi.validate(this.state.data, this.schema, options);
-  //   if (!error) return null;
-  //   const errors = {};
+  //====================================== Validations ========================================
 
-  //   for (let item of error.details) errors[item.path[0]] = item.message;
+  const validate = () => {
+    const options = { abortEarly: false };
+    let schema = {};
+    let validationData = {};
+    let data1 = { ...data };
+    data[activeSession].forEach((row) => {
+      row.forEach((item) => {
+        schema[item.label] = item.schema;
+        validationData[item.label] = item.value;
+      });
+    });
+    const { error } = Joi.validate(validationData, schema, options);
+    if (!error) return true;
 
-  //   return errors;
-  // };
+    data[activeSession].forEach((row, rowI) => {
+      row.forEach((item, itemI) => {
+        error.details.forEach((er) => {
+          if (er.path[0] === item.label) {
+            data1[activeSession][rowI][itemI].error = er.message;
+          }
+        });
+      });
+    });
 
-  // const validateProperty = ({ name, value }) => {
-  //   const obj = { [name]: value };
-  //   const schema = { [name]: this.schema[name] };
-  //   const { error } = Joi.validate(obj, schema);
-  //   return error ? error.details[0].message : null;
-  // };
+    setData(data1);
+    return false;
+  };
 
-  // const handleDOBChange = (date) => {
-  //   const data = { ...this.state.data };
-  //   const errors = { ...this.state.errors };
-  //   // const errorMessage = this.validateProperty(input);
-  //   // if (errorMessage) errors[input.name] = errorMessage;
-  //   // else delete errors[input.name];
-  //   data["basic_ResBirthDate"] = date;
-  //   this.setState({ data, errors });
-  // };
+  const validateProperty = ({ name, value, schema, label }) => {
+    // const obj = { [name.split("_")[3]]: value };
+    // const schema1 = { [name.split("_")[3]]: schema };
+    const obj = { [label]: value };
+    const schema1 = { [label]: schema };
+    const { error } = Joi.validate(obj, schema1);
+    return error ? error.details[0].message : null;
+  };
 
-  //session Switches
+  //====================================== Session Switches ========================================
 
-  const nextSession = () => {};
+  const nextSession = () => {
+    if (activeSession === "basic" || activeSession === "church") {
+      if (validate()) {
+        let updatedFormData = { ...formData };
+        data[activeSession].forEach((row) => {
+          row.forEach((item) => {
+            updatedFormData[item.name.split("_")[0]][item.name.split("_")[3]] =
+              item.value;
+          });
+        });
+        setFormData(updatedFormData);
+        if (data["basic"][0][2].value) {
+          setActiiveSession("church");
+        } else if (data["basic"][0][3].value) {
+          setActiiveSession("family");
+        } else {
+          setActiiveSession("contact");
+        }
+      } else {
+        console.log("do better");
+      }
+    }
+  };
 
-  const previousSession = () => {};
+  const previousSession = () => {
+    let f;
+    sessions.forEach((session, i) => {
+      if (session.name === activeSession) {
+        if (!f) {
+          f = true;
+          setActiiveSession(sessions[i - 1].name);
+        }
+      }
+    });
+  };
 
   let categoryIndex = 1;
   let currentSession = sessions.filter((session, i) => {
@@ -290,9 +216,9 @@ const CreateResident = () => {
     }
     return false;
   })[0];
+  console.log("formData", formData);
+  // console.log("data", data);
   console.log("---");
-  console.log(formData);
-  console.log(data);
 
   return (
     <div className="createResident-Container">
@@ -305,188 +231,23 @@ const CreateResident = () => {
       </div>
       {activeSession === "basic" && activeSessionPart === 1 && (
         <>
-          {/* <h1>asdsdasd</h1> */}
           <AdmissionSection
             data={data.basic}
             onChange={handleChange}
-            paginate={"1/2"}
+            toNextSection={nextSession}
           />
         </>
       )}
-      {/* {this.state.activeSession === "basic" && this.state.part === 2 && (
-        <div className="createResident-Container-formSection">
-          <div className="createResident-Container-formSection-row">
-            <div className="createResident-Container-formSection-rowItem grow1">
-              <Select
-                onChange={this.handleChange}
-                name={"basic_ResCountry"}
-                label={"Resident Country"}
-                options={this.state.countries.map((country) => ({
-                  _id: country.isoCode,
-                  name: country.name,
-                }))}
-                value={
-                  this.state.data.basic_ResCountry
-                    ? this.state.data.basic_ResCountry
-                    : undefined
-                }
-                error={this.state.errors["basic_ResCountry"]}
-              ></Select>
-            </div>
-            <div className="createResident-Container-formSection-rowItem grow1">
-              <Select
-                onChange={this.handleChange}
-                name={"basic_ResState"}
-                label={"Resident State"}
-                options={this.getStatesOfCountry("basic_ResCountry")}
-                value={
-                  this.state.data.basic_ResState
-                    ? this.state.data.basic_ResState
-                    : undefined
-                }
-                error={this.state.errors["basic_ResState"]}
-              ></Select>
-            </div>
-          </div>
-          <div className="createResident-Container-formSection-row">
-            <div className="createResident-Container-formSection-rowItem grow1">
-              <Select
-                onChange={this.handleChange}
-                name={"basic_ResCity"}
-                label={"Resident City"}
-                options={this.getCitiesOfState("basic_ResState")}
-                value={
-                  this.state.data.basic_ResCity
-                    ? this.state.data.basic_ResCity
-                    : undefined
-                }
-                error={this.state.errors["basic_ResCity"]}
-              ></Select>
-            </div>
-            <div className="createResident-Container-formSection-rowItem grow1">
-              <Input
-                type={"text"}
-                onChange={this.handleChange}
-                name={"basic_ResZipCode"}
-                label={"Resident Zip Code"}
-                value={
-                  this.state.data.basic_ResZipCode
-                    ? this.state.data.basic_ResZipCode
-                    : ""
-                }
-                showLabel={true}
-                error={this.state.errors["basic_ResZipCode"]}
-              />
-            </div>
-          </div>
-          <div className="createResident-Container-endSection">
-            <h4 className="form-pagination">2/3</h4>
-          </div>
-        </div>
+      {activeSession === "church" && activeSessionPart === 1 && (
+        <>
+          <AdmissionSection
+            data={data.church}
+            onChange={handleChange}
+            toNextSection={nextSession}
+            toPreviousSection={previousSession}
+          />
+        </>
       )}
-      {this.state.activeSession === "basic" && this.state.part === 3 && (
-        <div className="createResident-Container-formSection">
-          <div className="createResident-Container-formSection-row">
-            <div className="createResident-Container-formSection-rowItem grow1">
-              <Select
-                onChange={this.handleChange}
-                name={"basic_ResCountry"}
-                label={"Resident Country"}
-                options={this.state.countries.map((country) => ({
-                  _id: country.isoCode,
-                  name: country.name,
-                }))}
-                value={
-                  this.state.data.basic_ResCountry
-                    ? this.state.data.basic_ResCountry
-                    : undefined
-                }
-                error={this.state.errors["basic_ResCountry"]}
-              ></Select>
-            </div>
-            <div className="createResident-Container-formSection-rowItem grow1">
-              <Select
-                onChange={this.handleChange}
-                name={"basic_ResState"}
-                label={"Resident State"}
-                options={this.getStatesOfCountry("basic_ResCountry")}
-                value={
-                  this.state.data.basic_ResState
-                    ? this.state.data.basic_ResState
-                    : undefined
-                }
-                error={this.state.errors["basic_ResState"]}
-              ></Select>
-            </div>
-          </div>
-          <div className="createResident-Container-formSection-row">
-            <div className="createResident-Container-formSection-rowItem grow1">
-              <Select
-                onChange={this.handleChange}
-                name={"basic_ResCity"}
-                label={"Resident City"}
-                options={this.getCitiesOfState("basic_ResState")}
-                value={
-                  this.state.data.basic_ResCity
-                    ? this.state.data.basic_ResCity
-                    : undefined
-                }
-                error={this.state.errors["basic_ResCity"]}
-              ></Select>
-            </div>
-            <div className="createResident-Container-formSection-rowItem grow1">
-              <Input
-                type={"text"}
-                onChange={this.handleChange}
-                name={"basic_ResZipCode"}
-                label={"Resident Zip Code"}
-                value={
-                  this.state.data.basic_ResZipCode
-                    ? this.state.data.basic_ResZipCode
-                    : ""
-                }
-                showLabel={true}
-                error={this.state.errors["basic_ResZipCode"]}
-              />
-            </div>
-          </div>
-          <div className="createResident-Container-endSection">
-            <h4 className="form-pagination">3/3</h4>
-          </div>
-          <div className="createResident-Container-endSection">
-            <div className="createResident-Container-formSection-rowItem-nextButton">
-              <button
-                className="formSection-rowItem-nextButton button"
-                onClick={this.toBasic2}
-              >
-                Previous
-              </button>
-              <button
-                className="formSection-rowItem-nextButton button"
-                onClick={this.tofamily}
-              >
-                Next
-              </button>
-            </div>
-          </div>
-        </div>
-      )} */}
-      <div className="createResident-Container-endSection">
-        <div className="createResident-Container-formSection-rowItem-nextButton">
-          <button
-            className="formSection-rowItem-nextButton button"
-            onClick={previousSession}
-          >
-            Previous
-          </button>
-          <button
-            className="formSection-rowItem-nextButton b"
-            onClick={nextSession}
-          >
-            Next
-          </button>
-        </div>
-      </div>
     </div>
   );
 };

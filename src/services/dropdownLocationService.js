@@ -48,9 +48,3 @@ export function getCitiesOfState(state) {
     return [];
   }
 }
-
-export default {
-  getCountries,
-  getStatesOfCountry,
-  getCitiesOfState,
-};

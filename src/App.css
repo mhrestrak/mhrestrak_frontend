@@ -120,15 +120,17 @@
   display: flex;
   justify-content: center;
   align-items: stretch;
-  min-height: 100vh;
+  /* min-height: 100vh; */
   background-color: #028482;
+  flex-grow: 1;
 }
 
 .sideBar-Sections {
   margin: 2em;
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
+  justify-content: stretch;
+  flex-grow: 1;
 }
 
 .light-text {
@@ -169,12 +171,13 @@
 
 .dashboard {
   display: flex;
+  flex-grow: 1;
   flex-direction: row;
+  align-items: stretch;
 }
 
 .dashboard-sideBar {
-  /* width: 400px; */
-  /* opacity: 0.5; */
+  display: flex;
   flex-grow: 1;
 }
 
@@ -243,7 +246,7 @@
 .findResident-Container-resultSection-Action-Found-text {
   display: flex;
   flex-direction: column;
-  justify-content: end;
+  /* justify-content: end; */
   padding-left: 2em;
 }
 
@@ -294,6 +297,7 @@
   flex-direction: column;
   max-width: 1300px;
   flex-wrap: wrap;
+  justify-content: flex-start;
 }
 
 .createResident-Container-formSection-row {
@@ -325,9 +329,14 @@
   display: flex;
   justify-content: center;
   align-items: center;
-
   margin-top: 2em;
-  margin-right: 10em;
+  /* margin-right: 10em; */
+}
+
+.formSection-rowItem-nextButton {
+  margin-left: 1em;
+  margin-right: 1em;
+  width: 170px;
 }
 .form-pagination {
   margin-top: 1em;
@@ -351,11 +360,6 @@
   padding-left: 1em;
   padding-top: 0.4em;
   color: #028482;
-}
-
-.formSection-rowItem-nextButton {
-  padding-left: 2em;
-  padding-right: 2em;
 }
 
 /* ------End-------------*/

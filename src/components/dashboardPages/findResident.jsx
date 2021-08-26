@@ -1,6 +1,4 @@
 import React, { Component } from "react";
-import Joi, { errors } from "joi-browser";
-import { toast } from "react-toastify";
 import Input from "../common/input";
 import { findResident } from "../../services/residentService";
 import { Link } from "react-router-dom";

@@ -287,6 +287,7 @@ export function getobject() {
           name: "contact_3_0_State",
           label: "State",
           options: getStatesOfCountry("United States"),
+          // options: [],
           value: undefined,
           schema: Joi.string().max(30),
         },

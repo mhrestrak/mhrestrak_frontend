@@ -10,6 +10,8 @@ import {
 import AdmissionSection from "../common/admissionCommonComponents/admissionSection";
 import { getList } from "../../services/listService";
 import { getobject } from "../../utils/residentObject";
+import MultiItemGenerator from "../common/admissionCommonComponents/multipleItemGenerator";
+import { getFamilyObject } from "../../utils/familyObject";
 
 const CreateResident = () => {
   const sessions = [
@@ -30,18 +32,23 @@ const CreateResident = () => {
   const [countries, setCountries] = useState([]);
   const [formData, setFormData] = useState({
     basic: { ResCountry: "United States" },
-    family: {},
+    family: [
+      { ID: "123", ChildName: "Joshua Fernandes" },
+      { ID: "1224", ChildName: "Joshua Fernandes" },
+      { ID: "12234", ChildName: "Joshua Fernandes" },
+    ],
+    // family: [],
     contact: {},
     notes: {},
-    education: {},
+    education: [],
     employment: {},
-    drugs: {},
-    legal: {},
-    finances: {},
-    medical: {},
-    medication: {},
+    drugs: [],
+    legal: [],
+    finances: [],
+    medical: [],
+    medication: [],
   });
-  const [activeSession, setActiiveSession] = useState("contact");
+  const [activeSession, setActiiveSession] = useState("family");
   const [activeSessionPart, setActiveSessionPart] = useState(1);
 
   const [data, setData] = useState(getobject());
@@ -65,6 +72,7 @@ const CreateResident = () => {
     let lists = getListData();
     let data1 = { ...data };
     data1.church[1][1].options = lists;
+    console.log(lists);
     setData(data1);
   }, []);
 
@@ -129,6 +137,12 @@ const CreateResident = () => {
     setData(updatedData);
   };
 
+  const setmultiItems = (items, section) => {
+    let updatedFormData = { ...formData };
+    updatedFormData[section] = items;
+    setFormData(updatedFormData);
+  };
+
   // const doSubmit = async () => {};
 
   //====================================== Validations ========================================
@@ -173,16 +187,20 @@ const CreateResident = () => {
   //====================================== Session Switches ========================================
 
   const nextSession = () => {
+    let update = () => {
+      let updatedFormData = { ...formData };
+      data[activeSession].forEach((row) => {
+        row.forEach((item) => {
+          updatedFormData[item.name.split("_")[0]][item.name.split("_")[3]] =
+            item.value;
+        });
+      });
+      setFormData(updatedFormData);
+    };
+
     if (activeSession === "basic" || activeSession === "church") {
       if (validate()) {
-        let updatedFormData = { ...formData };
-        data[activeSession].forEach((row) => {
-          row.forEach((item) => {
-            updatedFormData[item.name.split("_")[0]][item.name.split("_")[3]] =
-              item.value;
-          });
-        });
-        setFormData(updatedFormData);
+        update();
         if (data["basic"][0][2].value) {
           setActiiveSession("church");
         } else if (data["basic"][0][3].value) {
@@ -190,9 +208,11 @@ const CreateResident = () => {
         } else {
           setActiiveSession("contact");
         }
-      } else {
-        console.log("do better");
       }
+    } else if (activeSession === "family") {
+      setActiiveSession("contact");
+    } else {
+      console.log("not configured");
     }
   };
 
@@ -202,7 +222,15 @@ const CreateResident = () => {
       if (session.name === activeSession) {
         if (!f) {
           f = true;
-          setActiiveSession(sessions[i - 1].name);
+          if (activeSession === "family") {
+            if (data["basic"][0][2].value) {
+              setActiiveSession("church");
+            } else {
+              setActiiveSession("basic");
+            }
+          } else {
+            setActiiveSession(sessions[i - 1].name);
+          }
         }
       }
     });
@@ -247,6 +275,16 @@ const CreateResident = () => {
             toPreviousSection={previousSession}
           />
         </>
+      )}
+      {activeSession === "family" && (
+        <MultiItemGenerator
+          data={formData.family}
+          setData={setmultiItems}
+          sectionName={"family"}
+          sectionModel={getFamilyObject()}
+          toNextSection={nextSession}
+          toPreviousSection={previousSession}
+        />
       )}
       {activeSession === "contact" && (
         <>

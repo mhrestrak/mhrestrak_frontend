@@ -41,7 +41,7 @@ const CreateResident = () => {
     medical: {},
     medication: {},
   });
-  const [activeSession, setActiiveSession] = useState("basic");
+  const [activeSession, setActiiveSession] = useState("contact");
   const [activeSessionPart, setActiveSessionPart] = useState(1);
 
   const [data, setData] = useState(getobject());
@@ -229,7 +229,7 @@ const CreateResident = () => {
           <h3>{`${categoryIndex}/11`}</h3>
         </div>
       </div>
-      {activeSession === "basic" && activeSessionPart === 1 && (
+      {activeSession === "basic" && (
         <>
           <AdmissionSection
             data={data.basic}
@@ -238,10 +238,20 @@ const CreateResident = () => {
           />
         </>
       )}
-      {activeSession === "church" && activeSessionPart === 1 && (
+      {activeSession === "church" && (
         <>
           <AdmissionSection
             data={data.church}
+            onChange={handleChange}
+            toNextSection={nextSession}
+            toPreviousSection={previousSession}
+          />
+        </>
+      )}
+      {activeSession === "contact" && (
+        <>
+          <AdmissionSection
+            data={data.contact}
             onChange={handleChange}
             toNextSection={nextSession}
             toPreviousSection={previousSession}

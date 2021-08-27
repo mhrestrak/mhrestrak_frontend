@@ -1,10 +1,11 @@
 import Joi from "joi-browser";
 import React from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   getCitiesOfState,
   getStatesOfCountry,
 } from "../../../services/dropdownLocationService";
+import { getList } from "../../../services/listService";
 import { getFamilyObject } from "../../../utils/familyObject";
 import InputFieldLayoutRow from "../inputFieldLayoutRow";
 import DataItems from "./dataItems";
@@ -16,9 +17,27 @@ const MultiItemGenerator = ({
   sectionModel,
   toPreviousSection,
   toNextSection,
+  submitWholeForm,
 }) => {
   const [GenState, setGenState] = useState("list");
   const [model, setModel] = useState(sectionModel);
+
+  useEffect(async () => {
+    let data1 = model.map((item) => item);
+    if (sectionName === "education") {
+      let lists = await getList(2);
+      data1[0][0].options = lists;
+      setModel(data1);
+    } else if (sectionName === "finances") {
+      let debtCategories = await getList(6);
+      data1[0][1].options = debtCategories;
+      setModel(data1);
+    } else if (sectionName === "legal") {
+      let states = await getStatesOfCountry("United States");
+      data1[2][1].options = states;
+      setModel(data1);
+    }
+  }, []);
 
   const onChange = (json, name) => {
     let itemName = name.split("_");
@@ -47,7 +66,10 @@ const MultiItemGenerator = ({
       ] = states;
     }
 
-    if (itemName[3].endsWith("State")) {
+    if (
+      itemName[3].endsWith("State") &&
+      itemName[3] !== "legal_2_1_WarrentState"
+    ) {
       let cities = getCitiesOfState(json.currentTarget.value);
       updatedData[parseInt(itemName[1], 10)][parseInt(itemName[2], 10) + 1][
         "options"
@@ -167,6 +189,14 @@ const MultiItemGenerator = ({
                 onClick={toNextSection}
               >
                 Next
+              </button>
+            )}
+            {submitWholeForm && (
+              <button
+                className="formSection-rowItem-nextButton button"
+                onClick={submitWholeForm}
+              >
+                Submit
               </button>
             )}
           </div>

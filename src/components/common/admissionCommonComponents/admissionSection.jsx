@@ -32,6 +32,14 @@ const AdmissionSection = (props) => {
               Next
             </button>
           )}
+          {props.submitWholeForm && (
+            <button
+              className="formSection-rowItem-nextButton button"
+              onClick={props.submitWholeForm}
+            >
+              Submit
+            </button>
+          )}
         </div>
       </div>
     </div>

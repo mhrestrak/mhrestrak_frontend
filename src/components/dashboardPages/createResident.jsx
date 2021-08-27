@@ -12,6 +12,14 @@ import { getList } from "../../services/listService";
 import { getobject } from "../../utils/residentObject";
 import MultiItemGenerator from "../common/admissionCommonComponents/multipleItemGenerator";
 import { getFamilyObject } from "../../utils/familyObject";
+import { getEducationObject } from "../../utils/educationObject";
+import { getDrugsObject } from "../../utils/drugsObject";
+import { getLegalobject } from "../../utils/legalCasesObject";
+import { getMedicalObject } from "../../utils/medicalObject";
+import { getFinanceObject } from "../../utils/financeObject";
+import { getMedicationObject } from "../../utils/medicationObject";
+import { prepData } from "../../utils/prepData";
+import { CreateResidentWithSections } from "../../services/residentService";
 
 const CreateResident = () => {
   const sessions = [
@@ -27,17 +35,14 @@ const CreateResident = () => {
     { name: "finances", label: "Finances" },
     { name: "medical", label: "Medical Info" },
     { name: "medication", label: "Medication  Info" },
+    { name: "medication", label: "Medication  Info" },
+    { name: "submitting", label: "Submitting" },
   ];
 
   const [countries, setCountries] = useState([]);
   const [formData, setFormData] = useState({
-    basic: { ResCountry: "United States" },
-    family: [
-      { ID: "123", ChildName: "Joshua Fernandes" },
-      { ID: "1224", ChildName: "Joshua Fernandes" },
-      { ID: "12234", ChildName: "Joshua Fernandes" },
-    ],
-    // family: [],
+    basic: {},
+    family: [],
     contact: {},
     notes: {},
     education: [],
@@ -48,7 +53,7 @@ const CreateResident = () => {
     medical: [],
     medication: [],
   });
-  const [activeSession, setActiiveSession] = useState("family");
+  const [activeSession, setActiiveSession] = useState("basic");
   const [activeSessionPart, setActiveSessionPart] = useState(1);
 
   const [data, setData] = useState(getobject());
@@ -63,25 +68,17 @@ const CreateResident = () => {
   //   errors: {},
   // };
 
-  useEffect(() => {
+  useEffect(async () => {
     let countries = getCountries();
     setCountries(countries);
-    let getListData = async () => {
-      return await getList(7);
-    };
-    let lists = getListData();
+    let lists = await getList(7);
+    let notCategories = await getList(4);
     let data1 = { ...data };
     data1.church[1][1].options = lists;
-    console.log(lists);
+    data1.notes[0][0].options = notCategories;
+    data1.basic[6][0].options = getStatesOfCountry("United States");
     setData(data1);
   }, []);
-
-  useEffect(() => {
-    let data1 = { ...data };
-    data1.basic[6][0].options = countries;
-    data1.basic[6][1].options = getStatesOfCountry(data1.basic[6][0].value);
-    setData(data1);
-  }, [countries]);
 
   const handleChange = (json, name) => {
     let itemName = name.split("_");
@@ -100,6 +97,7 @@ const CreateResident = () => {
       ] =
         json.currentTarget.value === "" ? undefined : json.currentTarget.value;
     } else if (item.type === "checkbox") {
+      console.log("ran");
       item.value = json.target.checked;
       updatedFormData[itemName[0] === "church" ? "basic" : itemName[0]][
         itemName[3]
@@ -143,8 +141,6 @@ const CreateResident = () => {
     setFormData(updatedFormData);
   };
 
-  // const doSubmit = async () => {};
-
   //====================================== Validations ========================================
 
   const validate = () => {
@@ -158,6 +154,7 @@ const CreateResident = () => {
         validationData[item.label] = item.value;
       });
     });
+
     const { error } = Joi.validate(validationData, schema, options);
     if (!error) return true;
 
@@ -191,14 +188,16 @@ const CreateResident = () => {
       let updatedFormData = { ...formData };
       data[activeSession].forEach((row) => {
         row.forEach((item) => {
-          updatedFormData[item.name.split("_")[0]][item.name.split("_")[3]] =
-            item.value;
+          let sID = item.name.split("_")[0];
+          updatedFormData[sID === "church" ? "basic" : sID][
+            item.name.split("_")[3]
+          ] = item.value;
         });
       });
       setFormData(updatedFormData);
     };
 
-    if (activeSession === "basic" || activeSession === "church") {
+    if (activeSession === "basic") {
       if (validate()) {
         update();
         if (data["basic"][0][2].value) {
@@ -209,8 +208,39 @@ const CreateResident = () => {
           setActiiveSession("contact");
         }
       }
+    } else if (activeSession === "church") {
+      if (data["basic"][0][3].value) {
+        setActiiveSession("family");
+      } else {
+        setActiiveSession("contact");
+      }
     } else if (activeSession === "family") {
       setActiiveSession("contact");
+    } else if (activeSession === "contact") {
+      if (validate()) {
+        update();
+        setActiiveSession("notes");
+      }
+    } else if (activeSession === "notes") {
+      if (validate()) {
+        update();
+        setActiiveSession("education");
+      }
+    } else if (activeSession === "education") {
+      setActiiveSession("employment");
+    } else if (activeSession === "employment") {
+      if (validate()) {
+        update();
+        setActiiveSession("drugs");
+      }
+    } else if (activeSession === "drugs") {
+      setActiiveSession("legal");
+    } else if (activeSession === "legal") {
+      setActiiveSession("finances");
+    } else if (activeSession === "finances") {
+      setActiiveSession("medical");
+    } else if (activeSession === "medical") {
+      setActiiveSession("medication");
     } else {
       console.log("not configured");
     }
@@ -228,12 +258,32 @@ const CreateResident = () => {
             } else {
               setActiiveSession("basic");
             }
+          } else if (activeSession === "contact") {
+            if (data["basic"][0][3].value) {
+              setActiiveSession("family");
+            } else if (data["basic"][0][2].value) {
+              setActiiveSession("church");
+            } else {
+              setActiiveSession("basic");
+            }
           } else {
             setActiiveSession(sessions[i - 1].name);
           }
         }
       }
     });
+  };
+
+  const doSubmit = async () => {
+    setActiiveSession("submitting");
+    let prepedData = prepData({ ...formData });
+    let result = await CreateResidentWithSections(prepedData);
+    if (result.ResID) {
+      console.log("success after done");
+      console.log(result);
+    } else {
+      console.log(result);
+    }
   };
 
   let categoryIndex = 1;
@@ -245,17 +295,19 @@ const CreateResident = () => {
     return false;
   })[0];
   console.log("formData", formData);
-  // console.log("data", data);
+  console.log("data", data);
   console.log("---");
 
   return (
     <div className="createResident-Container">
       <div className="createResident-Container-headSection">
         <h2 className="primary">{`Resident ${currentSession.label}`}</h2>
-        <div className="CreateForm-Session-Counter light-text">
-          <h5>Category</h5>
-          <h3>{`${categoryIndex}/11`}</h3>
-        </div>
+        {currentSession !== "submitting" && (
+          <div className="CreateForm-Session-Counter light-text">
+            <h5>Category</h5>
+            <h3>{`${categoryIndex}/12`}</h3>
+          </div>
+        )}
       </div>
       {activeSession === "basic" && (
         <>
@@ -295,6 +347,85 @@ const CreateResident = () => {
             toPreviousSection={previousSession}
           />
         </>
+      )}
+      {activeSession === "notes" && (
+        <>
+          <AdmissionSection
+            data={data.notes}
+            onChange={handleChange}
+            toNextSection={nextSession}
+            toPreviousSection={previousSession}
+          />
+        </>
+      )}
+      {activeSession === "education" && (
+        <MultiItemGenerator
+          data={formData.education}
+          setData={setmultiItems}
+          sectionName={"education"}
+          sectionModel={getEducationObject()}
+          toNextSection={nextSession}
+          toPreviousSection={previousSession}
+        />
+      )}
+      {activeSession === "employment" && (
+        <>
+          <AdmissionSection
+            data={data.employment}
+            onChange={handleChange}
+            toNextSection={nextSession}
+            toPreviousSection={previousSession}
+          />
+        </>
+      )}
+      {activeSession === "drugs" && (
+        <MultiItemGenerator
+          data={formData.drugs}
+          setData={setmultiItems}
+          sectionName={"drugs"}
+          sectionModel={getDrugsObject()}
+          toNextSection={nextSession}
+          toPreviousSection={previousSession}
+        />
+      )}
+      {activeSession === "legal" && (
+        <MultiItemGenerator
+          data={formData.legal}
+          setData={setmultiItems}
+          sectionName={"legal"}
+          sectionModel={getLegalobject()}
+          toNextSection={nextSession}
+          toPreviousSection={previousSession}
+        />
+      )}
+      {activeSession === "finances" && (
+        <MultiItemGenerator
+          data={formData.finances}
+          setData={setmultiItems}
+          sectionName={"finances"}
+          sectionModel={getFinanceObject()}
+          toNextSection={nextSession}
+          toPreviousSection={previousSession}
+        />
+      )}
+      {activeSession === "medical" && (
+        <MultiItemGenerator
+          data={formData.medical}
+          setData={setmultiItems}
+          sectionName={"medical"}
+          sectionModel={getMedicalObject()}
+          toNextSection={nextSession}
+          toPreviousSection={previousSession}
+        />
+      )}
+      {activeSession === "medication" && (
+        <MultiItemGenerator
+          data={formData.medication}
+          setData={setmultiItems}
+          sectionName={"medication"}
+          sectionModel={getMedicationObject()}
+          submitWholeForm={doSubmit}
+        />
       )}
     </div>
   );

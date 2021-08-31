@@ -238,7 +238,7 @@
 }
 .findResident-Container-resultSection-Action-cases {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   justify-content: space-between;
   align-items: center;
 }
@@ -247,7 +247,8 @@
   display: flex;
   flex-direction: column;
   /* justify-content: end; */
-  padding-left: 2em;
+  /* padding-left: 2em; */
+  align-items: center;
 }
 
 .findResident-Container-resultSection-Action-Found-userFound-b {
@@ -262,15 +263,30 @@
 
 /* ------End-------------*/
 
+/* createResident Message styles */
+
+.Submitting-message {
+  display: flex;
+  flex-direction: column;
+  /* flex-grow: 1; */
+  align-items: center;
+  justify-content: flex-start;
+  /* max-width: 600px; */
+  margin-top: 200px;
+  padding-bottom: 100px;
+}
+
+/* ------End-------------*/
+
 /* createResident styles */
 
 .createResident-Container {
   padding: 3em;
   padding-top: 2em;
+  background-color: #ccdfe0;
   display: flex;
   flex-direction: column;
   flex-grow: 1;
-  background-color: #ccdfe0;
 }
 
 .createResident-Container-headSection {
@@ -430,6 +446,51 @@
   margin-right: 0.4em;
   width: 35px;
 }
+
+/* ------Yes No Button-------------*/
+.yesNo-container {
+  display: flex;
+  min-width: 220px;
+  justify-content: center;
+  align-items: center;
+  margin-top: 1em;
+  flex-direction: column;
+}
+
+.yesNo-container-options {
+  display: flex;
+}
+
+.yesNo-container-options-item-unselected {
+  display: flex;
+  background-color: white;
+  /* padding-left: 1em; */
+  width: 5em;
+  height: 3em;
+  justify-content: center;
+  align-items: center;
+  color: grey;
+  border-radius: 1em;
+  cursor: pointer;
+  margin: 0.5em;
+}
+
+.yesNo-container-options-item-selected {
+  display: flex;
+  background-color: #028482;
+  /* padding-left: 1em; */
+  width: 5em;
+  height: 3em;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  border-radius: 1em;
+  cursor: pointer;
+  margin: 0.5em;
+}
+
+/* ------End-------------*/
+
 /* ------End-------------*/
 
 .App-link {

@@ -3,6 +3,7 @@ import Input from "../common/input";
 import CheckBox from "../common/checkbox";
 import Date from "../common/date";
 import Select from "../common/select";
+import YesNo from "./yesNo";
 
 const InputFieldLayoutRow = (props) => {
   let data = props.data;
@@ -44,6 +45,18 @@ const InputFieldLayoutRow = (props) => {
         onChange={(json) => props.onChange(json, item.name)}
         name={item.name}
         label={item.label}
+        checked={item.value}
+        error={item.error}
+      />
+    );
+  };
+
+  const renderYesNo = (item) => {
+    return (
+      <YesNo
+        onChange={(json) => props.onChange(json, item.name)}
+        name={item.name}
+        label={item.label}
         value={item.value}
         error={item.error}
       />
@@ -72,6 +85,8 @@ const InputFieldLayoutRow = (props) => {
         return renderCheckbox(item);
       case "date":
         return renderDate(item);
+      case "yesNo":
+        return renderYesNo(item);
       default:
         return renderInput(item);
     }

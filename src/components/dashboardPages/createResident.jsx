@@ -19,8 +19,11 @@ import { getMedicalObject } from "../../utils/medicalObject";
 import { getFinanceObject } from "../../utils/financeObject";
 import { getMedicationObject } from "../../utils/medicationObject";
 import { prepData } from "../../utils/prepData";
-import { CreateResidentWithSections } from "../../services/residentService";
-
+import {
+  CreateResidentWithSections,
+  findResident,
+} from "../../services/residentService";
+import { Link } from "react-router-dom";
 const CreateResident = () => {
   const sessions = [
     { name: "basic", label: "Basic Info" },
@@ -37,6 +40,7 @@ const CreateResident = () => {
     { name: "medication", label: "Medication  Info" },
     { name: "medication", label: "Medication  Info" },
     { name: "submitting", label: "Submitting" },
+    { name: "success", label: "Submitted Successfully!" },
   ];
 
   const [countries, setCountries] = useState([]);
@@ -102,7 +106,7 @@ const CreateResident = () => {
       updatedFormData[itemName[0] === "church" ? "basic" : itemName[0]][
         itemName[3]
       ] = json.target.checked;
-    } else if (item.type === "date") {
+    } else if (item.type === "date" || item.type === "yesNo") {
       item.value = json;
       updatedFormData[itemName[0] === "church" ? "basic" : itemName[0]][
         itemName[3]
@@ -143,7 +147,7 @@ const CreateResident = () => {
 
   //====================================== Validations ========================================
 
-  const validate = () => {
+  const validate = async () => {
     const options = { abortEarly: false };
     let schema = {};
     let validationData = {};
@@ -156,7 +160,30 @@ const CreateResident = () => {
     });
 
     const { error } = Joi.validate(validationData, schema, options);
-    if (!error) return true;
+
+    if (!error) {
+      if (activeSession === "basic") {
+        console.log(1);
+        let SSNValidation = await findResident(data.basic[2][0].value);
+        console.log(2);
+        console.log(SSNValidation);
+        if (SSNValidation.data) {
+          console.log(3);
+          if (SSNValidation.data.length > 0) {
+            console.log(4);
+            data1[activeSession][2][0].error = "Res With SSN Exists";
+            setData(data1);
+            return false;
+          } else {
+            return true;
+          }
+        } else {
+          return true;
+        }
+      } else {
+        return true;
+      }
+    }
 
     data[activeSession].forEach((row, rowI) => {
       row.forEach((item, itemI) => {
@@ -183,7 +210,7 @@ const CreateResident = () => {
 
   //====================================== Session Switches ========================================
 
-  const nextSession = () => {
+  const nextSession = async () => {
     let update = () => {
       let updatedFormData = { ...formData };
       data[activeSession].forEach((row) => {
@@ -198,7 +225,7 @@ const CreateResident = () => {
     };
 
     if (activeSession === "basic") {
-      if (validate()) {
+      if (await validate()) {
         update();
         if (data["basic"][0][2].value) {
           setActiiveSession("church");
@@ -217,19 +244,19 @@ const CreateResident = () => {
     } else if (activeSession === "family") {
       setActiiveSession("contact");
     } else if (activeSession === "contact") {
-      if (validate()) {
+      if (await validate()) {
         update();
         setActiiveSession("notes");
       }
     } else if (activeSession === "notes") {
-      if (validate()) {
+      if (await validate()) {
         update();
         setActiiveSession("education");
       }
     } else if (activeSession === "education") {
       setActiiveSession("employment");
     } else if (activeSession === "employment") {
-      if (validate()) {
+      if (await validate()) {
         update();
         setActiiveSession("drugs");
       }
@@ -281,6 +308,7 @@ const CreateResident = () => {
     if (result.ResID) {
       console.log("success after done");
       console.log(result);
+      setActiiveSession("success");
     } else {
       console.log(result);
     }
@@ -301,14 +329,44 @@ const CreateResident = () => {
   return (
     <div className="createResident-Container">
       <div className="createResident-Container-headSection">
-        <h2 className="primary">{`Resident ${currentSession.label}`}</h2>
-        {currentSession !== "submitting" && (
+        {activeSession !== "submitting" && activeSession !== "success" && (
+          <h2 className="primary">{`Resident ${currentSession.label}`}</h2>
+        )}
+        {activeSession !== "submitting" && activeSession !== "success" && (
           <div className="CreateForm-Session-Counter light-text">
             <h5>Category</h5>
             <h3>{`${categoryIndex}/12`}</h3>
           </div>
         )}
       </div>
+      {activeSession === "submitting" && (
+        <div className="Submitting-message">
+          <h1 className="display-2">Submitting data</h1>
+          <h3 className="primary">Do not refresh the page!</h3>
+        </div>
+      )}
+      {activeSession === "success" && (
+        <>
+          <div className="Submitting-message">
+            <h1 className="display-1">Congratulations!</h1>
+            <h3 className="">New resident has been created successfully</h3>
+          </div>
+          <div className="findResident-Container-resultSection-Action-cases">
+            <i className="fa fa-user fa-4x primary" aria-hidden="true" />
+            <div className="findResident-Container-resultSection-Action-Found-text">
+              <h4>{`${formData.basic.ResFirstName} ${formData.basic.ResLastName}`}</h4>
+            </div>
+            <Link
+              to={`/dashboard/create-admission/${formData.basic.ResID}`}
+              className="nav-item"
+            >
+              <div className="sideBar-Sections-Nav-Item">
+                <h4 className="primary">Create Admission Record</h4>
+              </div>
+            </Link>
+          </div>
+        </>
+      )}
       {activeSession === "basic" && (
         <>
           <AdmissionSection
@@ -424,6 +482,7 @@ const CreateResident = () => {
           setData={setmultiItems}
           sectionName={"medication"}
           sectionModel={getMedicationObject()}
+          toPreviousSection={previousSession}
           submitWholeForm={doSubmit}
         />
       )}

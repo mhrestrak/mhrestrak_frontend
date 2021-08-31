@@ -3,6 +3,7 @@ import { Route, Switch } from "react-router-dom";
 import auth from "../services/authService";
 
 import SideBar from "./common/sideBar";
+import CreateAdmission from "./dashboardPages/createAdmission";
 import CreateResident from "./dashboardPages/createResident";
 import FindResident from "./dashboardPages/findResident";
 
@@ -32,6 +33,10 @@ class Dashboard extends Component {
             <Route
               path="/dashboard/create-resident"
               component={CreateResident}
+            />
+            <Route
+              path="/dashboard/create-admission"
+              component={CreateAdmission}
             />
             <Route path="/dashboard/" component={FindResident} />
           </Switch>

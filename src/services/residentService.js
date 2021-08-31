@@ -9,6 +9,12 @@ export function findResident(ssn, name) {
   return http.get(url);
 }
 
+export async function CreateResAdmission(data) {
+  let url = `${apiEndpoint}/admission`;
+  let result = await http.post(url, data);
+  return result;
+}
+
 export async function CreateResidentWithSections(data) {
   if (data.basic.SSN) {
     try {

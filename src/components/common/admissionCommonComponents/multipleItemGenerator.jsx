@@ -20,7 +20,7 @@ const MultiItemGenerator = ({
   submitWholeForm,
 }) => {
   const [GenState, setGenState] = useState("list");
-  const [model, setModel] = useState(sectionModel);
+  const [model, setModel] = useState([...sectionModel]);
 
   useEffect(async () => {
     let data1 = model.map((item) => item);
@@ -51,7 +51,7 @@ const MultiItemGenerator = ({
         json.currentTarget.value === "" ? undefined : json.currentTarget.value;
     } else if (item.type === "checkbox") {
       item.value = json.target.checked;
-    } else if (item.type === "date") {
+    } else if (item.type === "date" || item.type === "yesNo") {
       item.value = json;
     }
 
@@ -99,9 +99,9 @@ const MultiItemGenerator = ({
       console.log(data);
       let data1 = data.map((item) => item);
       data1.push(updatedFormData);
+      setModel([...sectionModel]);
       setD(data1, sectionName);
       setGenState("list");
-      setModel(sectionModel);
     }
   };
 
@@ -167,7 +167,7 @@ const MultiItemGenerator = ({
               className="formSection-rowItem-nextButton button"
               onClick={() => setGenState("create")}
             >
-              Add Child +
+              Add +
             </button>
           </div>
         </>

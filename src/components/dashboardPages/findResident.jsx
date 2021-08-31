@@ -89,12 +89,14 @@ class FindResident extends Component {
                       <h4>{`${this.state.res[0].ResFirstName} ${this.state.res[0].ResLastName}`}</h4>
                       <h4 className="primary">{`${this.state.res[0].SSN}`}</h4>
                     </div>
-                    <button
-                      className="findResident-Container-resultSection-Action-Found-userFound-b b "
-                      onClick={this.handleAdmissionRedirect}
+                    <Link
+                      to={`/dashboard/create-admission/${this.state.res[0].ResID}`}
+                      className="nav-item"
                     >
-                      Create Admission Record
-                    </button>
+                      <div className="sideBar-Sections-Nav-Item">
+                        <h4 className="primary">Create Admission Record</h4>
+                      </div>
+                    </Link>
                   </div>
                 </div>
               ) : (

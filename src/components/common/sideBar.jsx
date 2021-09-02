@@ -9,6 +9,9 @@ const SideBar = ({ user }) => {
           <h1 className="display-3 light-text">{user.firstName}</h1>
           <h6 className="light-text">{user.email}</h6>
           <h5 className="light-text">Intakecoordinator</h5>
+          <h4 className="light-text">
+            {user.Center ? user.Center : "Hope Center"}
+          </h4>
         </div>
         <div className="sideBar-Sections-Nav">
           <Link to="/dashboard/" className="nav-item">

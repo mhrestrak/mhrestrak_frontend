@@ -23,10 +23,10 @@ class FindResident extends Component {
         this.state.data.ssn,
         this.state.data.name
       );
-      if (this.state.data.ssn && !this.state.data.name) {
-        console.log("filter");
-        data = data.filter((res) => res.IsActive !== true);
-      }
+      // if (this.state.data.ssn && !this.state.data.name) {
+      //   console.log("filter");
+      //   data = data.filter((res) => res.IsActive !== true);
+      // }
       console.log(data);
       this.setState({ res: data, search: true });
     } catch (ex) {
@@ -40,6 +40,33 @@ class FindResident extends Component {
   };
 
   handleAdmissionRedirect = async () => {};
+
+  decideAdmission = () => {
+    let data1 = this.state.res.filter((res) => res.IsActive !== true);
+    if (data1.length > 0) {
+      return (
+        <div className="findResident-Container-resultSection-Action">
+          <div className="findResident-Container-resultSection-Action-cases">
+            <i className="fa fa-user fa-4x primary" aria-hidden="true" />
+            <div className="findResident-Container-resultSection-Action-Found-text">
+              <h4>{`${this.state.res[0].ResFirstName} ${this.state.res[0].ResLastName}`}</h4>
+              <h4 className="primary">{`${this.state.res[0].SSN}`}</h4>
+            </div>
+            <Link
+              to={`/dashboard/create-admission/${this.state.res[0].ResID}`}
+              className="nav-item"
+            >
+              <div className="sideBar-Sections-Nav-Item">
+                <h4 className="primary">Create Admission Record</h4>
+              </div>
+            </Link>
+          </div>
+        </div>
+      );
+    } else {
+      return "";
+    }
+  };
 
   render() {
     return (
@@ -79,26 +106,7 @@ class FindResident extends Component {
             <h3 className="primary">{`${this.state.res.length} Result Found`}</h3>
             {this.state.res.length > 0 ? (
               this.state.data.ssn.length > 0 && this.state.data.name === "" ? (
-                <div className="findResident-Container-resultSection-Action">
-                  <div className="findResident-Container-resultSection-Action-cases">
-                    <i
-                      className="fa fa-user fa-4x primary"
-                      aria-hidden="true"
-                    />
-                    <div className="findResident-Container-resultSection-Action-Found-text">
-                      <h4>{`${this.state.res[0].ResFirstName} ${this.state.res[0].ResLastName}`}</h4>
-                      <h4 className="primary">{`${this.state.res[0].SSN}`}</h4>
-                    </div>
-                    <Link
-                      to={`/dashboard/create-admission/${this.state.res[0].ResID}`}
-                      className="nav-item"
-                    >
-                      <div className="sideBar-Sections-Nav-Item">
-                        <h4 className="primary">Create Admission Record</h4>
-                      </div>
-                    </Link>
-                  </div>
-                </div>
+                this.decideAdmission()
               ) : (
                 ""
               )

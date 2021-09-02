@@ -71,7 +71,7 @@ export function getobject() {
       [
         {
           type: "input",
-          size: "grow1",
+          size: "grow2",
           typeName: "text",
           name: "basic_2_0_SSN",
           label: "SSN",
@@ -80,12 +80,20 @@ export function getobject() {
         },
         {
           type: "input",
-          size: "grow1",
+          size: "grow2",
           typeName: "text",
           name: "basic_2_1_PSNumber",
           label: "PSNumber",
           value: undefined,
           schema: Joi.string().required().max(12),
+        },
+        {
+          type: "checkbox",
+          size: "grow1",
+          name: "basic_2_2_IsPregnant",
+          label: "IsPregnant",
+          value: false,
+          schema: Joi.boolean(),
         },
       ],
       [

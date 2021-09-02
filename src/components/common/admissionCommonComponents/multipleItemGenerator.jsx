@@ -6,7 +6,6 @@ import {
   getStatesOfCountry,
 } from "../../../services/dropdownLocationService";
 import { getList } from "../../../services/listService";
-import { getFamilyObject } from "../../../utils/familyObject";
 import InputFieldLayoutRow from "../inputFieldLayoutRow";
 import DataItems from "./dataItems";
 
@@ -88,6 +87,22 @@ const MultiItemGenerator = ({
     );
   };
 
+  const clearFields = async () => {
+    let sectionModel1 = [...sectionModel];
+    if (sectionName === "education") {
+      let lists = await getList(2);
+      sectionModel1[0][0].options = lists;
+    } else if (sectionName === "finances") {
+      let debtCategories = await getList(6);
+      sectionModel1[0][1].options = debtCategories;
+    } else if (sectionName === "legal") {
+      let states = await getStatesOfCountry("United States");
+      sectionModel1[2][1].options = states;
+    }
+    setModel([...sectionModel1]);
+    setGenState("create");
+  };
+
   const submit = () => {
     if (validate()) {
       let updatedFormData = {};
@@ -165,7 +180,7 @@ const MultiItemGenerator = ({
           <div className="createResident-Container-formSection-rowItem-nextButton">
             <button
               className="formSection-rowItem-nextButton button"
-              onClick={() => setGenState("create")}
+              onClick={clearFields}
             >
               Add +
             </button>

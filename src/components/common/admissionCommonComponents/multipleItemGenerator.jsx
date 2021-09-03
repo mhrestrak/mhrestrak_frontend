@@ -111,7 +111,6 @@ const MultiItemGenerator = ({
           updatedFormData[item.name.split("_")[3]] = item.value;
         });
       });
-      console.log(data);
       let data1 = data.map((item) => item);
       data1.push(updatedFormData);
       setModel([...sectionModel]);
@@ -157,7 +156,6 @@ const MultiItemGenerator = ({
     return error ? error.details[0].message : null;
   };
 
-  console.log(model);
   return (
     <div className="multiItem-container">
       {GenState === "list" && (

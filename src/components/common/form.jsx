@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import Joi from "joi-browser";
-import Input from "./input";
+import Input from "../common/input";
 // import Select from "./select";
 
 class Form extends Component {
@@ -31,7 +31,6 @@ class Form extends Component {
     e.preventDefault();
 
     const errors = this.validate();
-    console.log({ errors });
     this.setState({ errors: errors || {} });
     if (errors) return;
     this.doSubmit();

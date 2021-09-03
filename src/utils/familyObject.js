@@ -50,14 +50,6 @@ export function getFamilyObject() {
         value: false,
         schema: Joi.boolean(),
       },
-      {
-        type: "checkbox",
-        size: "grow1",
-        name: "family_2_1_IsPregnant",
-        label: "Is Pregnant",
-        value: false,
-        schema: Joi.boolean(),
-      },
     ],
     [
       {

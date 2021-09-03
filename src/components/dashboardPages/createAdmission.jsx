@@ -113,7 +113,7 @@ const CreateAdmission = () => {
   console.log("data", data);
   console.log("---");
   if (!ResID) return <Redirect to="/dashboard" />;
-  if (activeSession === "success") return <Redirect to="/dashboard" />;
+  // if (activeSession === "success") return <Redirect to="/dashboard" />;
 
   return (
     <div className="createResident-Container">
@@ -127,6 +127,20 @@ const CreateAdmission = () => {
             onChange={handleChange}
             submitWholeForm={doSubmit}
           />
+        </>
+      )}
+      {activeSession === "submitting" && (
+        <div className="Submitting-message">
+          <h1 className="display-2">Submitting Admission</h1>
+          <h3 className="primary">Do not refresh the page!</h3>
+        </div>
+      )}
+      {activeSession === "success" && (
+        <>
+          <div className="Submitting-message">
+            <h1 className="display-1">Congratulations!</h1>
+            <h3 className="">New admission has been created successfully</h3>
+          </div>
         </>
       )}
     </div>

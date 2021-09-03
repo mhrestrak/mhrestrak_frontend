@@ -18,7 +18,6 @@ class loginForm extends Form {
 
   doSubmit = async () => {
     try {
-      console.log("submit");
       const { data } = this.state;
       await auth.login(data.email, data.pass);
       const { state } = this.props.location;
@@ -26,12 +25,9 @@ class loginForm extends Form {
     } catch (ex) {
       const errors = { ...this.state.errors };
       if (ex.response && ex.response.status === 400) {
-        console.log(errors);
         errors.data = ex.response.data;
         this.setState({ errors });
       } else {
-        console.log(ex);
-        console.log("asd");
         errors.message = ex.message;
         this.setState({ errors });
         toast.error(errors.message);

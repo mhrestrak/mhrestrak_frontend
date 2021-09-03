@@ -20,7 +20,6 @@ export async function CreateResidentWithSections(data) {
     try {
       let url = `${apiEndpoint}/basic`;
       let result = await http.post(url, data.basic);
-      console.log(result);
     } catch (error) {
       console.log("error");
       console.log(error);
@@ -32,7 +31,6 @@ export async function CreateResidentWithSections(data) {
       let url = `${apiEndpoint}/family`;
       data.family.forEach(async (family, i) => {
         let result = await http.post(url, family);
-        console.log(result);
       });
     } catch (error) {
       return error;
@@ -42,7 +40,6 @@ export async function CreateResidentWithSections(data) {
     try {
       let url = `${apiEndpoint}/contacts`;
       let result = await http.post(url, data.contact);
-      console.log(result);
     } catch (error) {
       return error;
     }
@@ -51,7 +48,6 @@ export async function CreateResidentWithSections(data) {
     try {
       let url = `${apiEndpoint}/notes`;
       let result = await http.post(url, data.notes);
-      console.log(result);
     } catch (error) {
       return error;
     }
@@ -61,7 +57,6 @@ export async function CreateResidentWithSections(data) {
       let url = `${apiEndpoint}/education`;
       data.education.forEach(async (educ, i) => {
         let result = await http.post(url, educ);
-        console.log(result);
       });
     } catch (error) {
       return error;
@@ -71,7 +66,6 @@ export async function CreateResidentWithSections(data) {
     try {
       let url = `${apiEndpoint}/employment`;
       let result = await http.post(url, data.employment);
-      console.log(result);
     } catch (error) {
       return error;
     }
@@ -81,7 +75,6 @@ export async function CreateResidentWithSections(data) {
       let url = `${apiEndpoint}/drug`;
       data.drugs.forEach(async (drugs, i) => {
         let result = await http.post(url, drugs);
-        console.log(result);
       });
     } catch (error) {
       return error;
@@ -92,7 +85,6 @@ export async function CreateResidentWithSections(data) {
       let url = `${apiEndpoint}/legal`;
       data.legal.forEach(async (legal, i) => {
         let result = await http.post(url, legal);
-        console.log(result);
       });
     } catch (error) {
       return error;
@@ -103,7 +95,6 @@ export async function CreateResidentWithSections(data) {
       let url = `${apiEndpoint}/finance`;
       data.finances.forEach(async (finance, i) => {
         let result = await http.post(url, finance);
-        console.log(result);
       });
     } catch (error) {
       return error;
@@ -114,7 +105,6 @@ export async function CreateResidentWithSections(data) {
       let url = `${apiEndpoint}/medical`;
       data.medical.forEach(async (medical, i) => {
         let result = await http.post(url, medical);
-        console.log(result);
       });
     } catch (error) {
       return error;
@@ -125,12 +115,10 @@ export async function CreateResidentWithSections(data) {
       let url = `${apiEndpoint}/medication`;
       data.medication.forEach(async (medication, i) => {
         let result = await http.post(url, medication);
-        console.log(result);
       });
     } catch (error) {
       return error;
     }
   }
-  console.log("done");
   return { ResID: data.basic.ResID };
 }

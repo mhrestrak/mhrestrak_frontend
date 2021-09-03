@@ -13,7 +13,6 @@ export function getStatesOfCountry(country) {
     let selectedCountry = Country.getAllCountries().filter(
       (c) => c.name === country
     );
-    console.log(selectedCountry);
     if (selectedCountry.length > 0) {
       let states = State.getStatesOfCountry(selectedCountry[0].isoCode);
       return states.map((country) => ({

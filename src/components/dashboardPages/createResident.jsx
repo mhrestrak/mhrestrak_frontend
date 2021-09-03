@@ -101,7 +101,6 @@ const CreateResident = () => {
       ] =
         json.currentTarget.value === "" ? undefined : json.currentTarget.value;
     } else if (item.type === "checkbox") {
-      console.log("ran");
       item.value = json.target.checked;
       updatedFormData[itemName[0] === "church" ? "basic" : itemName[0]][
         itemName[3]
@@ -163,14 +162,9 @@ const CreateResident = () => {
 
     if (!error) {
       if (activeSession === "basic") {
-        console.log(1);
         let SSNValidation = await findResident(data.basic[2][0].value);
-        console.log(2);
-        console.log(SSNValidation);
         if (SSNValidation.data) {
-          console.log(3);
           if (SSNValidation.data.length > 0) {
-            console.log(4);
             data1[activeSession][2][0].error = "Res With SSN Exists";
             setData(data1);
             return false;
@@ -269,7 +263,7 @@ const CreateResident = () => {
     } else if (activeSession === "medical") {
       setActiiveSession("medication");
     } else {
-      console.log("not configured");
+      // console.log("not configured");
     }
   };
 
@@ -306,11 +300,8 @@ const CreateResident = () => {
     let prepedData = prepData({ ...formData });
     let result = await CreateResidentWithSections(prepedData);
     if (result.ResID) {
-      console.log("success after done");
-      console.log(result);
       setActiiveSession("success");
     } else {
-      console.log(result);
     }
   };
 
@@ -322,9 +313,6 @@ const CreateResident = () => {
     }
     return false;
   })[0];
-  console.log("formData", formData);
-  console.log("data", data);
-  console.log("---");
 
   return (
     <div className="createResident-Container">

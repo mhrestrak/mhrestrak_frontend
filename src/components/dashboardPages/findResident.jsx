@@ -18,7 +18,6 @@ class FindResident extends Component {
 
   handleSubmit = async () => {
     try {
-      console.log("sd");
       let { data } = await findResident(
         this.state.data.ssn,
         this.state.data.name
@@ -27,7 +26,6 @@ class FindResident extends Component {
       //   console.log("filter");
       //   data = data.filter((res) => res.IsActive !== true);
       // }
-      console.log(data);
       this.setState({ res: data, search: true });
     } catch (ex) {
       console.log(ex);

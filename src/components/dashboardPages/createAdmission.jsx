@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import Joi from "joi-browser";
 
 import AdmissionSection from "../common/admissionCommonComponents/admissionSection";
@@ -49,7 +49,6 @@ const CreateAdmission = () => {
   //====================================== Validations ========================================
 
   const validate = () => {
-    console.log("sdfsdf");
     const options = { abortEarly: false };
     let schema = {};
     let validationData = {};
@@ -100,18 +99,12 @@ const CreateAdmission = () => {
     if (validate()) {
       update();
       setActiiveSession("submitting");
-      console.log(ResID);
       let prepedData = prepAdmissionData({ ...formData }, ResID);
       let result = await CreateResAdmission(prepedData);
-      console.log("success after done");
-      console.log(result);
       setActiiveSession("success");
     }
   };
 
-  console.log("formData", formData);
-  console.log("data", data);
-  console.log("---");
   if (!ResID) return <Redirect to="/dashboard" />;
   // if (activeSession === "success") return <Redirect to="/dashboard" />;
 

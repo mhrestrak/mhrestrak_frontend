@@ -68,7 +68,7 @@ export function getAdmissionobject() {
         size: "grow1",
         name: "admission_2_0_IsRestricted",
         label: "Is Restricted?",
-        value: undefined,
+        value: true,
         schema: Joi.boolean(),
       },
       {
@@ -76,7 +76,7 @@ export function getAdmissionobject() {
         size: "grow1",
         name: "admission_2_1_IsApprovedPartner",
         label: "Is Approved Partner?",
-        value: undefined,
+        value: false,
         schema: Joi.boolean(),
       },
       {
@@ -92,7 +92,7 @@ export function getAdmissionobject() {
         size: "grow1",
         name: "admission_2_3_CanSelfSignout",
         label: "Can Self Signout?",
-        value: undefined,
+        value: false,
         schema: Joi.boolean(),
       },
     ],

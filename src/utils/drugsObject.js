@@ -40,6 +40,14 @@ export function getDrugsObject() {
         value: undefined,
         schema: Joi.string().max(50),
       },
+      {
+        type: "checkbox",
+        size: "grow1",
+        name: "drugs_1_2_PrimaryDrugOfChoice",
+        label: "Primary Drug of Choice",
+        value: false,
+        schema: Joi.boolean(),
+      },
     ],
   ];
 }

@@ -7,7 +7,7 @@ const DataItems = (props) => {
   } else if (props.sectionName === "education") {
     text = props.data.EducationName;
   } else if (props.sectionName === "drugs") {
-    text = "Drug item " + (props.index + 1);
+    text = "Drug item " + props.data.DrugOfChoice;
   } else if (props.sectionName === "legal") {
     text = "Legal Case" + (props.index + 1);
   } else if (props.sectionName === "finances") {

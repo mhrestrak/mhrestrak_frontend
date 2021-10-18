@@ -11,7 +11,7 @@ export function getLegalobject() {
         name: "legal_0_0_CaseNumber",
         label: "Case Number",
         value: undefined,
-        schema: Joi.string().required().max(30),
+        schema: Joi.string().max(30),
       },
       {
         type: "input",

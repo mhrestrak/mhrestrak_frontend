@@ -12,7 +12,11 @@ import { CreateResAdmission } from "../../services/residentService";
 const CreateAdmission = () => {
   const [ResID, setResID] = useState(window.location.pathname.split("/")[3]);
   const [data, setData] = useState(getAdmissionobject());
-  const [formData, setFormData] = useState({});
+  const [formData, setFormData] = useState({
+    IsRestricted: true,
+    IsApprovedPartner: false,
+    CanSelfSignout: false,
+  });
   const [activeSession, setActiiveSession] = useState("create");
 
   const handleChange = (json, name) => {

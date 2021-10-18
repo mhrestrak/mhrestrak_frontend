@@ -55,8 +55,8 @@ export function getFamilyObject() {
       {
         type: "checkbox",
         size: "grow1",
-        name: "family_3_0_ChildInHouseFlag",
-        label: "Child In House",
+        name: "family_3_0_HasChildSupport",
+        label: "Has Child Support",
         value: false,
         schema: Joi.boolean(),
       },

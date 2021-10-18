@@ -77,9 +77,12 @@ const CreateResident = () => {
     setCountries(countries);
     let lists = await getList(7);
     let notCategories = await getList(4);
+    let AdmittedFromList = await getList(8);
     let data1 = { ...data };
-    data1.church[1][1].options = lists;
+    // data1.church[1][1].options = lists;
     data1.notes[0][0].options = notCategories;
+    data1.basic[4][2].options = lists;
+    data1.basic[5][2].options = AdmittedFromList;
     data1.basic[6][0].options = getStatesOfCountry("United States");
     setData(data1);
   }, []);

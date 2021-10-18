@@ -46,7 +46,7 @@ export function getMedicationObject() {
         name: "medication_1_2_TimesPerDay",
         label: "Times Per Day",
         value: undefined,
-        schema: Joi.number().max(20).required(),
+        schema: Joi.string().max(50),
       },
     ],
     [

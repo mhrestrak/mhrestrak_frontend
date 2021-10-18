@@ -8,9 +8,9 @@ const SideBar = ({ user }) => {
         <div className="sideBar-Sections-UserInfo">
           <h1 className="display-3 light-text">{user.firstName}</h1>
           <h6 className="light-text">{user.email}</h6>
-          <h5 className="light-text">Intakecoordinator</h5>
+          <h5 className="light-text">Intake Coordinator</h5>
           <h4 className="light-text">
-            {user.Center ? user.Center : "Hope Center"}
+            {user.Center ? user.Center : "New Hope Center"}
           </h4>
         </div>
         <div className="sideBar-Sections-Nav">

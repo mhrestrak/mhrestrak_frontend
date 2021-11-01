@@ -165,7 +165,7 @@ const CreateAdmission = () => {
       {activeSession === "admission" && (
         <>
           <AdmissionSection
-            data={data.admission}
+            data={data}
             onChange={handleChange}
             toNextSection={nextSession}
           />

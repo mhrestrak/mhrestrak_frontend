@@ -7,7 +7,7 @@ export function prepAdmissionData(data, resID) {
   if (data.legal.length > 0) {
     data.legal.forEach((legal, i) => {
       data.legal[i].ID = uniqid();
-      data.legal[i].ResID = ResID;
+      data.legal[i].ResID = resID;
     });
   }
   return data;

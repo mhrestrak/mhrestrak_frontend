@@ -16,7 +16,7 @@ import { getEducationObject } from "../../utils/educationObject";
 import { getDrugsObject } from "../../utils/drugsObject";
 import { getLegalobject } from "../../utils/legalCasesObject";
 import { getMedicalObject } from "../../utils/medicalObject";
-import { getFinanceObject } from "../../utils/financeObject";
+// import { getFinanceObject } from "../../utils/financeObject";
 import { getMedicationObject } from "../../utils/medicationObject";
 import { prepData } from "../../utils/prepData";
 import {
@@ -447,7 +447,7 @@ const CreateResident = () => {
           toPreviousSection={previousSession}
         />
       )}
-      {activeSession === "finances" && (
+      {/* {activeSession === "finances" && (
         <MultiItemGenerator
           data={formData.finances}
           setData={setmultiItems}
@@ -456,7 +456,7 @@ const CreateResident = () => {
           toNextSection={nextSession}
           toPreviousSection={previousSession}
         />
-      )}
+      )} */}
       {activeSession === "medical" && (
         <MultiItemGenerator
           data={formData.medical}

@@ -2,28 +2,32 @@ import React, { useState } from "react";
 import Joi from "joi-browser";
 
 import AdmissionSection from "../common/admissionCommonComponents/admissionSection";
-import MultiItemGenerator from "../common/admissionCommonComponents/multipleItemGenerator";
-import { CreateResAdmission } from "../../services/residentService";
-import { getLegalobject } from "../../utils/legalCasesObject";
 import { getAdmissionobject } from "../../utils/admissionObject";
 import { prepAdmissionData } from "../../utils/prepAdmissionData";
 import { Redirect } from "react-router-dom";
+import { CreateResAdmission } from "../../services/residentService";
+// import { prepData } from "../../utils/prepData";
+// import { CreateResidentWithSections } from "../../services/residentService";
 
 const CreateAdmission = () => {
   const [ResID, setResID] = useState(window.location.pathname.split("/")[3]);
-  const [activeSession, setActiiveSession] = useState("admission");
   const [data, setData] = useState(getAdmissionobject());
+  const [formData, setFormData] = useState({
+    IsRestricted: true,
+    IsApprovedPartner: false,
+    CanSelfSignout: false,
+  });
+  const [activeSession, setActiiveSession] = useState("create");
+
   const sessions = [
     { name: "admission", label: "Admission" },
     { name: "legal", label: "Legal Cases" },
     { name: "success", label: "Submitted Successfully!" },
   ];
+
+  const [activeSession, setActiiveSession] = useState("admission");
+
   const [formData, setFormData] = useState({
-    admission: {
-      IsRestricted: true,
-      IsApprovedPartner: false,
-      CanSelfSignout: false,
-    },
     legal: [],
   });
 
@@ -38,14 +42,14 @@ const CreateAdmission = () => {
     if (item.type === "input" || item.type === "select") {
       item.value =
         json.currentTarget.value === "" ? undefined : json.currentTarget.value;
-      updatedFormData.admission[itemName[3]] =
+      updatedFormData[itemName[3]] =
         json.currentTarget.value === "" ? undefined : json.currentTarget.value;
     } else if (item.type === "checkbox") {
       item.value = json.target.checked;
-      updatedFormData.admission[itemName[3]] = json.target.checked;
+      updatedFormData[itemName[3]] = json.target.checked;
     } else if (item.type === "date" || item.type === "yesNo") {
       item.value = json;
-      updatedFormData.admission[itemName[3]] = json;
+      updatedFormData[itemName[3]] = json;
     }
 
     const errorMessage = validateProperty(item);
@@ -56,12 +60,6 @@ const CreateAdmission = () => {
 
     setFormData(updatedFormData);
     setData(updatedData);
-  };
-
-  const setmultiItems = (items, section) => {
-    let updatedFormData = { ...formData };
-    updatedFormData[section] = items;
-    setFormData(updatedFormData);
   };
 
   //====================================== Validations ========================================
@@ -106,10 +104,65 @@ const CreateAdmission = () => {
   //====================================== Session Switches ========================================
 
   const nextSession = async () => {
-    if (activeSession === "admission") {
+    let update = () => {
+      let updatedFormData = { ...formData };
+      data[activeSession].forEach((row) => {
+        row.forEach((item) => {
+          let sID = item.name.split("_")[0];
+          updatedFormData[sID === "church" ? "basic" : sID][
+            item.name.split("_")[3]
+          ] = item.value;
+        });
+      });
+      setFormData(updatedFormData);
+    };
+
+    if (activeSession === "basic") {
       if (await validate()) {
-        setActiiveSession("legal");
+        update();
+        if (data["basic"][0][2].value) {
+          setActiiveSession("church");
+        } else if (data["basic"][0][3].value) {
+          setActiiveSession("family");
+        } else {
+          setActiiveSession("contact");
+        }
       }
+    } else if (activeSession === "church") {
+      if (data["basic"][0][3].value) {
+        setActiiveSession("family");
+      } else {
+        setActiiveSession("contact");
+      }
+    } else if (activeSession === "family") {
+      setActiiveSession("contact");
+    } else if (activeSession === "contact") {
+      if (await validate()) {
+        update();
+        setActiiveSession("notes");
+      }
+    } else if (activeSession === "notes") {
+      if (await validate()) {
+        update();
+        setActiiveSession("education");
+      }
+    } else if (activeSession === "education") {
+      setActiiveSession("employment");
+    } else if (activeSession === "employment") {
+      if (await validate()) {
+        update();
+        setActiiveSession("drugs");
+      }
+    } else if (activeSession === "drugs") {
+      setActiiveSession("legal");
+    } else if (activeSession === "legal") {
+      setActiiveSession("finances");
+    } else if (activeSession === "finances") {
+      setActiiveSession("medical");
+    } else if (activeSession === "medical") {
+      setActiiveSession("medication");
+    } else {
+      // console.log("not configured");
     }
   };
 
@@ -119,35 +172,65 @@ const CreateAdmission = () => {
       if (session.name === activeSession) {
         if (!f) {
           f = true;
-          setActiiveSession(sessions[i - 1].name);
+          if (activeSession === "family") {
+            if (data["basic"][0][2].value) {
+              setActiiveSession("church");
+            } else {
+              setActiiveSession("basic");
+            }
+          } else if (activeSession === "contact") {
+            if (data["basic"][0][3].value) {
+              setActiiveSession("family");
+            } else if (data["basic"][0][2].value) {
+              setActiiveSession("church");
+            } else {
+              setActiiveSession("basic");
+            }
+          } else {
+            setActiiveSession(sessions[i - 1].name);
+          }
         }
       }
     });
   };
 
   const doSubmit = async () => {
-    setActiiveSession("submitting");
-    let prepedData = prepAdmissionData(formData, ResID);
-    let result = await CreateResAdmission(prepedData);
-    setActiiveSession("success");
+    let update = () => {
+      let updatedFormData = { ...formData };
+      data.forEach((row) => {
+        row.forEach((item) => {
+          let sID = item.name.split("_")[0];
+          updatedFormData[sID[3]] = item.value;
+        });
+      });
+      setFormData(updatedFormData);
+    };
+    if (validate()) {
+      update();
+      setActiiveSession("submitting");
+      let prepedData = prepAdmissionData({ ...formData }, ResID);
+      let result = await CreateResAdmission(prepedData);
+      setActiiveSession("success");
+    }
   };
 
-  let categoryIndex = 1;
-  let currentSession = sessions.filter((session, i) => {
-    if (session.name === activeSession) {
-      categoryIndex = i + 1;
-      return true;
-    }
-    return false;
-  })[0];
-
   if (!ResID) return <Redirect to="/dashboard" />;
+  // if (activeSession === "success") return <Redirect to="/dashboard" />;
 
   return (
     <div className="createResident-Container">
       <div className="createResident-Container-headSection">
         <h2 className="primary">Admission</h2>
       </div>
+      {activeSession === "create" && (
+        <>
+          <AdmissionSection
+            data={data}
+            onChange={handleChange}
+            submitWholeForm={doSubmit}
+          />
+        </>
+      )}
       {activeSession === "submitting" && (
         <div className="Submitting-message">
           <h1 className="display-2">Submitting Admission</h1>
@@ -161,25 +244,6 @@ const CreateAdmission = () => {
             <h3 className="">New admission has been created successfully</h3>
           </div>
         </>
-      )}
-      {activeSession === "admission" && (
-        <>
-          <AdmissionSection
-            data={data.admission}
-            onChange={handleChange}
-            toNextSection={nextSession}
-          />
-        </>
-      )}
-      {activeSession === "legal" && (
-        <MultiItemGenerator
-          data={formData.legal}
-          setData={setmultiItems}
-          sectionName={"legal"}
-          sectionModel={getLegalobject()}
-          toPreviousSection={previousSession}
-          submitWholeForm={doSubmit}
-        />
       )}
     </div>
   );

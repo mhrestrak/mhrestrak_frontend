@@ -10,9 +10,20 @@ export function findResident(ssn, name) {
 }
 
 export async function CreateResAdmission(data) {
-  let url = `${apiEndpoint}/admission`;
-  let result = await http.post(url, data);
-  return result;
+  let AdUrl = `${apiEndpoint}/admission`;
+  let AdResult = await http.post(AdUrl, data.admission);
+
+  if (data.legal.length > 0) {
+    try {
+      let url = `${apiEndpoint}/legal`;
+      data.legal.forEach(async (legal, i) => {
+        let result = await http.post(url, legal);
+      });
+    } catch (error) {
+      return error;
+    }
+  }
+  return AdResult;
 }
 
 export async function CreateResidentWithSections(data) {
@@ -90,16 +101,16 @@ export async function CreateResidentWithSections(data) {
       return error;
     }
   }
-  if (data.finances.length > 0) {
-    try {
-      let url = `${apiEndpoint}/finance`;
-      data.finances.forEach(async (finance, i) => {
-        let result = await http.post(url, finance);
-      });
-    } catch (error) {
-      return error;
-    }
-  }
+  // if (data.finances.length > 0) {
+  //   try {
+  //     let url = `${apiEndpoint}/finance`;
+  //     data.finances.forEach(async (finance, i) => {
+  //       let result = await http.post(url, finance);
+  //     });
+  //   } catch (error) {
+  //     return error;
+  //   }
+  // }
   if (data.medical.length > 0) {
     try {
       let url = `${apiEndpoint}/medical`;

@@ -34,8 +34,6 @@ const CreateResident = () => {
     { name: "education", label: "Education Info" },
     { name: "employment", label: "Employment Info" },
     { name: "drugs", label: "Drugs Info" },
-    { name: "legal", label: "Legal Cases" },
-    { name: "finances", label: "Finances" },
     { name: "medical", label: "Medical Info" },
     { name: "medication", label: "Medication  Info" },
     { name: "medication", label: "Medication  Info" },
@@ -433,16 +431,6 @@ const CreateResident = () => {
           setData={setmultiItems}
           sectionName={"drugs"}
           sectionModel={getDrugsObject()}
-          toNextSection={nextSession}
-          toPreviousSection={previousSession}
-        />
-      )}
-      {activeSession === "legal" && (
-        <MultiItemGenerator
-          data={formData.legal}
-          setData={setmultiItems}
-          sectionName={"legal"}
-          sectionModel={getLegalobject()}
           toNextSection={nextSession}
           toPreviousSection={previousSession}
         />

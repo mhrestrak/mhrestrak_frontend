@@ -256,10 +256,6 @@ const CreateResident = () => {
         setActiiveSession("drugs");
       }
     } else if (activeSession === "drugs") {
-      setActiiveSession("legal");
-    } else if (activeSession === "legal") {
-      setActiiveSession("finances");
-    } else if (activeSession === "finances") {
       setActiiveSession("medical");
     } else if (activeSession === "medical") {
       setActiiveSession("medication");

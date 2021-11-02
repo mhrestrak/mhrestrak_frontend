@@ -271,7 +271,7 @@ export function getobject() {
           name: "contact_0_0_ContactFirstName",
           label: "First Name",
           value: undefined,
-          schema: Joi.string().required().max(30),
+          schema: Joi.string().max(30),
         },
         {
           type: "input",
@@ -280,7 +280,7 @@ export function getobject() {
           name: "contact_0_1_ContactLastName",
           label: "Last Name",
           value: undefined,
-          schema: Joi.string().required().max(30),
+          schema: Joi.string().max(30),
         },
       ],
       [
@@ -300,7 +300,7 @@ export function getobject() {
           name: "contact_1_1_Phone",
           label: "Phone Number",
           value: undefined,
-          schema: Joi.string().required().max(15),
+          schema: Joi.string().max(15),
         },
       ],
       [

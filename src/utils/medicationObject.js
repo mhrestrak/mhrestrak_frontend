@@ -29,7 +29,7 @@ export function getMedicationObject() {
         name: "medication_1_0_StartDate",
         label: "Start Date",
         value: null,
-        schema: Joi.date().allow(null),
+        schema: Joi.date(),
       },
       {
         type: "date",
@@ -37,7 +37,7 @@ export function getMedicationObject() {
         name: "medication_1_1_EndDate",
         label: "End Date",
         value: null,
-        schema: Joi.date().allow(null),
+        schema: Joi.date(),
       },
       {
         type: "input",

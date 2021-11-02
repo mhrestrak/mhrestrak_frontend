@@ -68,7 +68,7 @@ export function getLegalobject() {
         name: "legal_2_0_WarrantDate",
         label: "Warrant Date",
         value: null,
-        schema: Joi.date().allow(null),
+        schema: Joi.date(),
       },
       {
         type: "select",

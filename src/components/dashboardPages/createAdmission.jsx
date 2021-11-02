@@ -172,14 +172,19 @@ const CreateAdmission = () => {
         </>
       )}
       {activeSession === "legal" && (
-        <MultiItemGenerator
-          data={formData.legal}
-          setData={setmultiItems}
-          sectionName={"legal"}
-          sectionModel={getLegalobject()}
-          toPreviousSection={previousSession}
-          submitWholeForm={doSubmit}
-        />
+        <>
+          <div className="createResident-Container-headSection">
+            <h2 className="primary">{`Legal Cases`}</h2>
+          </div>
+          <MultiItemGenerator
+            data={formData.legal}
+            setData={setmultiItems}
+            sectionName={"legal"}
+            sectionModel={getLegalobject()}
+            toPreviousSection={previousSession}
+            submitWholeForm={doSubmit}
+          />
+        </>
       )}
     </div>
   );

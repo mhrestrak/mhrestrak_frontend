@@ -25,11 +25,11 @@ const CreateAdmission = () => {
     { name: "success", label: "Submitted Successfully!" },
   ];
 
-  const [activeSession, setActiiveSession] = useState("admission");
+  // const [activeSession, setActiiveSession] = useState("admission");
 
-  const [formData, setFormData] = useState({
-    legal: [],
-  });
+  // const [formData, setFormData] = useState({
+  //   legal: [],
+  // });
 
   const handleChange = (json, name) => {
     let itemName = name.split("_");

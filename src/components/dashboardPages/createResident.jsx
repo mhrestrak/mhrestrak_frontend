@@ -69,7 +69,7 @@ const CreateResident = () => {
   //   cities: [],
   //   errors: {},
   // };
-
+//@ts-ignore
   useEffect(async () => {
     let countries = getCountries();
     setCountries(countries);
@@ -372,6 +372,7 @@ const CreateResident = () => {
         </>
       )}
       {activeSession === "family" && (
+        //@ts-ignore
         <MultiItemGenerator
           data={formData.family}
           setData={setmultiItems}
@@ -402,6 +403,7 @@ const CreateResident = () => {
         </>
       )}
       {activeSession === "education" && (
+        //@ts-ignore
         <MultiItemGenerator
           data={formData.education}
           setData={setmultiItems}
@@ -422,6 +424,7 @@ const CreateResident = () => {
         </>
       )}
       {activeSession === "drugs" && (
+        //@ts-ignore
         <MultiItemGenerator
           data={formData.drugs}
           setData={setmultiItems}
@@ -442,6 +445,7 @@ const CreateResident = () => {
         />
       )} */}
       {activeSession === "medical" && (
+        //@ts-ignore
         <MultiItemGenerator
           data={formData.medical}
           setData={setmultiItems}
@@ -452,6 +456,7 @@ const CreateResident = () => {
         />
       )}
       {activeSession === "medication" && (
+        //@ts-ignore
         <MultiItemGenerator
           data={formData.medication}
           setData={setmultiItems}

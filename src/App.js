@@ -24,6 +24,7 @@ class App extends Component {
         <ToastContainer />
         <div className="content">
           <Switch>
+            {/* @ts-ignore */}
             <ProtectedRoute path="/dashboard" component={Dashbord} />
             <Route path="/login" component={LoginForm} />
             <Route path="/logout" component={Logout} />

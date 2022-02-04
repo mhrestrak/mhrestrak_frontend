@@ -29,6 +29,15 @@ const SideBar = ({ user }) => {
               <h4 className="light-text  rightspcae-2">Create resident</h4>
             </div>
           </Link>
+          <Link to="/dashboard/reports" className="nav-item">
+            <div className="sideBar-Sections-Nav-Item">
+              <i
+                className="fa fa-bar-chart fa-2x light-text"
+                aria-hidden="true"
+              ></i>
+              <h4 className="light-text  rightspcae-2">Reports</h4>
+            </div>
+          </Link>
           <Link to="/logout" className="nav-item">
             <div className="sideBar-Sections-Nav-Item">
               <i

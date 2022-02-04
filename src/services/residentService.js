@@ -2,10 +2,30 @@ import http from "./httpService";
 
 const apiEndpoint = "/resident";
 
+export async function updateResident(resident){
+  let url = `${apiEndpoint}/basic/update`
+  try {
+    console.log(resident)
+    return await http.post(url, resident)
+  } catch (error) {
+    return {error}
+  }
+}
+
 export function findResident(ssn, name) {
   let url = `${apiEndpoint}${(ssn || name) && "?"}${ssn ? "ssn=" + ssn : ""}${
     ssn ? (name ? "&name=" + name : "") : name ? "name=" + name : ""
   }`;
+  return http.get(url);
+}
+
+export function getActiveResidents(){
+  let url = `${apiEndpoint}/basic/active`
+  return http.get(url);
+}
+
+export function getResidentByID(id){
+  let url = `${apiEndpoint}/${id}`
   return http.get(url);
 }
 

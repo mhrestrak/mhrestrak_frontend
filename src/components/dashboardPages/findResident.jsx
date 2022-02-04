@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import Input from "../common/input";
 import { findResident } from "../../services/residentService";
 import { Link } from "react-router-dom";
-
+import uniqId from "uniqid";
 class FindResident extends Component {
   state = {
     data: { ssn: "", name: "" },
@@ -71,6 +71,7 @@ class FindResident extends Component {
       <div className="findResident-Container">
         <div className="findResident-Container-searchSection">
           <div className="findResident-Container-searchSection-item">
+            {/* @ts-ignore */}
             <Input
               type={"text"}
               onChange={this.handleChange}
@@ -80,6 +81,7 @@ class FindResident extends Component {
             />
           </div>
           <div className="findResident-Container-searchSection-item">
+            {/* @ts-ignore */}
             <Input
               type={"text"}
               onChange={this.handleChange}
@@ -102,13 +104,7 @@ class FindResident extends Component {
         {this.state.search && (
           <div className="findResident-Container-resultSection">
             <h3 className="primary">{`${this.state.res.length} Result Found`}</h3>
-            {this.state.res.length > 0 ? (
-              this.state.data.ssn.length > 0 && this.state.data.name === "" ? (
-                this.decideAdmission()
-              ) : (
-                ""
-              )
-            ) : (
+            {this.state.res.length === 0 && (
               <div className="findResident-Container-resultSection-Action">
                 <div className="findResident-Container-resultSection-Action-cases">
                   <i className="fa fa-user fa-4x primary" aria-hidden="true" />
@@ -126,6 +122,47 @@ class FindResident extends Component {
                 </div>
               </div>
             )}
+          </div>
+        )}
+        {this.state.res.length > 0 && (
+          <div className="findResident-Container-data">
+            {this.state.res.map((res) => (
+              <div id={uniqId()} className="findResident-Container-data-Item">
+                <div className="findResident-Container-data-Item-ind grow3">
+                  {res.ResLastName || res.ResFirstName
+                    ? (res.ResLastName ? res.ResLastName : "") +
+                      (res.ResFirstName ? " " + res.ResFirstName : "")
+                    : "No Name"}
+                </div>
+                <div className="findResident-Container-data-Item-ind grow3">
+                  {res.SSN}
+                </div>
+                {!res.IsActive && res.ResID ? (
+                  <div className="findResident-Container-data-Item-ind grow1 flexEnd">
+                    <Link
+                      to={`/dashboard/create-admission/${res.ResID}`}
+                      className="nav-item"
+                    >
+                      <button className="resident-button">
+                        Create Admission
+                      </button>
+                    </Link>
+                  </div>
+                ) : (
+                  <div className="findResident-Container-data-Item-ind grow2 flexEnd"></div>
+                )}
+                <div className="findResident-Container-data-Item-ind grow1 flexEnd">
+                <Link
+                      to={`/dashboard/update-resident/${res.ResID}`}
+                      className="nav-item"
+                    >
+                  <button className="resident-button " onClick={() => {}}>
+                    Update
+                  </button>
+                  </Link>
+                </div>
+              </div>
+            ))}
           </div>
         )}
       </div>

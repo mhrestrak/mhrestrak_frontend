@@ -5,6 +5,7 @@ export function prepData(data) {
   if (data.basic) {
     data.basic.ResID = ResID;
     data.basic.IsActive = false;
+    data.basic.RecentPhase = "0";
   }
   if (data.family.length > 0) {
     data.family.forEach((family, i) => {

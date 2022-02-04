@@ -6,6 +6,8 @@ import SideBar from "./common/sideBar";
 import CreateAdmission from "./dashboardPages/createAdmission";
 import CreateResident from "./dashboardPages/createResident";
 import FindResident from "./dashboardPages/findResident";
+import UpdateResident from "./dashboardPages/updateResident";
+import Reports from "./dashboardPages/reports";
 
 class Dashboard extends Component {
   state = {
@@ -37,6 +39,14 @@ class Dashboard extends Component {
             <Route
               path="/dashboard/create-admission"
               component={CreateAdmission}
+            />
+            <Route
+              path="/dashboard/update-resident"
+              component={UpdateResident}
+            />
+            <Route
+              path="/dashboard/reports"
+              component={Reports}
             />
             <Route path="/dashboard/" component={FindResident} />
           </Switch>

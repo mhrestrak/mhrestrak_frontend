@@ -176,6 +176,7 @@ const CreateAdmission = () => {
           <div className="createResident-Container-headSection">
             <h2 className="primary">{`Legal Cases`}</h2>
           </div>
+          {/* @ts-ignore */}
           <MultiItemGenerator
             data={formData.legal}
             setData={setmultiItems}

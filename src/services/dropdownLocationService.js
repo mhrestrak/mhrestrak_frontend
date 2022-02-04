@@ -35,6 +35,7 @@ export function getCitiesOfState(state) {
         selectedState[0].countryCode,
         selectedState[0].isoCode
       );
+      //@ts-ignore
       cities = cities.map((state, i) => ({
         _id: i.toString(),
         name: state.name,

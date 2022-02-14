@@ -104,7 +104,7 @@ export function getobject() {
           name: "basic_3_0_ResEmailAddr",
           label: "Email Address",
           value: undefined,
-          schema: Joi.string().email().required().max(60),
+          schema: Joi.string().email().max(60),
         },
         {
           type: "date",
@@ -363,7 +363,7 @@ export function getobject() {
           label: "Note Category",
           options: [],
           value: undefined,
-          schema: Joi.string().required().max(30),
+          schema: Joi.string().max(30),
         },
         {
           type: "input",
@@ -394,7 +394,7 @@ export function getobject() {
           name: "notes_2_0_Note",
           label: "Note",
           value: undefined,
-          schema: Joi.string().required(),
+          schema: Joi.string(),
         },
       ],
     ],

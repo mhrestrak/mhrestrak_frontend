@@ -10,6 +10,7 @@
 .date {
   align-items: flex-start;
   margin-top: -15px;
+  /* margin-top: -15px; */
 }
 .date-label {
   color: #028482;

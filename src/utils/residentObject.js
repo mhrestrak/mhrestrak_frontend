@@ -132,7 +132,7 @@ export function getobject() {
           name: "basic_4_1_WhereRaised",
           label: "Last County of Residence",
           value: undefined,
-          schema: Joi.string().required().max(100),
+          schema: Joi.string().max(100),
         },
         {
           type: "select",

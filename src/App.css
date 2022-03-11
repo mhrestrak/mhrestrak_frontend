@@ -10,6 +10,7 @@
 .date {
   align-items: flex-start;
   margin-top: -15px;
+  width : 80%
 }
 .date-label {
   color: #028482;
@@ -24,8 +25,8 @@
 .date-item {
   padding-top: 0.2em;
   padding-bottom: 0.2em;
-  padding-left: 2em;
-  padding-right: 2em;
+  padding-left: .3em;
+  padding-right: .3em;
 }
 
 /* --------------------*/
@@ -107,7 +108,7 @@
 
 .box-input {
   margin-top: 1em;
-  width: 80%;
+  width: 40%;
   border: transparent;
 }
 

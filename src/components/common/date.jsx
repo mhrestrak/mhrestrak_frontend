@@ -13,6 +13,7 @@ const Date = ({ name, label, error, ...rest }) => {
       <div className="date-container">
         <div className="date-item">
           <MuiPickersUtilsProvider utils={DateFnsUtils}>
+            {/* @ts-ignore */}
             <KeyboardDatePicker
               //   margin="normal"
               id={name}
@@ -25,7 +26,7 @@ const Date = ({ name, label, error, ...rest }) => {
           </MuiPickersUtilsProvider>
         </div>
       </div>
-      {error && <div className="alert alert-danger">{error}</div>}
+      {error && <div className="alert alert-danger">{label+" must be a valid date"}</div>}
     </div>
   );
 };

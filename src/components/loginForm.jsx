@@ -42,7 +42,7 @@ class loginForm extends Form {
       <div className="loginContainer">
         <div className="container">
           <div className="box">
-            <h1 className="display-1">Welcome to MHM</h1>
+            <h1 className="display-1">Welcome to MetroHope Ministries</h1>
             <div className="container">
               <div className="box-input">
                 <form onSubmit={this.handleSubmit}>

@@ -20,7 +20,7 @@ const MultiItemGenerator = ({
 }) => {
   const [GenState, setGenState] = useState("list");
   const [model, setModel] = useState([...sectionModel]);
-
+//@ts-ignore
   useEffect(async () => {
     let data1 = model.map((item) => item);
     if (sectionName === "education") {
@@ -117,6 +117,10 @@ const MultiItemGenerator = ({
       setD(data1, sectionName);
       setGenState("list");
     }
+  };
+
+  const back = () => {
+      setGenState("list");
   };
 
   const validate = () => {
@@ -229,6 +233,12 @@ const MultiItemGenerator = ({
       {GenState === "create" && (
         <div className="createResident-Container-endSection">
           <div className="createResident-Container-formSection-rowItem-nextButton">
+            <button
+              className="formSection-rowItem-nextButton button"
+              onClick={back}
+            >
+              Back
+            </button>
             <button
               className="formSection-rowItem-nextButton button"
               onClick={submit}

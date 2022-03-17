@@ -23,7 +23,7 @@ const UpdateResident = (props) => {
       console.log(user);
       if (user.data) {
         tempData.resident = user.data;
-        tempData.formStructure[0][0]["value"] = user.data.RoomNum ? user.data.RoomNum : undefined;
+        tempData.formStructure[0][0]["value"] = user.data.RoomNum ? user.data.RoomNum.toString() : undefined;
         tempData.formStructure[0][1]["value"] = user.data.RecentPhase ? user.data.RecentPhase : undefined;
         tempData.formStructure[1][0]["value"] = user.data.IsActive ? true : false;
         tempData.resFound = 2;

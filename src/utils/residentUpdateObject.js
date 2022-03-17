@@ -10,7 +10,7 @@ export function getResidentUpdateObject() {
         name: "resident_0_0_RoomNum",
         label: "Room Number",
         value: undefined,
-        schema: Joi.number(),
+        schema: Joi.string().max(30),
       },
       {
         type: "select",

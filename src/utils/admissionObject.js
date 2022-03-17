@@ -120,7 +120,7 @@ export function getAdmissionobject() {
         name: "admission_3_0_RoomNum",
         label: "Room Num",
         value: undefined,
-        schema: Joi.number(),
+        schema: Joi.string().max(30),
       },
       {
         type: "input",

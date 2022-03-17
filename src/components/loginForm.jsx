@@ -4,8 +4,10 @@ import auth from "../services/authService";
 import Joi from "joi-browser";
 import Form from "./common/form";
 import { toast } from "react-toastify";
-
+//@ts-ignore
+import logo from "../images/logo.png"
 class loginForm extends Form {
+  //@ts-ignore
   state = {
     data: { email: "", pass: "" },
     errors: {},
@@ -42,7 +44,8 @@ class loginForm extends Form {
       <div className="loginContainer">
         <div className="container">
           <div className="box">
-            <h1 className="display-1">Welcome to MetroHope Ministries</h1>
+            <div className="imageCon"><img src={logo} className="image" width={"70%"}/></div>
+            {/* <h1 className="display-1">Welcome to MetroHope Ministries</h1> */}
             <div className="container">
               <div className="box-input">
                 <form onSubmit={this.handleSubmit}>

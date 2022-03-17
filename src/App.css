@@ -88,7 +88,7 @@
 .loginContainer {
   display: flex;
   min-height: 100vh;
-  background-color: #ccdfe0;
+  /* background-color: #ccdfe0; */
   /* position: absolute;
   width: 100%;
   height: 100%; */
@@ -101,13 +101,27 @@
   /* width: 100%; */
   /* transform: "translate(-50%, -50%)"; */
 }
+.imageCon{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 
 .display-1 {
   color: #028482;
 }
 
+.box{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  padding-bottom: 15em;
+}
+
 .box-input {
-  margin-top: 1em;
+  margin-top: 3em;
+  min-width: 20em;
   width: 40%;
   border: transparent;
 }

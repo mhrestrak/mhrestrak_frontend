@@ -115,7 +115,7 @@ export function getAdmissionobject() {
     [
       {
         type: "input",
-        typeName: "number",
+        typeName: "text",
         size: "grow2",
         name: "admission_3_0_RoomNum",
         label: "Room Num",

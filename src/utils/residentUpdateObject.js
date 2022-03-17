@@ -5,7 +5,7 @@ export function getResidentUpdateObject() {
     [
       {
         type: "input",
-        typeName: "number",
+        typeName: "text",
         size: "grow1",
         name: "resident_0_0_RoomNum",
         label: "Room Number",

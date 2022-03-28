@@ -20,15 +20,16 @@ const SideBar = ({ user }) => {
               <h4 className="light-text rightspcae-2">Dashboard</h4>
             </div>
           </Link>
+          {user.isIntakeCoordinator && 
           <Link to="/dashboard/create-resident" className="nav-item">
-            <div className="sideBar-Sections-Nav-Item">
-              <i
-                className="fa fa-pencil-square-o fa-2x light-text"
-                aria-hidden="true"
-              ></i>
-              <h4 className="light-text  rightspcae-2">Create resident</h4>
-            </div>
-          </Link>
+          <div className="sideBar-Sections-Nav-Item">
+            <i
+              className="fa fa-pencil-square-o fa-2x light-text"
+              aria-hidden="true"
+            ></i>
+            <h4 className="light-text  rightspcae-2">Create resident</h4>
+          </div>
+        </Link>}
           <Link to="/dashboard/reports" className="nav-item">
             <div className="sideBar-Sections-Nav-Item">
               <i

@@ -3,11 +3,6 @@ import { useState } from "react";
 import { CSVLink } from "react-csv";
 import { getActiveResidents } from "../../services/residentService";
 
-let data = [
-  { name: "ds", age: 2 },
-  { name: "second", age: 3 },
-];
-
 function Reports(props) {
   const [reports, setReports] = useState({
     RbN: {
@@ -94,9 +89,13 @@ function Reports(props) {
       Phase: res.RecentPhase ? res.RecentPhase : undefined,
       LastEntryDate: res.LastEntryDate,
       DaysHere: res.LastEntryDate
-        ? daysBetweenDates(res.LastEntryDate)
-        : undefined,
+      ? daysBetweenDates(res.LastEntryDate)
+      : undefined,
     }));
+    trimmedData.forEach((res,i) =>{
+      let date = new Date(trimmedData[i].LastEntryDate)
+      trimmedData[i].LastEntryDate = date.toLocaleString('en-US', { timeZone: 'CST' })+" (CST)"
+    })
     return trimmedData;
   };
 

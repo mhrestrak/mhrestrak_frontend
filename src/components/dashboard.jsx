@@ -5,6 +5,7 @@ import auth from "../services/authService";
 import SideBar from "./common/sideBar";
 import CreateAdmission from "./dashboardPages/createAdmission";
 import CreateResident from "./dashboardPages/createResident";
+import ExitResident from "./dashboardPages/exitResident";
 import FindResident from "./dashboardPages/findResident";
 import UpdateResident from "./dashboardPages/updateResident";
 import Reports from "./dashboardPages/reports";
@@ -39,6 +40,10 @@ class Dashboard extends Component {
             <Route
               path="/dashboard/create-admission"
               component={CreateAdmission}
+            />
+            <Route
+              path="/dashboard/exit"
+              component={ExitResident}
             />
             <Route
               path="/dashboard/update-resident"

@@ -97,7 +97,7 @@ const InputFieldLayoutRow = (props) => {
       {data.map((item, i) => (
         <div
           className={
-            "createResident-Container-formSection-rowItem " + item.size
+            (i=== data.length-1 ? "createResident-Container-formSection-rowItem-end ": i=== 0 ? "createResident-Container-formSection-rowItem ": "createResident-Container-formSection-rowItem-center " )+ item.size
           }
           key={i.toString()}
         >

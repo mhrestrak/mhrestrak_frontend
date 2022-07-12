@@ -7,18 +7,9 @@ export async function getResidentExitObject() {
   return [
     [
       {
-        type: "input",
-        typeName: "text",
-        size: "grow1",
-        name: "exit_0_0_WhoReferred",
-        label: "Who Referred",
-        value: undefined,
-        schema: Joi.string().max(30),
-      },
-      {
         type: "select",
         size: "grow1",
-        name: "exit_0_1_ReasonForLeaving",
+        name: "exit_0_0_ReasonForLeaving",
         label: "Reason for Leaving",
         options: reasonForLeaving,
         value: undefined,
@@ -80,31 +71,31 @@ export async function getResidentExitObject() {
     ],
     [
       {
-        type: "input",
+        type: "textBox",
         typeName: "text",
         size: "grow2",
         name: "exit_3_0_UnresolvedIssues",
         label: "Unresolved Issues",
         value: undefined,
-        schema: Joi.string().max(30),
-      },
+        schema: Joi.string().max(200),
+      }],[
       {
-        type: "input",
+        type: "textBox",
         typeName: "text",
         size: "grow2",
-        name: "exit_3_1_ReadmitConditions",
+        name: "exit_4_0_ReadmitConditions",
         label: "Readmit Conditions",
         value: undefined,
-        schema: Joi.string().max(30),
+        schema: Joi.string().max(200),
       },
     ],
     [
       {
-        type: "input",
+        type: "textBox",
         typeName: "text",
         size: "grow1",
-        name: "exit_4_0_ExitNotes",
-        label: "Exit Notes",
+        name: "exit_5_0_ExitNotes",
+        label: "Other Exit Notes",
         value: undefined,
         schema: Joi.string().max(200),
       },

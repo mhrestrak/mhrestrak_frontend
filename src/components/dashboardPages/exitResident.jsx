@@ -22,6 +22,7 @@ const UpdateResident = (props) => {
     admissionFound: 1,
   });
   const [message, setMessage] = useState();
+  const [exited, setExited] = useState(false);
   const [daysHere, setDaysHere] = useState(0)
 
   useEffect(() => {
@@ -100,6 +101,7 @@ const UpdateResident = (props) => {
       console.log(result);
       //@ts-ignore
       setMessage("Updated");
+      setExited(true)
     } catch (error) {
       //@ts-ignore
       setMessage("Failed to Update Resident");
@@ -131,6 +133,15 @@ const UpdateResident = (props) => {
 }
   return (
     <div className="exitResident-Container">
+      {exited && (
+        <>
+          <div className="Submitting-message">
+            <h1 className="display-1">Resident successfully Exited!</h1>
+          </div>
+        </>
+      )}
+      {!exited && (
+        <>
       <div className="createResident-Container-headSection">
         <h2 className="primary">
           {data.resident.ResFirstName
@@ -157,6 +168,8 @@ const UpdateResident = (props) => {
           ></Form>
           {message && <div className="updateResident-footer">{message}</div>}
         </>
+      )}
+      </>
       )}
     </div>
   );

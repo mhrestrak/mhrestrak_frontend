@@ -196,6 +196,7 @@
   flex-grow: 1;
   flex-direction: row;
   align-items: stretch;
+  background-color: #ccdfe0;
 }
 
 .dashboard-sideBar {
@@ -301,6 +302,7 @@
 .findResident-Container-data-Item-ind{
   display: flex;
   /* flex-grow: 1; */
+  background-color: "Red";
   max-width: 13em;
 }
 .resident-button{
@@ -310,6 +312,16 @@
   border-style: none;
   width: 10em;
   height: 2em;
+}
+
+.update-button{
+  border-width: 2px;
+  border-color: black;
+  border-radius: 100px;
+  color: black;
+  width: 10em;
+  height: 2em;
+  background-color: white;
 }
 .exit-button{
   background-color: #000000;
@@ -499,7 +511,6 @@
   flex-grow: 1;
   background-color: #ccdfe0;
   align-items: center;
-  
 }
 
 .updateResident-footer{
@@ -675,6 +686,7 @@
   max-width: 1300px;
   min-width: 1000px;
   flex-wrap: wrap;
+  background-color: #ccdfe0;
   justify-content: flex-start;
 }
 

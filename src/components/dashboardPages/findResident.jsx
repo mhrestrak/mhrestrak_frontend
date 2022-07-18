@@ -155,22 +155,22 @@ class FindResident extends Component {
                       to={`/dashboard/exit/${res.ResID}`}
                       className="nav-item"
                     >
-                      <button className="exit-button">
-                        Exit Resident
+                      <button className="exit-button">Exit Resident</button>
+                    </Link>
+                  </div>
+                )}
+                {res.IsActive && res.ResID && (
+                  <div className="findResident-Container-data-Item-ind grow1 flexEnd">
+                    <Link
+                      to={`/dashboard/update-resident/${res.ResID}`}
+                      className="nav-item"
+                    >
+                      <button className="update-button " onClick={() => {}}>
+                        Update
                       </button>
                     </Link>
                   </div>
                 )}
-                <div className="findResident-Container-data-Item-ind grow1 flexEnd">
-                <Link
-                      to={`/dashboard/update-resident/${res.ResID}`}
-                      className="nav-item"
-                    >
-                  <button className="resident-button " onClick={() => {}}>
-                    Update
-                  </button>
-                  </Link>
-                </div>
               </div>
             ))}
           </div>

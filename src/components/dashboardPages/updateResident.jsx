@@ -25,7 +25,6 @@ const UpdateResident = (props) => {
             tempData.resident = user.data;
             tempData.formStructure[0][0]["value"] = user.data.RoomNum ? user.data.RoomNum.toString() : undefined;
             tempData.formStructure[0][1]["value"] = user.data.RecentPhase ? user.data.RecentPhase : undefined;
-            tempData.formStructure[1][0]["value"] = user.data.IsActive ? true : false;
             tempData.resFound = 2;
             setData(tempData);
           }
@@ -37,7 +36,7 @@ const UpdateResident = (props) => {
         }
     }
     getandSetResident()
-  });
+  },[]);
 
   const handleChange = (name, item) =>{
     let updatedData = {...data};
@@ -74,7 +73,7 @@ const UpdateResident = (props) => {
   };
 
   return (
-    <div className="updateResident-Container">
+    <div className="simpleForm-Container-formSection">
       <div className="createResident-Container-headSection">
         <h2 className="primary">Update Resident</h2>
       </div>

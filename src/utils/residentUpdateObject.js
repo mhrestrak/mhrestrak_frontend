@@ -28,16 +28,6 @@ export function getResidentUpdateObject() {
         value: undefined,
         schema: Joi.string().max(30).required(),
       },
-    ],
-    [
-      {
-        type: "yesNo",
-        size: "grow1",
-        name: "resident_1_0_IsActive",
-        label: "Active",
-        value: undefined,
-        schema: Joi.boolean(),
-      },
-    ],
+    ]
   ];
 }

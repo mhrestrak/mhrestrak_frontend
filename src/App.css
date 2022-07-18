@@ -10,7 +10,8 @@
 .date {
   align-items: flex-start;
   margin-top: -15px;
-  width : 80%
+  width: 100%;
+  max-width: 18em;
 }
 .date-label {
   color: #028482;
@@ -64,12 +65,18 @@
 
 .form-group input {
   border-radius: 30em;
-  padding-left: 2em;
+  /* padding-left: 2em; */
+}
+
+.form-group textarea {
+  border-radius: 1.5em;
+  /* padding-left: 2em; */
+  height: 5em;
 }
 
 .form-group select {
   border-radius: 30em;
-  padding-left: 2em;
+  /* padding-left: 2em; */
 }
 
 /* login styles */
@@ -189,6 +196,7 @@
   flex-grow: 1;
   flex-direction: row;
   align-items: stretch;
+  background-color: #ccdfe0;
 }
 
 .dashboard-sideBar {
@@ -209,7 +217,7 @@
 
 /* ------End-------------*/
 
-/* findResident styles */
+/* find styles */
 
 .findResident-Container {
   padding: 1em;
@@ -294,10 +302,29 @@
 .findResident-Container-data-Item-ind{
   display: flex;
   /* flex-grow: 1; */
+  background-color: "Red";
   max-width: 13em;
 }
 .resident-button{
   background-color: #028482;
+  border-radius: 100px;
+  color: white;
+  border-style: none;
+  width: 10em;
+  height: 2em;
+}
+
+.update-button{
+  border-width: 2px;
+  border-color: black;
+  border-radius: 100px;
+  color: black;
+  width: 10em;
+  height: 2em;
+  background-color: white;
+}
+.exit-button{
+  background-color: #000000;
   border-radius: 100px;
   color: white;
   border-style: none;
@@ -342,6 +369,8 @@
 
 .createResident-Container-headSection {
   display: flex;
+  max-width: 1300px;
+  min-width: 1000px;
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
@@ -381,10 +410,22 @@
   display: flex;
   padding-right: 2em;
   align-items: center;
-  /* justify-content: center; */
   justify-content: flex-start;
+}
+.createResident-Container-formSection-rowItem-end {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+.createResident-Container-formSection-rowItem-center {
+  display: flex;
+  padding-right: 2em;
+  align-items: center;
+  /* justify-content: center; */
+  justify-content: center;
   /* background-color: lightgreen; */
 }
+
 .createResident-Container-formSection-rowItem-pagination {
   display: flex;
   align-items: center;
@@ -449,6 +490,27 @@
   flex-direction: column;
   flex-grow: 1;
   background-color: #ccdfe0;
+}
+
+.updateResident-footer{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-top: 2em;
+}
+
+/* ------End-------------*/
+
+/* exitResident styles */
+
+.exitResident-Container{
+  padding: 1em;
+  padding-top: 3em;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  background-color: #ccdfe0;
+  align-items: center;
 }
 
 .updateResident-footer{
@@ -577,6 +639,7 @@
   justify-content: center;
   align-items: center;
   margin-top: 1em;
+  margin-bottom: 1em;
   flex-direction: column;
 }
 
@@ -621,7 +684,9 @@
   display: flex;
   flex-direction: column;
   max-width: 1300px;
+  min-width: 1000px;
   flex-wrap: wrap;
+  background-color: #ccdfe0;
   justify-content: flex-start;
 }
 

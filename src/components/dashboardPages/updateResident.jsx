@@ -14,27 +14,28 @@ const UpdateResident = (props) => {
   });
   const [message, setMessage] = useState();
 
-  // @ts-ignore
-  useEffect(async () => {
+  useEffect(() => {
     let tempData = { ...data };
     console.log(tempData)
-    try {
-      let user = await getResidentByID(ResID);
-      console.log(user);
-      if (user.data) {
-        tempData.resident = user.data;
-        tempData.formStructure[0][0]["value"] = user.data.RoomNum ? user.data.RoomNum.toString() : undefined;
-        tempData.formStructure[0][1]["value"] = user.data.RecentPhase ? user.data.RecentPhase : undefined;
-        tempData.formStructure[1][0]["value"] = user.data.IsActive ? true : false;
-        tempData.resFound = 2;
-        setData(tempData);
-      }
-    } catch (error) {
-      tempData.resFound = 3;
-      setData(tempData);
-      //@ts-ignore
-      setMessage("Resident not found!")
+    const getandSetResident = async () =>{
+        try {
+          let user = await getResidentByID(ResID);
+          console.log(user);
+          if (user.data) {
+            tempData.resident = user.data;
+            tempData.formStructure[0][0]["value"] = user.data.RoomNum ? user.data.RoomNum.toString() : undefined;
+            tempData.formStructure[0][1]["value"] = user.data.RecentPhase ? user.data.RecentPhase : undefined;
+            tempData.resFound = 2;
+            setData(tempData);
+          }
+        } catch (error) {
+          tempData.resFound = 3;
+          setData(tempData);
+          //@ts-ignore
+          setMessage("Resident not found!")
+        }
     }
+    getandSetResident()
   },[]);
 
   const handleChange = (name, item) =>{
@@ -72,7 +73,7 @@ const UpdateResident = (props) => {
   };
 
   return (
-    <div className="updateResident-Container">
+    <div className="simpleForm-Container-formSection">
       <div className="createResident-Container-headSection">
         <h2 className="primary">Update Resident</h2>
       </div>

@@ -4,6 +4,7 @@ import CheckBox from "../common/checkbox";
 import Date from "../common/date";
 import Select from "../common/select";
 import YesNo from "./yesNo";
+import TextArea from "./textarea";
 
 const InputFieldLayoutRow = (props) => {
   let data = props.data;
@@ -11,6 +12,20 @@ const InputFieldLayoutRow = (props) => {
   const renderInput = (item) => {
     return (
       <Input
+        type={item.typeName}
+        onChange={(json) => props.onChange(json, item.name)}
+        name={item.name}
+        label={item.label}
+        value={item.value ? item.value : ""}
+        showLabel={true}
+        error={item.error}
+      />
+    );
+  };
+
+  const renderTextBox = (item) => {
+    return (
+      <TextArea
         type={item.typeName}
         onChange={(json) => props.onChange(json, item.name)}
         name={item.name}
@@ -79,6 +94,8 @@ const InputFieldLayoutRow = (props) => {
     switch (item.type) {
       case "input":
         return renderInput(item);
+      case "textBox":
+        return renderTextBox(item);
       case "select":
         return renderSelect(item);
       case "checkbox":
@@ -97,7 +114,7 @@ const InputFieldLayoutRow = (props) => {
       {data.map((item, i) => (
         <div
           className={
-            "createResident-Container-formSection-rowItem " + item.size
+            (i=== 0 ? "createResident-Container-formSection-rowItem " : i=== data.length-1 ? "createResident-Container-formSection-rowItem-end ": "createResident-Container-formSection-rowItem-center " )+ item.size
           }
           key={i.toString()}
         >

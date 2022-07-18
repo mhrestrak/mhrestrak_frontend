@@ -9,7 +9,7 @@ const Form = ({ onChange, data, submit, buttonLabel }) => {
 
     let item = data[parseInt(itemName[1], 10)][parseInt(itemName[2], 10)];
 
-    if (item.type === "input" || item.type === "select") {
+    if (item.type === "input" || item.type === "select" || item.type === "textBox") {
       item.value =
         json.currentTarget.value === "" ? undefined : json.currentTarget.value;
     } else if (item.type === "checkbox") {

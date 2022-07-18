@@ -2,13 +2,13 @@ import http from "./httpService";
 
 const apiEndpoint = "/resident";
 
-export async function updateResident(resident){
-  let url = `${apiEndpoint}/basic/update`
+export async function updateResident(resident) {
+  let url = `${apiEndpoint}/basic/update`;
   try {
-    console.log(resident)
-    return await http.post(url, resident)
+    console.log(resident);
+    return await http.post(url, resident);
   } catch (error) {
-    return {error}
+    return { error };
   }
 }
 
@@ -19,13 +19,17 @@ export function findResident(ssn, name) {
   return http.get(url);
 }
 
-export function getActiveResidents(){
-  let url = `${apiEndpoint}/basic/active`
+export function getActiveResidents() {
+  let url = `${apiEndpoint}/basic/active`;
   return http.get(url);
 }
 
-export function getResidentByID(id){
-  let url = `${apiEndpoint}/${id}`
+export function getResidentByID(id) {
+  let url = `${apiEndpoint}/${id}`;
+  return http.get(url);
+}
+export function getAdmission(id) {
+  let url = `${apiEndpoint}/admission/${id}`;
   return http.get(url);
 }
 
@@ -44,6 +48,15 @@ export async function CreateResAdmission(data) {
     }
   }
   return AdResult;
+}
+
+export async function exitResident(admission) {
+  let url = `${apiEndpoint}/admission/exit`;
+  try {
+    return await http.post(url, admission);
+  } catch (error) {
+    return { error };
+  }
 }
 
 export async function CreateResidentWithSections(data) {

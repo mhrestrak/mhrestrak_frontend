@@ -5,23 +5,34 @@ import { Link } from "react-router-dom";
 import uniqId from "uniqid";
 class FindResident extends Component {
   state = {
-    data: { ssn: "", name: "" },
+    query: "",
     search: false,
     res: [],
   };
 
+  async componentDidMount() {
+    try {
+      let { data } = await findResident();
+      // if (this.state.data.ssn && !this.state.data.name) {
+      //   console.log("filter");
+      //   data = data.filter((res) => res.IsActive !== true);
+      // }
+      this.setState({ res: data, search: false });
+    } catch (ex) {
+      console.log(ex);
+      // toast.error(ex.message);
+    }
+  }
+
   handleChange = ({ currentTarget: input }) => {
-    const data = { ...this.state.data };
-    data[input.name] = input.value;
-    this.setState({ data, search: false });
+    let query = this.state.query;
+    query = input.value;
+    this.setState({ query, search: false });
   };
 
   handleSubmit = async () => {
     try {
-      let { data } = await findResident(
-        this.state.data.ssn,
-        this.state.data.name
-      );
+      let { data } = await findResident(this.state.query);
       // if (this.state.data.ssn && !this.state.data.name) {
       //   console.log("filter");
       //   data = data.filter((res) => res.IsActive !== true);
@@ -34,7 +45,12 @@ class FindResident extends Component {
   };
 
   handleReset = async () => {
-    this.setState({ search: false, data: { ssn: "", name: "" }, res: [] });
+    try {
+      let { data } = await findResident();
+      this.setState({ res: data, search: false ,query: ""});
+    } catch (ex) {
+      console.log(ex);
+    }
   };
 
   handleAdmissionRedirect = async () => {};
@@ -70,56 +86,41 @@ class FindResident extends Component {
     return (
       <div className="findResident-Container">
         <div className="findResident-Container-searchSection">
-          <div className="findResident-Container-searchSection-item">
+          {/* <div className="findResident-Container-searchSection-item"> */}
             {/* @ts-ignore */}
             <Input
               type={"text"}
               onChange={this.handleChange}
-              name={"ssn"}
-              label={"SSN"}
-              value={this.state.data.ssn}
+              name={"query"}
+              label={"Search SSN/Name"}
+              value={this.state.query}
             />
-          </div>
-          <div className="findResident-Container-searchSection-item">
-            {/* @ts-ignore */}
-            <Input
-              type={"text"}
-              onChange={this.handleChange}
-              name={"name"}
-              label={"Name"}
-              value={this.state.data.name}
-            />
-          </div>
-          <div className="findResident-Container-searchSection-item">
-            <button className="b" onClick={this.handleSubmit}>
+            <div className="findResidentButtons">
+            <button className="b"  onClick={this.handleSubmit}>
               Search
             </button>
-          </div>
-          <div className="findResident-Container-searchSection-item">
-            <button className="b" onClick={this.handleReset}>
+            <button className="b leftMargin blackButton" onClick={this.handleReset}>
               Reset
             </button>
-          </div>
+            </div>
+            {/* </div> */}
         </div>
         {this.state.search && (
           <div className="findResident-Container-resultSection">
             <h3 className="primary">{`${this.state.res.length} Result Found`}</h3>
             {this.state.res.length === 0 && (
-              <div className="findResident-Container-resultSection-Action">
-                <div className="findResident-Container-resultSection-Action-cases">
+                <div className="Resident-NotFound-container">
                   <i className="fa fa-user fa-4x primary" aria-hidden="true" />
-                  <div className="findResident-Container-resultSection-Action-Found-text">
+                  <div className="">
                     <h4>Add a resident</h4>
                   </div>
                   <Link
                     to="/dashboard/create-resident"
-                    className="findResident-Container-resultSection-Action-Found-userFound-b"
                   >
-                    <button className="findResident-Container-resultSection-Action-Found-userFound-b b ">
+                    <button className="b ">
                       create
                     </button>
                   </Link>
-                </div>
               </div>
             )}
           </div>
@@ -137,7 +138,15 @@ class FindResident extends Component {
                 <div className="findResident-Container-data-Item-ind grow3">
                   {res.SSN}
                 </div>
-                {!res.IsActive && res.ResID ? (
+                <Link
+                      to={`/dashboard/resident/${res.ResID}`}
+                      className="nav-item"
+                    >
+                <button className="b">
+                  Manage
+                </button>
+                    </Link>
+                {/* {!res.IsActive && res.ResID ? (
                   <div className="findResident-Container-data-Item-ind grow1 flexEnd">
                     <Link
                       to={`/dashboard/create-admission/${res.ResID}`}
@@ -158,8 +167,8 @@ class FindResident extends Component {
                       <button className="exit-button">Exit Resident</button>
                     </Link>
                   </div>
-                )}
-                {res.IsActive && res.ResID && (
+                )} */}
+                {/* {res.IsActive && res.ResID && (
                   <div className="findResident-Container-data-Item-ind grow1 flexEnd">
                     <Link
                       to={`/dashboard/update-resident/${res.ResID}`}
@@ -170,7 +179,7 @@ class FindResident extends Component {
                       </button>
                     </Link>
                   </div>
-                )}
+                )} */}
               </div>
             ))}
           </div>

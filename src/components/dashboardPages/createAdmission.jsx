@@ -10,7 +10,7 @@ import { prepAdmissionData } from "../../utils/prepAdmissionData";
 import { Redirect } from "react-router-dom";
 
 const CreateAdmission = () => {
-  const [ResID, setResID] = useState(window.location.pathname.split("/")[3]);
+  const ResID = window.location.pathname.split("/")[3]
   const [activeSession, setActiiveSession] = useState("admission");
   const [data, setData] = useState(getAdmissionobject());
   const sessions = [
@@ -142,6 +142,7 @@ const CreateAdmission = () => {
   })[0];
 
   if (!ResID) return <Redirect to="/dashboard" />;
+  if (activeSession === "success") return <Redirect to={`/dashboard/resident/${ResID}`} />
 
   return (
     <div className="createResident-Container">

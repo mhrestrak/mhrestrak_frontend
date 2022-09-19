@@ -1,9 +1,18 @@
+
+import Date1 from "../../components/common/date";
 import React from "react";
 import { useState } from "react";
 import { CSVLink } from "react-csv";
-import { getActiveResidents } from "../../services/residentService";
+import { getActiveResidents, getDischargeLocationData } from "../../services/residentService";
 
 function Reports(props) {
+  let minusoneMonth = new Date()
+  minusoneMonth.setDate(minusoneMonth.getDate()-30)
+  const [DL_Dates, setDL_Dates] = useState({
+    startDate : minusoneMonth,
+    endDate : new Date(),
+  })
+
   const [reports, setReports] = useState({
     RbN: {
       data: [],
@@ -20,6 +29,11 @@ function Reports(props) {
       created: false,
       fileName: "Resident-by-Room.csv",
     },
+    DLR : {
+      data: [],
+      created: false,
+      fileName: "Discharge-Location-Report.csv",
+    }
   });
   const [message, setMessage] = useState();
 
@@ -78,6 +92,26 @@ function Reports(props) {
     }
   };
 
+  const createDLReport = async () => {
+    setMessage(undefined);
+    try {
+      let JSONData = await getDischargeLocationData(DL_Dates.startDate, DL_Dates.endDate);
+      if(JSONData.data?.length === 0){
+        //@ts-ignore
+        setMessage("Not records found in this period");
+      }else{
+        console.log(JSONData)
+        let updatedReports = { ...reports };
+        updatedReports.DLR.data = JSONData.data;
+        updatedReports.DLR.created = true;
+        setReports(updatedReports);
+      }
+    } catch (error) {
+      //@ts-ignore
+      setMessage("Report could not be generated! Try again later");
+    }
+  };
+
   const getData = async (type) => {
     let result = await getActiveResidents();
     let JSONData = result.data.recordset;
@@ -89,15 +123,27 @@ function Reports(props) {
       Phase: res.RecentPhase ? res.RecentPhase : undefined,
       LastEntryDate: res.LastEntryDate,
       DaysHere: res.LastEntryDate
-      ? daysBetweenDates(res.LastEntryDate)
-      : undefined,
+        ? daysBetweenDates(res.LastEntryDate)
+        : undefined,
     }));
-    trimmedData.forEach((res,i) =>{
-      let date = new Date(trimmedData[i].LastEntryDate)
-      trimmedData[i].LastEntryDate = date.toLocaleString('en-US', { timeZone: 'CST' })+" (CST)"
-    })
+    trimmedData.forEach((res, i) => {
+      let date = new Date(trimmedData[i].LastEntryDate);
+      trimmedData[i].LastEntryDate =
+        date.toLocaleString("en-US", { timeZone: "CST" }) + " (CST)";
+    });
     return trimmedData;
   };
+
+  const DL_startDate_change = (date) =>{
+    const tempDL = {...DL_Dates}
+    tempDL.startDate = date
+    setDL_Dates(tempDL)
+  }
+  const DL_endDate_change = (date) =>{
+    const tempDL = {...DL_Dates}
+    tempDL.endDate = date
+    setDL_Dates(tempDL)
+  }
 
   const daysBetweenDates = (start) => {
     const date1 = new Date(start);
@@ -114,7 +160,8 @@ function Reports(props) {
 
     return diffInDays + 1;
   };
-
+const AppKey = "pamhzojpeq49ubv"
+  
   return (
     <div className="reports-Container">
       <div className="createResident-Container-headSection">
@@ -123,7 +170,7 @@ function Reports(props) {
       <div className="reports-Container-Section">
         <div className="reports-Container-Section-Individual">
           <div className="reports-Container-Section-Individual-Text">
-            Resident by Name
+            Get Residents by Name
           </div>
           <button className="report-button button" onClick={residentByName}>
             Generate
@@ -138,7 +185,7 @@ function Reports(props) {
         </div>
         <div className="reports-Container-Section-Individual">
           <div className="reports-Container-Section-Individual-Text">
-            Resident by Phase
+            Get Residents by Phase
           </div>
           <button className="report-button button" onClick={residentByPhase}>
             Generate
@@ -153,7 +200,7 @@ function Reports(props) {
         </div>
         <div className="reports-Container-Section-Individual">
           <div className="reports-Container-Section-Individual-Text">
-            Resident by Room
+            Get Residents by Room
           </div>
           <button className="report-button button" onClick={residentByRoom}>
             Generate
@@ -165,6 +212,40 @@ function Reports(props) {
               </div>
             </CSVLink>
           )}
+        </div>
+      </div>
+      <div className="reports-Container-Section">
+        <div className="reports-Container-Section-Individual">
+          <div className="reports-Container-Section-Individual-Text">
+            Discharge Location Report
+          </div>
+          <div className="reports-Container-Section-Individual-Dates">
+            <Date1
+              onChange={(value) => DL_startDate_change(value)}
+              name={"startDate"}
+              label={"From"}
+              value={DL_Dates?.startDate ? DL_Dates.startDate : null}
+            />
+            <Date1
+              onChange={(value) => DL_endDate_change(value)}
+              name={"endDate"}
+              label={"To"}
+              value={DL_Dates?.endDate ? DL_Dates.endDate : null}
+            />
+          </div>
+              <button className="report-button button" onClick={createDLReport}>
+                Generate
+              </button>
+              {reports.DLR.created && (
+                <CSVLink
+                  data={reports.DLR.data}
+                  filename={reports.DLR.fileName}
+                >
+                  <div className="reports-csv-button report-button button">
+                    Download
+                  </div>
+                </CSVLink>
+              )}
         </div>
       </div>
       {message && <div className="updateResident-footer">{message}</div>}

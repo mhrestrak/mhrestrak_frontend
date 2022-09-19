@@ -24,6 +24,15 @@ import {
   findResident,
 } from "../../services/residentService";
 import { Link } from "react-router-dom";
+
+import {
+  CircularProgressbar,
+  CircularProgressbarWithChildren,
+  buildStyles
+} from "react-circular-progressbar";
+import "react-circular-progressbar/dist/styles.css";
+
+
 const CreateResident = () => {
   const sessions = [
     { name: "basic", label: "Basic Info" },
@@ -111,6 +120,12 @@ const CreateResident = () => {
       updatedFormData[itemName[0] === "church" ? "basic" : itemName[0]][
         itemName[3]
       ] = json;
+    }else if(item.type === "imagePicker") {
+      item.value = json;
+      updatedFormData[itemName[0] === "church" ? "basic" : itemName[0]][
+        itemName[3]
+      ] = json;
+      console.log("Sd")
     }
 
     const errorMessage = validateProperty(item);
@@ -315,13 +330,26 @@ const CreateResident = () => {
     <div className="createResident-Container">
       <div className="createResident-Container-headSection">
         {activeSession !== "submitting" && activeSession !== "success" && (
+          <>
           <h2 className="primary">{`Resident ${currentSession.label}`}</h2>
-        )}
-        {activeSession !== "submitting" && activeSession !== "success" && (
-          <div className="CreateForm-Session-Counter light-text">
+          {/* <div className="CreateForm-Session-Counter light-text">
             <h5>Category</h5>
             <h3>{`${categoryIndex}/12`}</h3>
+          </div> */}
+          <div className="createResident-progressContainer">
+          <CircularProgressbarWithChildren value={(categoryIndex/12)*100} styles={buildStyles({
+          pathColor: "#028482"
+        })}>
+        {/* Put any JSX content in here that you'd like. It'll be vertically and horizonally centered. */}
+        <div style={{ fontSize: 20,fontWeight :500 }}>
+          {`${categoryIndex} / 12`}
+        </div>
+        <div style={{ fontSize: 12, marginTop: 2, color :  "#028482"}}>
+          Completed
+        </div>
+      </CircularProgressbarWithChildren>
           </div>
+          </>
         )}
       </div>
       {activeSession === "submitting" && (

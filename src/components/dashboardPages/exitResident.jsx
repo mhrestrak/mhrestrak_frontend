@@ -8,6 +8,7 @@ import {
   exitResident,
 } from "../../services/residentService";
 import Form from "../common/simpleForm";
+import { Redirect } from "react-router-dom";
 
 import { confirmAlert } from 'react-confirm-alert'; // Import
 import 'react-confirm-alert/src/react-confirm-alert.css';
@@ -97,6 +98,14 @@ const UpdateResident = (props) => {
           notNullFields[item[0]] = item[1];
         }
       });
+
+      if(notNullFields.PhaseData){
+        let phaseData = notNullFields.PhaseData
+        phaseData = JSON.parse(phaseData)
+        phaseData[phaseData.length-1].outDate = notNullFields.DateOut
+        notNullFields.PhaseData = JSON.stringify(phaseData)
+      }
+      
       let result = await exitResident(notNullFields);
       console.log(result);
       //@ts-ignore
@@ -131,6 +140,8 @@ const UpdateResident = (props) => {
     dates = [...dates, endDate];
     return dates.length
 }
+
+if (exited) return <Redirect to={`/dashboard/resident/${ResID}`} />
   return (
     <div className="exitResident-Container">
       {exited && (
@@ -158,7 +169,7 @@ const UpdateResident = (props) => {
         )}
       </div>
       {data.resFound === 2 && (
-        <>
+        <div className="exitResident-FormContainer">
           {/* @ts-ignore */}
           <Form
             data={data.formStructure}
@@ -167,7 +178,7 @@ const UpdateResident = (props) => {
             buttonLabel={"Exit Resident"}
           ></Form>
           {message && <div className="updateResident-footer">{message}</div>}
-        </>
+        </div>
       )}
       </>
       )}

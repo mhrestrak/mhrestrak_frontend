@@ -39,10 +39,12 @@ const MultiItemGenerator = ({
   }, []);
 
   const onChange = (json, name) => {
+    console.log("ooooo")
     let itemName = name.split("_");
 
     let item = model[parseInt(itemName[1], 10)][parseInt(itemName[2], 10)];
-
+    console.log(item, "pp")
+    
     let updatedData = [...model];
 
     if (item.type === "input" || item.type === "select") {
@@ -51,6 +53,9 @@ const MultiItemGenerator = ({
     } else if (item.type === "checkbox") {
       item.value = json.target.checked;
     } else if (item.type === "date" || item.type === "yesNo") {
+      item.value = json;
+    }else if(item.type === "imagePicker") {
+      console.log("Sd")
       item.value = json;
     }
 

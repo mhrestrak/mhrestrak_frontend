@@ -44,13 +44,14 @@ class loginForm extends Form {
       <div className="loginContainer">
         <div className="container">
           <div className="box">
-            <div className="imageCon"><img src={logo} className="image" width={"70%"}/></div>
+            <div className="imageCon"><img src={logo} className="image" width={"50%"}/></div>
             {/* <h1 className="display-1">Welcome to MetroHope Ministries</h1> */}
             <div className="container">
               <div className="box-input">
                 <form onSubmit={this.handleSubmit}>
                   {this.renderInput("email", "Email")}
                   {this.renderInput("pass", "Password", "password")}
+                  {/* {this.renderSelect("pass", "Password", "password")} */}
                   {this.renderButton("Login")}
                 </form>
               </div>

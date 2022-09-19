@@ -3,7 +3,6 @@ import InputFieldLayoutRow from "./inputFieldLayoutRow";
 import  Joi  from "joi-browser";
 
 const Form = ({ onChange, data, submit, buttonLabel }) => {
-    console.log(data)
   const handleChange = (json, name) => {
     let itemName = name.split("_");
 

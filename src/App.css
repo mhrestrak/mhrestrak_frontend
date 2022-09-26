@@ -6,10 +6,12 @@
 
 body {
   --primary-color: #028482;
+  --seconday-color: #005655;
+  --faded-color: #8fcdcc;
   --black : #000000;
-  --lghtGrey : #FAFAFA;
+  --grey : #c7c7c7;
+  --lghtGrey : #FAFAFA
 }
-
 
 .b {
   background-color: var(--primary-color);
@@ -24,6 +26,17 @@ body {
 .blackButton {
   background-color: var(--black);
 }
+
+.fadedButton {
+  background-color: var(--faded-color);
+}
+.greyButton {
+  background-color:  var(--grey);
+}
+.secondayButton {
+  background-color:  var(--seconday-color);
+}
+
 /* Date--ere*/
 .date {
   align-items: flex-start;
@@ -959,8 +972,8 @@ body {
 
 .simpleForm-Container-endSection {
   display: flex;
-  flex-direction: column;
-  justify-content: center;
+  flex-direction: row;
+  justify-content: space-evenly;
   align-items: center;
   margin-top: 2em;
 }
@@ -1064,10 +1077,13 @@ body {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  align-items: center;
    margin: 1em;
-   padding-bottom: 1em;
+   padding-left: 1em;
+   padding-right: 1em;
+   padding-top: 0.5em;
+   padding-bottom: 0.5em;
    flex :1;
-   min-height: 50px;
    /* max-width: 50px; */
    background-color: var(--lghtGrey);
    box-shadow: 2px 2px 6px 0px #d6d6d6;
@@ -1077,13 +1093,8 @@ body {
  }
  
  .fragmentList-Item-Title {
-   padding-Top :1em;
-   padding-Left :1em;
    flex-grow: 1;
    flex-basis: 0;
-   padding-Right :1em;
-   /* font-weight: 500; */
-   /* font-size: large; */
    word-break: break-all; 
    hyphens: auto;
  }

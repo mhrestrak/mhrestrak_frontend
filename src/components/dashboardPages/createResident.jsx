@@ -1,8 +1,9 @@
+/* eslint-disable react-hooks/exhaustive-deps */
+
 import React, { useEffect, useState } from "react";
 import Joi from "joi-browser";
 // import { toast } from "react-toastify";
 import {
-  getCountries,
   getStatesOfCountry,
   getCitiesOfState,
 } from "../../services/dropdownLocationService";
@@ -14,7 +15,6 @@ import MultiItemGenerator from "../common/admissionCommonComponents/multipleItem
 import { getFamilyObject } from "../../utils/familyObject";
 import { getEducationObject } from "../../utils/educationObject";
 import { getDrugsObject } from "../../utils/drugsObject";
-import { getLegalobject } from "../../utils/legalCasesObject";
 import { getMedicalObject } from "../../utils/medicalObject";
 // import { getFinanceObject } from "../../utils/financeObject";
 import { getMedicationObject } from "../../utils/medicationObject";
@@ -26,11 +26,10 @@ import {
 import { Link } from "react-router-dom";
 
 import {
-  CircularProgressbar,
   CircularProgressbarWithChildren,
   buildStyles
 } from "react-circular-progressbar";
-import "react-circular-progressbar/dist/styles.css";
+import 'react-circular-progressbar/dist/styles.css';
 
 
 const CreateResident = () => {
@@ -50,7 +49,6 @@ const CreateResident = () => {
     { name: "success", label: "Submitted Successfully!" },
   ];
 
-  const [countries, setCountries] = useState([]);
   const [formData, setFormData] = useState({
     basic: {},
     family: [],
@@ -65,33 +63,24 @@ const CreateResident = () => {
     medication: [],
   });
   const [activeSession, setActiiveSession] = useState("basic");
-  const [activeSessionPart, setActiveSessionPart] = useState(1);
 
   const [data, setData] = useState(getobject());
 
-  // state = {
-  //   data: {},
-  //   activeSession: "basic",
-  //   part: 1,
-  //   countries: [],
-  //   states: [],
-  //   cities: [],
-  //   errors: {},
-  // };
 //@ts-ignore
-  useEffect(async () => {
-    let countries = getCountries();
-    setCountries(countries);
-    let lists = await getList(7);
-    let notCategories = await getList(4);
-    let AdmittedFromList = await getList(8);
-    let data1 = { ...data };
-    // data1.church[1][1].options = lists;
-    data1.notes[0][0].options = notCategories;
-    data1.basic[4][2].options = lists;
-    data1.basic[5][2].options = AdmittedFromList;
-    data1.basic[6][0].options = getStatesOfCountry("United States");
-    setData(data1);
+  useEffect(() => {
+    const asyncfunc = async  () =>{
+      let lists = await getList(7);
+      let notCategories = await getList(4);
+      let AdmittedFromList = await getList(8);
+      let data1 = { ...data };
+      // data1.church[1][1].options = lists;
+      data1.notes[0][0].options = notCategories;
+      data1.basic[4][2].options = lists;
+      data1.basic[5][2].options = AdmittedFromList;
+      data1.basic[6][0].options = getStatesOfCountry("United States");
+      setData(data1);
+    }
+    asyncfunc()
   }, []);
 
   const handleChange = (json, name) => {

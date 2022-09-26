@@ -1,13 +1,6 @@
 import React from "react";
-import { useState } from "react";
-import { useEffect } from "react";
-import { getList } from "../../../services/listService";
 
-
-const FragmentList = (props) => {
-  const data = props.data;
-  const title = props.title
-  console.log(title)
+const FragmentList = ({data,title, onManage}) => {
 
   return (
     <div className="fragmentList-Container">
@@ -18,11 +11,12 @@ const FragmentList = (props) => {
                     <div className="fragmentList-Item-Title">
                         {entry[title] ? entry[title] : "Entry"}
                     </div>
+                    <button className="b" onClick={() => onManage(entry)}>Manage</button>
                 </div>
             ))
             }
           </div>
-       : 
+       :
       <div className="fragmentList-NoData">
             No Entries
       </div>}

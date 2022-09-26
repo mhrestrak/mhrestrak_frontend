@@ -18,7 +18,7 @@ export function getDrugsObject() {
         name: "drugs_0_1_LastDateOfUse",
         label: "Last Date Of Use",
         value: null,
-        schema: Joi.date().required(),
+        schema: Joi.date().allow(null),
       },
     ],
     [

@@ -20,6 +20,7 @@ import FragmentList from "../../components/common/residentView_Common_Components
 import CreateFragment from "../../components/common/residentView_Common_Components/createFragment";
 import PhaseList from "../../components/common/residentView_Common_Components/phaseList";
 import PhaseChange from "../../components/common/residentView_Common_Components/phaseChange";
+import UpdateFragment from "../../components/common/residentView_Common_Components/updateFragment";
 
 const UpdateResident = (props) => {
   const ResID = window.location.pathname.split("/")[3];
@@ -32,6 +33,7 @@ const UpdateResident = (props) => {
   const [Notes, setNotes] = useState();
   const [NotesState, setNotesState] = useState("View");
   const [Fragments, setFragments] = useState([]);
+  const [FragmentToBeUpdated, setFragmentToBeUpdated] = useState({})
   const [phaseInfo, setPhaseInfo] = useState();
   const [PhaseState, setPhaseState] = useState("View");
 
@@ -214,12 +216,20 @@ const UpdateResident = (props) => {
       const fragment = fragmentsArray[i];
       if (name === fragment.name) {
         let result = await getResidentFragment(fragment.name, ResID);
-        if (result.data?.length > 0) fragmentsArray[i].items = result.data;
+        fragmentsArray[i].items = result.data;
         setFragments(fragmentsArray);
       }
     }
     setFragmentState(name, "View");
   };
+
+  const setFragmentToUpdated = (name, data) =>{
+    let fTBU = {...FragmentToBeUpdated}
+    fTBU[name] = data
+    console.log(fTBU,"pp")
+    setFragmentToBeUpdated(fTBU)
+    setFragmentState(name, "Manage")
+  }
 
   const phaseChanged = async () => {
     let { data: queriedResident } = await getResidentByID(ResID);
@@ -237,7 +247,7 @@ const UpdateResident = (props) => {
 
   function dateFormatter(d) {
     d = new Date(d);
-    return d.getDate() + "/" + (d.getMonth() + 1) + "/" + d.getFullYear();
+    return (d.getMonth() + 1) + "/" +  d.getDate()+ "/" + d.getFullYear();
   }
 
   return (
@@ -382,7 +392,7 @@ const UpdateResident = (props) => {
                     <h4 className="primary">{fragment.title}</h4>
                     {fragment.state === "View" ? (
                       <button
-                        className="b"
+                        className="b secondayButton"
                         onClick={() =>
                           setFragmentState(fragment.name, "Create")
                         }
@@ -402,8 +412,14 @@ const UpdateResident = (props) => {
                     <FragmentList
                       data={fragment.items}
                       title={fragment.titleName}
+                      onManage={(data) => setFragmentToUpdated(fragment.name, data)}
                     />
-                  ) : (
+                  ) : fragment.state === "Manage" ? 
+                  <UpdateFragment
+                    onUpdate={fragmentCreated}
+                    name={fragment.name}
+                    data={FragmentToBeUpdated[fragment.name]}
+                  />: (
                     <CreateFragment
                       onCreate={fragmentCreated}
                       ResId={ResID}

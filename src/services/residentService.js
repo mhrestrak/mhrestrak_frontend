@@ -19,6 +19,22 @@ export async function createResidentFragment(path, data) {
     return { error };
   }
 }
+export async function updateResidentFragment(path, data) {
+  let url = `${apiEndpoint}/${path}`;
+  try {
+    return await http.put(url, data);
+  } catch (error) {
+    return { error };
+  }
+}
+export async function deleteResidentFragment(path, id) {
+  let url = `${apiEndpoint}/${path}/${id}`;
+  try {
+    return await http.delete(url);
+  } catch (error) {
+    return { error };
+  }
+}
 
 export async function updateResident(resident) {
   let url = `${apiEndpoint}/basic/update`;
@@ -29,6 +45,7 @@ export async function updateResident(resident) {
     return { error };
   }
 }
+
 
 export async function updateResidentPhase(data) {
   let url = `${apiEndpoint}/basic/phaseUpdate`;

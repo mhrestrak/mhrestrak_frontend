@@ -32,7 +32,7 @@ const PhaseList = (props) => {
 
 function dateFormatter(d){
     d = new Date(d)
-    return d.getDate() + "/" +  (d.getMonth() + 1) + "/" +  d.getFullYear();
+    return (d.getMonth() + 1) + "/" +  d.getDate() + "/" +  d.getFullYear();
 }
 
 export default PhaseList;

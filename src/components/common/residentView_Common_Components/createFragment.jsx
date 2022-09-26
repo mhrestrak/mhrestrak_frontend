@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 // @ts-nocheck
 import React from "react";
 import { useState } from "react";
@@ -73,7 +74,7 @@ const CreateFragment = ({ onCreate, ResId, name, ...props }) => {
   const handleSubmit = async ({ validation, errorData }) => {
     if (validation) {
         console.log("ddfdfdf")
-      const tempObject = {
+      let tempObject = {
         ResID: ResId,
         ID: uniqid(),
         // LastModifiedDateTime: name !== "education"  ? new Date() : undefined,
@@ -84,6 +85,9 @@ const CreateFragment = ({ onCreate, ResId, name, ...props }) => {
           tempObject[key] = item.value;
         });
       });
+      
+      //remove Null
+      tempObject =  Object.fromEntries(Object.entries(tempObject).filter(([_, v]) => v != null));
 
       try {
             let {data} = await createResidentFragment(name, tempObject);

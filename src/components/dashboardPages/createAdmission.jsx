@@ -128,18 +128,18 @@ const CreateAdmission = () => {
   const doSubmit = async () => {
     setActiiveSession("submitting");
     let prepedData = prepAdmissionData(formData, ResID);
-    let result = await CreateResAdmission(prepedData);
+    await CreateResAdmission(prepedData);
     setActiiveSession("success");
   };
 
-  let categoryIndex = 1;
-  let currentSession = sessions.filter((session, i) => {
-    if (session.name === activeSession) {
-      categoryIndex = i + 1;
-      return true;
-    }
-    return false;
-  })[0];
+  // let categoryIndex = 1;
+  // let currentSession = sessions.filter((session, i) => {
+  //   if (session.name === activeSession) {
+  //     categoryIndex = i + 1;
+  //     return true;
+  //   }
+  //   return false;
+  // })[0];
 
   if (!ResID) return <Redirect to="/dashboard" />;
   if (activeSession === "success") return <Redirect to={`/dashboard/resident/${ResID}`} />

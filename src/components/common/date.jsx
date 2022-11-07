@@ -3,7 +3,8 @@ import "date-fns";
 import DateFnsUtils from "@date-io/date-fns";
 import {
   MuiPickersUtilsProvider,
-  DatePicker,
+  // DatePicker,
+  KeyboardDatePicker
 } from "@material-ui/pickers";
 
 const Date = ({ name, label, error, ...rest }) => {
@@ -14,10 +15,10 @@ const Date = ({ name, label, error, ...rest }) => {
         <div className="date-item">
           <MuiPickersUtilsProvider utils={DateFnsUtils}>
             {/* @ts-ignore */}
-            <DatePicker
+            <KeyboardDatePicker
               //   margin="normal"
               id={name}
-              format="MM/dd/yyyy"
+              format="mm/dd/yyyy"
               // KeyboardButtonProps={{
               //   "aria-label": "change date",
               // }}

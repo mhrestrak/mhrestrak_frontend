@@ -38,7 +38,16 @@ const NotesList = (props) => {
                     </div>
                     <div className="noteList-Item-Date">
                         <div>{NoteCategories && ` ${notes.category}`}</div>
-                        <div>{dateFormatter(notes.NoteDateTime)}</div>
+                        <div >
+                          <div>
+                            {dateFormatter(notes.NoteDateTime)}
+                          </div>
+                          {notes.NoteByName &&
+                            <div className="noteList-Item-Date-container">
+                              {notes.NoteByName}
+                            </div>
+                          }
+                        </div>
                     </div>
                     <div className="noteList-Item-Body">
                             {notes.Note}
@@ -57,7 +66,7 @@ const NotesList = (props) => {
 
 function dateFormatter(d){
     d = new Date(d)
-    return d.getDate() + "/" +  (d.getMonth() + 1) + "/" +  d.getFullYear();
+    return  (d.getMonth() + 1) + "/" +  d.getDate() + "/" +  d.getFullYear();
 }
 
 export default NotesList;

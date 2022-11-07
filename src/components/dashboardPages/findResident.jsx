@@ -3,9 +3,11 @@ import Input from "../common/input";
 import { findResident } from "../../services/residentService";
 import { Link } from "react-router-dom";
 import uniqId from "uniqid";
+import Select from "../../components/common/select";
 class FindResident extends Component {
   state = {
     query: "",
+    filter : 1,
     search: false,
     res: [],
   };
@@ -13,7 +15,7 @@ class FindResident extends Component {
   async componentDidMount() {
     try {
       let { data } = await findResident();
-      // if (this.state.data.ssn && !this.state.data.name) {
+      // if (this.state.data.ssn && !this.state.data.name) {s
       //   console.log("filter");
       //   data = data.filter((res) => res.IsActive !== true);
       // }
@@ -30,9 +32,14 @@ class FindResident extends Component {
     this.setState({ query, search: false });
   };
 
+  handleFilterChange = ({ currentTarget: input }) => {
+    let filter = input.value;
+    this.setState({ filter, search: false });
+  };
+
   handleSubmit = async () => {
     try {
-      let { data } = await findResident(this.state.query);
+      let { data } = await findResident(this.state.query, this.state.filter);
       // if (this.state.data.ssn && !this.state.data.name) {
       //   console.log("filter");
       //   data = data.filter((res) => res.IsActive !== true);
@@ -103,7 +110,20 @@ class FindResident extends Component {
               Reset
             </button>
             </div>
-            {/* </div> */}
+            <div className="grow1 filterDropdown">
+              <Select 
+                label="Resident Status" 
+                options={[
+                  {name : "All", value : 1},
+                  {name : "Active", value : 2},
+                  {name : "In-Active", value : 3}
+                ]}
+                name="Status"
+                error={null}
+                onChange={this.handleFilterChange}
+                value={this.state.filter}
+              />
+            </div>
         </div>
         {this.state.search && (
           <div className="findResident-Container-resultSection">
@@ -135,6 +155,9 @@ class FindResident extends Component {
                       (res.ResFirstName ? " " + res.ResFirstName : "")
                     : "No Name"}
                 </div>
+                {res.IsActive &&
+                  <div className="residentView-activeBadge">Active</div>
+                }
                 <div className="findResident-Container-data-Item-ind grow3">
                   {res.SSN}
                 </div>

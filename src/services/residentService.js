@@ -56,8 +56,12 @@ export async function updateResidentPhase(data) {
   }
 }
 
-export function findResident(query) {
-  let url = `${apiEndpoint}${query ? "?" : ""}${query ? "query=" + query : ""}`;
+export function findResident(query, active) {
+  let url = `${apiEndpoint}${query ? "?" : ""}${query ? "query=" + query : ""}`
+  if(active){
+    if(query) url = `${url}&active=${active}`
+    else url = `${url}?active=${active}`
+  }
   return http.get(url);
 }
 

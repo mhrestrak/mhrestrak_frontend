@@ -41,7 +41,7 @@ export function getMedicationObject() {
       },
       {
         type: "input",
-        typeName: "number",
+        typeName: "text",
         size: "grow1",
         name: "medication_1_2_TimesPerDay",
         label: "Times Per Day",

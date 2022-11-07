@@ -1,3 +1,5 @@
+/* eslint-disable jsx-a11y/alt-text */
+/* eslint-disable react-hooks/exhaustive-deps */
 // @ts-nocheck
 import React from "react";
 import { useState } from "react";
@@ -21,6 +23,7 @@ import CreateFragment from "../../components/common/residentView_Common_Componen
 import PhaseList from "../../components/common/residentView_Common_Components/phaseList";
 import PhaseChange from "../../components/common/residentView_Common_Components/phaseChange";
 import UpdateFragment from "../../components/common/residentView_Common_Components/updateFragment";
+import { getList } from "../../services/listService";
 
 const UpdateResident = (props) => {
   const ResID = window.location.pathname.split("/")[3];
@@ -99,6 +102,7 @@ const UpdateResident = (props) => {
   }, [admission]);
 
   const getFragments = async () => {
+    let educationList = await getList(2);
     const fragmentsArray = [
       {
         title: "Medication",
@@ -119,7 +123,8 @@ const UpdateResident = (props) => {
         name: "education",
         items: [],
         state: "View",
-        titleName: "EducationName",
+        titleName: "EducationLevel",
+        educationList
       },
       {
         title: "Employment",
@@ -133,14 +138,14 @@ const UpdateResident = (props) => {
         name: "medical",
         items: [],
         state: "View",
-        titleName: "Illness",
+        titleName: "Condition",
       },
       {
         title: "Legal",
         name: "legal",
         items: [],
         state: "View",
-        titleName: "CaseName",
+        titleName: "CaseNumber",
       },
       //   { title: "Family", name: "family", items: [], state : "View", titleName : "" },
       //   { title: "Contacts", name: "contacts", items: [], state : "View", titleName : "" },
@@ -412,6 +417,7 @@ const UpdateResident = (props) => {
                     <FragmentList
                       data={fragment.items}
                       title={fragment.titleName}
+                      list={fragment.educationList}
                       onManage={(data) => setFragmentToUpdated(fragment.name, data)}
                     />
                   ) : fragment.state === "Manage" ? 

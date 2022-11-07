@@ -8,8 +8,10 @@ import Form from "../simpleForm";
 import { getList } from "../../../services/listService";
 import { getNoteCreationObject } from "../../../utils/noteCreationObject";
 import { createNote } from "../../../services/residentFragments/frag_notes";
+import { getCurrentUser } from "../../../services/authService";
 
 
+// @ts-ignore
 const CreateNote = ( {onCreate, ResId,...props}) => {
   const [creationObject, setCreationObject] = useState(getNoteCreationObject())
   const [message, setMessage] = useState("");
@@ -31,11 +33,14 @@ const CreateNote = ( {onCreate, ResId,...props}) => {
   };
 
   const handleSubmit = async ({ validation, errorData }) => {
+    let user  = await  getCurrentUser()
     if (validation) {
       const tempNote = {
         ResID : ResId,
         ID : uniqid(),
         NoteDateTime : new Date(),
+        // @ts-ignore
+        NoteByName : user.firstName + " " + user.lastName
       };
       creationObject.forEach((row) => {
         row.forEach((item) => {
@@ -44,6 +49,7 @@ const CreateNote = ( {onCreate, ResId,...props}) => {
         });
       });
       try {
+        // @ts-ignore
         let {data} = await createNote(tempNote);
         if(data) onCreate()
         else setMessage("Failed to create Note");
@@ -56,7 +62,9 @@ const CreateNote = ( {onCreate, ResId,...props}) => {
 
   return (
     <div className="notesCreation-Container">
-      <Form 
+      <
+// @ts-ignore
+      Form 
         buttonLabel={"Create Note"} 
         data={creationObject} 
         onChange={handleChange} 

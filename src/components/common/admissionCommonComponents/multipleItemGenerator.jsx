@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import Joi from "joi-browser";
 import React from "react";
 import { useState, useEffect } from "react";
@@ -21,21 +22,28 @@ const MultiItemGenerator = ({
   const [GenState, setGenState] = useState("list");
   const [model, setModel] = useState([...sectionModel]);
 //@ts-ignore
-  useEffect(async () => {
-    let data1 = model.map((item) => item);
-    if (sectionName === "education") {
-      let lists = await getList(2);
-      data1[0][0].options = lists;
-      setModel(data1);
-    } else if (sectionName === "finances") {
-      let debtCategories = await getList(6);
-      data1[0][1].options = debtCategories;
-      setModel(data1);
-    } else if (sectionName === "legal") {
-      let states = await getStatesOfCountry("United States");
-      data1[2][1].options = states;
-      setModel(data1);
+  useEffect(() => {
+    const asyncFunction = async () =>{
+      let data1 = model.map((item) => item);
+      if (sectionName === "education") {
+        let lists = await getList(2);
+        let LastIndex = lists.length-1
+        var element = lists[LastIndex];
+        lists.splice(LastIndex, 1);
+        lists.splice(2, 0, element);
+        data1[0][0].options = lists;
+        setModel(data1);
+      } else if (sectionName === "finances") {
+        let debtCategories = await getList(6);
+        data1[0][1].options = debtCategories;
+        setModel(data1);
+      } else if (sectionName === "legal") {
+        let states = await getStatesOfCountry("United States");
+        data1[2][1].options = states;
+        setModel(data1);
+      }
     }
+    asyncFunction()
   }, []);
 
   const onChange = (json, name) => {
@@ -96,6 +104,10 @@ const MultiItemGenerator = ({
     let sectionModel1 = [...sectionModel];
     if (sectionName === "education") {
       let lists = await getList(2);
+        let LastIndex = lists.length-1
+        var element = lists[LastIndex];
+        lists.splice(LastIndex, 1);
+        lists.splice(2, 0, element);
       sectionModel1[0][0].options = lists;
     } else if (sectionName === "finances") {
       let debtCategories = await getList(6);
@@ -174,6 +186,7 @@ const MultiItemGenerator = ({
               data.map((item, i) => (
                 <DataItems
                   key={i.toString()}
+                  list={sectionName === "education" ? model[0][0].options : undefined}
                   data={item}
                   sectionName={sectionName}
                   index={i}

@@ -66,7 +66,6 @@ body {
   /* padding-left: .3em; */
   /* padding-right: .3em; */
 }
-
 /* --------------------*/
 
 .App {
@@ -380,8 +379,8 @@ body {
 .findResident-Container-searchSection {
   display: flex;
   flex-wrap: wrap;
-  align-items: flex-start;
-  justify-content: space-around;
+  align-items: center;
+  justify-content: space-evenly;
 }
 .findResident-Container-searchSection-item {
   /* padding: 0.5em; */
@@ -396,6 +395,11 @@ body {
   display: flex;
   flex-grow: 2;
   padding-left: 1em;
+  margin-bottom: 1em;
+}
+
+.filterDropdown {
+  margin-bottom: 1em;
 }
 
 .findResident-Container-resultSection {
@@ -781,7 +785,7 @@ body {
 .residentView-activeBadge {
   height : 2.7em;
   width : 9em;
-  background-color: var(--primary-color);
+  background-color: var(--seconday-color);
   color: #FAFAFA;
   justify-content: center;
   align-items: center;
@@ -1025,9 +1029,13 @@ body {
   padding-Left :2em;
   padding-Right :2em;
   font-size: x-small;
-  color: var(--primary-color);
+  /* color: var(--primary-color); */
   display: flex;
   justify-content: space-between;
+}
+
+.noteList-Item-Date-container {
+  align-items: flex-end;
 }
 
 .noteList-Item-Body {

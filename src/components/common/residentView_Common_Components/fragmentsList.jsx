@@ -1,6 +1,13 @@
 import React from "react";
 
-const FragmentList = ({data,title, onManage}) => {
+const FragmentList = ({data,title, onManage, list :educationList}) => {
+  let getName = (id) =>{
+    let name = ""
+    educationList.forEach((list) =>{
+      if(list.value == id) name = list.name 
+    })
+    return name ? name : id
+  }
 
   return (
     <div className="fragmentList-Container">
@@ -9,7 +16,7 @@ const FragmentList = ({data,title, onManage}) => {
             {data.map((entry) =>(
                 <div className="fragmentList-Item" key={entry.ID}>
                     <div className="fragmentList-Item-Title">
-                        {entry[title] ? entry[title] : "Entry"}
+                        {(educationList? getName(entry[title]) : (entry[title]? entry[title] : "Entry"))}
                     </div>
                     <button className="b" onClick={() => onManage(entry)}>Manage</button>
                 </div>

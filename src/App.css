@@ -467,12 +467,26 @@ body {
   box-shadow: 2px 2px 6px 0px #d6d6d6;
   background-color:#FAFAFA;
 }
+.findResident-Container-data-header{
+  margin-top: 0.8em;
+  /* padding: 1em; */
+  display: flex;
+  flex: 1;
+  align-items: center;
+  padding-right: 2em;
+  padding-left: 2em;
+  flex-direction: row;
+  height : 30px;
+  justify-content: space-between;
+  font-size: large;
+}
 
 .findResident-Container-data-Item-ind{
-  display: flex;
-  /* flex-grow: 1; */
+  flex :1
   /* background-color: "Red"; */
-  max-width: 13em;
+  /* max-width: 15em; */
+}
+.findResident-Container-data-Item-ind-item{
   font-size: large;
 }
 .resident-button{
@@ -1179,6 +1193,13 @@ body {
 }
 
 /* Flex grow items */
+
+.center {
+  justify-content:  center;
+}
+.bold {
+  font-weight: 600;
+}
 
 .grow1 {
   flex-grow: 1;

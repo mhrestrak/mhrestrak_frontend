@@ -15,6 +15,7 @@ class FindResident extends Component {
   async componentDidMount() {
     try {
       let { data } = await findResident();
+      console.log(data)
       // if (this.state.data.ssn && !this.state.data.name) {s
       //   console.log("filter");
       //   data = data.filter((res) => res.IsActive !== true);
@@ -35,11 +36,12 @@ class FindResident extends Component {
   handleFilterChange = ({ currentTarget: input }) => {
     let filter = input.value;
     this.setState({ filter, search: false });
+    this.handleSubmit(filter)
   };
 
-  handleSubmit = async () => {
+  handleSubmit = async (filter) => {
     try {
-      let { data } = await findResident(this.state.query, this.state.filter);
+      let { data } = await findResident(this.state.query, (filter ? filter :this.state.filter));
       // if (this.state.data.ssn && !this.state.data.name) {
       //   console.log("filter");
       //   data = data.filter((res) => res.IsActive !== true);
@@ -103,7 +105,7 @@ class FindResident extends Component {
               value={this.state.query}
             />
             <div className="findResidentButtons">
-            <button className="b"  onClick={this.handleSubmit}>
+            <button className="b"  onClick={() => this.handleSubmit()}>
               Search
             </button>
             <button className="b leftMargin blackButton" onClick={this.handleReset}>
@@ -122,6 +124,7 @@ class FindResident extends Component {
                 error={null}
                 onChange={this.handleFilterChange}
                 value={this.state.filter}
+                noClear
               />
             </div>
         </div>
@@ -145,22 +148,44 @@ class FindResident extends Component {
             )}
           </div>
         )}
+        {this.state.res.length > 0 &&
+        (
+          <div className="findResident-Container-data-bold">
+            <div id={uniqId()} className="findResident-Container-data-header">
+                <div className="findResident-Container-data-Item-ind grow2 bold">Name</div>
+                <div className="findResident-Container-data-Item-ind grow1 center bold">Status</div>
+                <div className="findResident-Container-data-Item-ind grow1 center bold">Phase</div>
+                <div className="findResident-Container-data-Item-ind grow2 center bold">SSN</div>
+                <div className="findResident-Container-data-Item-ind grow1"/>
+            </div>
+          </div>
+        )
+        }
         {this.state.res.length > 0 && (
           <div className="findResident-Container-data">
             {this.state.res.map((res) => (
               <div id={uniqId()} className="findResident-Container-data-Item">
-                <div className="findResident-Container-data-Item-ind grow3">
+                <div className="findResident-Container-data-Item-ind grow2">
                   {res.ResLastName || res.ResFirstName
                     ? (res.ResLastName ? res.ResLastName : "") +
                       (res.ResFirstName ? " " + res.ResFirstName : "")
                     : "No Name"}
                 </div>
-                {res.IsActive &&
-                  <div className="residentView-activeBadge">Active</div>
+                {res.IsActive ?
+                  <div className="findResident-Container-data-Item-ind grow1 center">
+                  <div className="residentView-activeBadge grow1">Active</div>
+                  </div>
+                  :
+                  <div className="findResident-Container-data-Item-ind grow1 center">InActive</div>
                 }
-                <div className="findResident-Container-data-Item-ind grow3">
-                  {res.SSN}
+                {res.IsActive ? 
+                  <div className="findResident-Container-data-Item-ind grow1 center">{res.RecentPhase}</div> :
+                  <div className="findResident-Container-data-Item-ind grow1 center">-</div>
+                }
+                <div className="findResident-Container-data-Item-ind grow2 center">
+                  {res.SSN ? res.SSN :"-"}
                 </div>
+                <div className="findResident-Container-data-Item-ind grow1">
                 <Link
                       to={`/dashboard/resident/${res.ResID}`}
                       className="nav-item"
@@ -169,6 +194,7 @@ class FindResident extends Component {
                   Manage
                 </button>
                     </Link>
+                    </div>
                 {/* {!res.IsActive && res.ResID ? (
                   <div className="findResident-Container-data-Item-ind grow1 flexEnd">
                     <Link

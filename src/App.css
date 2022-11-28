@@ -97,6 +97,7 @@ body {
 .form-group {
   margin-bottom: 1em;
   flex-grow: 1;
+  /* align-items: center; */
 }
 
 .form-group input {
@@ -594,32 +595,30 @@ body {
 
 .createResident-Container-formSection-row {
   display: flex;
+  column-gap: 2em;
   flex-direction: row;
   flex-wrap: wrap;
   min-height: 86px;
+  /* padding-left: 1em; */
   /* align-items: center; */
   /* justify-content: space-around; */
   /* background-color: lightgreen; */
 }
 
-.createResident-Container-formSection-rowItem {
-  display: flex;
-  padding-right: 2em;
-  align-items: center;
-  justify-content: flex-start;
-}
-.createResident-Container-formSection-rowItem-end {
+.createResident-Container-formSection-rowItem{
   display: flex;
   align-items: center;
-  justify-content: flex-end;
+  /* justify-content: flex-start; */
 }
-.createResident-Container-formSection-rowItem-center {
+.createResident-Container-formSection-rowItem-end{
   display: flex;
-  padding-right: 2em;
   align-items: center;
   /* justify-content: center; */
-  justify-content: center;
-  /* background-color: lightgreen; */
+}
+.createResident-Container-formSection-rowItem-center{
+  display: flex;
+  align-items: center;
+  /* justify-content: center; */
 }
 
 .createResident-Container-formSection-rowItem-pagination {

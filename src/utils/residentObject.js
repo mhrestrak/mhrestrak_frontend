@@ -6,14 +6,22 @@ export function getobject() {
     basic: [
       [
         {
-          type: "input",
-          typeName: "text",
+          type: "imagePicker",
           size: "grow2",
           name: "basic_0_0_ResPictureKey",
-          label: "Image Link",
+          label: "Profile Image",
           value: undefined,
           schema: Joi.string(),
         },
+        // {
+        //   type: "input",
+        //   typeName: "text",
+        //   size: "grow2",
+        //   name: "basic_0_0_ResPictureKey",
+        //   label: "Image Link",
+        //   value: undefined,
+        //   schema: Joi.string(),
+        // },
         {
           type: "checkbox",
           size: "grow1",

@@ -5,6 +5,7 @@ import Date from "../common/date";
 import Select from "../common/select";
 import YesNo from "./yesNo";
 import TextArea from "./textarea";
+import ImageChooser from "./imageChooser";
 
 const InputFieldLayoutRow = (props) => {
   let data = props.data;
@@ -90,6 +91,19 @@ const InputFieldLayoutRow = (props) => {
     );
   };
 
+  const renderImagePicker = (item) => {
+    return (
+      <ImageChooser
+        onChange={(url) => props.onChange(url, item.name)}
+        name={item.name}
+        label={item.label}
+        value={item.value ? item.value : undefined}
+        showLabel={true}
+        error={item.error}
+      />
+    );
+  };
+
   const renderItem = (item) => {
     switch (item.type) {
       case "input":
@@ -104,6 +118,8 @@ const InputFieldLayoutRow = (props) => {
         return renderDate(item);
       case "yesNo":
         return renderYesNo(item);
+      case "imagePicker":
+        return renderImagePicker(item);
       default:
         return renderInput(item);
     }

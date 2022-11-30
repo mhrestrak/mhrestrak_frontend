@@ -47,9 +47,11 @@ class Form extends Component {
 
   renderButton(label) {
     return (
+      <div className="buttonRow">
       <button disabled={this.validate()} className="button">
         {label}
       </button>
+      </div>
     );
   }
 
@@ -78,7 +80,7 @@ class Form extends Component {
         label={label}
         value={data[name]}
         error={errors[name]}
-      />
+        />
     );
   }
 }

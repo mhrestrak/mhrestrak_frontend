@@ -8,7 +8,9 @@ import CreateResident from "./dashboardPages/createResident";
 import ExitResident from "./dashboardPages/exitResident";
 import FindResident from "./dashboardPages/findResident";
 import UpdateResident from "./dashboardPages/updateResident";
+import ResidentView from "./dashboardPages/residentView";
 import Reports from "./dashboardPages/reports";
+import TopBar from "./common/topBar";
 
 class Dashboard extends Component {
   state = {
@@ -32,10 +34,16 @@ class Dashboard extends Component {
           <SideBar user={user} />
         </div>
         <div className="dashboard-main-routes">
+        <TopBar user={user}/>
+        <div className="dashboard-main-Scrollable">
           <Switch>
             <Route
               path="/dashboard/create-resident"
               component={CreateResident}
+            />
+            <Route
+              path="/dashboard/resident"
+              component={ResidentView}
             />
             <Route
               path="/dashboard/create-admission"
@@ -55,6 +63,7 @@ class Dashboard extends Component {
             />
             <Route path="/dashboard/" component={FindResident} />
           </Switch>
+        </div>
         </div>
       </div>
     );

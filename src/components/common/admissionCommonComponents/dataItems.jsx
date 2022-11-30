@@ -1,21 +1,29 @@
 import React from "react";
 
 const DataItems = (props) => {
+
   let text = "";
   if (props.sectionName === "family") {
     text = props.data.ChildName;
   } else if (props.sectionName === "education") {
-    text = props.data.EducationName;
+    console.log(props.list)
+    console.log(props.data)
+    props.list.forEach((item) =>{
+      if(item.value == props.data.EducationLevel){
+        text = item.name;
+      }
+    })
+    if(!text) text = props.data.EducationLevel;
   } else if (props.sectionName === "drugs") {
     text = "Drug item " + props.data.DrugOfChoice;
   } else if (props.sectionName === "legal") {
-    text = "Legal Case" + (props.index + 1);
+    text = "Case Number " + (props.data.CaseNumber);
   } else if (props.sectionName === "finances") {
     text = "Finance Item " + (props.index + 1) + " - " + props.data.DebtName;
   } else if (props.sectionName === "medical") {
-    text = "Medical Item " + (props.index + 1);
+    text = props.data.Condition
   } else if (props.sectionName === "medication") {
-    text = "medication Item " + (props.index + 1);
+    text = props.data.MedicationName
   } else {
     text = "configure text";
   }

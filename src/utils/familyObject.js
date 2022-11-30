@@ -6,7 +6,7 @@ export function getFamilyObject() {
       {
         type: "input",
         typeName: "text",
-        size: "grow2",
+        size: "grow3",
         name: "family_0_0_ChildName",
         label: "Child Name",
         value: undefined,
@@ -18,7 +18,7 @@ export function getFamilyObject() {
         name: "family_0_1_ChildDob",
         label: "Child DOB",
         value: null,
-        schema: Joi.date(),
+        schema: Joi.date().allow(null),
       },
     ],
     [
@@ -36,10 +36,19 @@ export function getFamilyObject() {
         typeName: "text",
         size: "grow2",
         name: "family_1_1_PartnerName",
-        label: "Partner Name",
+        label: "Co-parent Name",
         value: undefined,
         schema: Joi.string().max(30),
       },
+      {
+        type: "input",
+        typeName: "text",
+        size: "grow2",
+        name: "family_1_2_CustodyOfChild",
+        label: "Who has custody of child?",
+        value: undefined,
+        schema: Joi.string().max(30),
+      }
     ],
     [
       {
@@ -50,12 +59,10 @@ export function getFamilyObject() {
         value: false,
         schema: Joi.boolean(),
       },
-    ],
-    [
       {
         type: "checkbox",
         size: "grow1",
-        name: "family_3_0_HasChildSupport",
+        name: "family_2_1_HasChildSupport",
         label: "Has Child Support",
         value: false,
         schema: Joi.boolean(),
@@ -63,7 +70,7 @@ export function getFamilyObject() {
       {
         type: "checkbox",
         size: "grow1",
-        name: "family_3_1_PaysChildSupport",
+        name: "family_2_2_PaysChildSupport",
         label: "Pays Child Support",
         value: false,
         schema: Joi.boolean(),

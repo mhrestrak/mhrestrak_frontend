@@ -88,7 +88,6 @@ const UpdateResident = (props) => {
   useEffect(() => {
     if (admission) {
       let phaseData = admission.PhaseData;
-      phaseData = JSON.parse(phaseData);
       if(!phaseData){
         phaseData = [
           {
@@ -96,6 +95,8 @@ const UpdateResident = (props) => {
             inDate : admission.ProgramInDate ? admission.ProgramInDate : admission.GuestInDate
           }
         ]
+      }else{
+        phaseData = JSON.parse(phaseData);
       }
       setPhaseInfo(phaseData);
     }

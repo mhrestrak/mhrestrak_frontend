@@ -130,7 +130,7 @@ class FindResident extends Component {
         </div>
         {this.state.search && (
           <div className="findResident-Container-resultSection">
-            <h3 className="primary">{`${this.state.res.length} Result Found`}</h3>
+            <h3 className="primary">{`${this.state.res.length} ${this.state.res.length === 1 ? "Result Found" : "Results Found"}`}</h3>
             {this.state.res.length === 0 && (
                 <div className="Resident-NotFound-container">
                   <i className="fa fa-user fa-4x primary" aria-hidden="true" />
@@ -161,6 +161,8 @@ class FindResident extends Component {
           </div>
         )
         }
+        <div className="findResident-scrollable-container">
+        <div className="findResident-scrollable">
         {this.state.res.length > 0 && (
           <div className="findResident-Container-data">
             {this.state.res.map((res) => (
@@ -233,6 +235,8 @@ class FindResident extends Component {
             ))}
           </div>
         )}
+        </div>
+        </div>
       </div>
     );
   }

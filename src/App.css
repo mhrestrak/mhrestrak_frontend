@@ -371,10 +371,22 @@ body {
 
 .findResident-Container {
   padding: 1em;
-  display: flex;
+  /* display: flex; */
   flex-direction: column;
-  flex-grow: 1;
+  /* flex-grow: 1; */
   /* background-color: #ccdfe0; */
+}
+
+.findResident-scrollable-container {
+  /* flex :1 */
+  /* background-color: #ccdfe0; */
+}
+
+.findResident-scrollable {
+  /* flex-grow: 1; */
+  max-height: 70vh;
+  overflow-y: scroll;
+  /* background-color: black; */
 }
 
 .findResident-Container-searchSection {
@@ -461,11 +473,15 @@ body {
   padding-right: 2em;
   padding-left: 2em;
   flex-direction: row;
-  background-color: white;
+  /* background-color: white; */
   border-radius: 5px;
+  border-bottom-width: 5px;
+  border-bottom-color: #000000;
+  border-width: 5px;
+  border-color: #000000;
   height : 70px;
   justify-content: space-between;
-  box-shadow: 2px 2px 6px 0px #d6d6d6;
+  /* box-shadow: 2px 2px 6px 0px #d6d6d6; */
   background-color:#FAFAFA;
 }
 .findResident-Container-data-header{
@@ -480,6 +496,8 @@ body {
   height : 30px;
   justify-content: space-between;
   font-size: large;
+  /* background-color: var(--primary-color);
+  color : white */
 }
 
 .findResident-Container-data-Item-ind{

@@ -110,16 +110,23 @@ const CreateResident = () => {
         itemName[3]
       ] = json;
     }else if(item.type === "imagePicker") {
-      item.value = json;
-      updatedFormData[itemName[0] === "church" ? "basic" : itemName[0]][
-        itemName[3]
-      ] = json;
-      console.log("Sd")
+      if(!json.error){
+        item.value = json.value;
+        item.url = json.url
+        updatedFormData[itemName[0] === "church" ? "basic" : itemName[0]][
+          itemName[3]
+        ] = json;
+        console.log("Sd")
+      }
     }
 
     const errorMessage = validateProperty(item);
     if (errorMessage) item.error = errorMessage;
     else item.error = undefined;
+
+    if(json.error && item.type === "imagePicker"){
+      item.error = json.error
+    }
 
     if (itemName[3].endsWith("Country")) {
       let states = getStatesOfCountry(json.currentTarget.value);

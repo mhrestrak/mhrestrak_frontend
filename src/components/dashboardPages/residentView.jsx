@@ -46,6 +46,7 @@ const UpdateResident = (props) => {
         //get Resident
         let { data: queriedResident } = await getResidentByID(ResID);
         if (queriedResident) {
+          console.log(queriedResident)
           setResident(queriedResident);
 
           //get Admission

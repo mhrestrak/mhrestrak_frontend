@@ -1,3 +1,4 @@
+/* eslint-disable import/no-anonymous-default-export */
 import jwtDecode from "jwt-decode";
 
 import http from "./httpService";

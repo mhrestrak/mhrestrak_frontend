@@ -5,7 +5,8 @@ import Date from "../common/date";
 import Select from "../common/select";
 import YesNo from "./yesNo";
 import TextArea from "./textarea";
-import ImageChooser from "./imageChooser";
+// import ImageChooser from "./imageChooser";
+import AWSImagePicker from "./awsImagePicker";
 
 const InputFieldLayoutRow = (props) => {
   let data = props.data;
@@ -50,8 +51,8 @@ const InputFieldLayoutRow = (props) => {
         //   name: option.name,
         // }))}
         value={item.value ? item.value : undefined}
-        error={item.error}
-      />
+        error={item.error} 
+        noClear={undefined}      />
     );
   };
 
@@ -93,16 +94,29 @@ const InputFieldLayoutRow = (props) => {
 
   const renderImagePicker = (item) => {
     return (
-      <ImageChooser
-        onChange={(url) => props.onChange(url, item.name)}
+      <AWSImagePicker
+        onChange={(data) => props.onChange(data, item.name)}
         name={item.name}
         label={item.label}
         value={item.value ? item.value : undefined}
+        url={item.url ? item.url : undefined}
         showLabel={true}
         error={item.error}
       />
     );
   };
+  // const renderImagePicker = (item) => {
+  //   return (
+  //     <ImageChooser
+  //       onChange={(url) => props.onChange(url, item.name)}
+  //       name={item.name}
+  //       label={item.label}
+  //       value={item.value ? item.value : undefined}
+  //       showLabel={true}
+  //       error={item.error}
+  //     />
+  //   );
+  // };
 
   const renderItem = (item) => {
     switch (item.type) {

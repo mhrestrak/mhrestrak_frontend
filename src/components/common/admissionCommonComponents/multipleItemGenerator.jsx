@@ -66,7 +66,8 @@ const MultiItemGenerator = ({
       console.log("Sd")
       item.value = json;
     }
-
+    
+    console.log(json)
     const errorMessage = validateProperty(item);
     if (errorMessage) item.error = errorMessage;
     else item.error = undefined;

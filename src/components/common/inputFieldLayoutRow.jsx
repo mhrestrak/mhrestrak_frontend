@@ -83,7 +83,11 @@ const InputFieldLayoutRow = (props) => {
   const renderDate = (item) => {
     return (
       <Date
-        onChange={(json) => props.onChange(json, item.name)}
+        onChange={(json) => {
+          props.onChange(json, item.name)
+          console.log(json)
+          console.log(item.value)
+        }}
         name={item.name}
         label={item.label}
         value={item.value ? item.value : null}

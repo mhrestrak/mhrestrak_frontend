@@ -18,7 +18,7 @@ const Date = ({ name, label, error, ...rest }) => {
             <KeyboardDatePicker
               //   margin="normal"
               id={name}
-              format="mm/dd/yyyy"
+              format="MM/dd/yyyy"
               // KeyboardButtonProps={{
               //   "aria-label": "change date",
               // }}

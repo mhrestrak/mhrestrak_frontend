@@ -25,7 +25,7 @@ export function getAdmissionobject() {
         name: "admission_0_2_EstMoveOutDate",
         label: "Est Move Out Date",
         value: null,
-        schema: Joi.date(),
+        schema: Joi.date().allow(null),
       }],[
         {
           type: "input",

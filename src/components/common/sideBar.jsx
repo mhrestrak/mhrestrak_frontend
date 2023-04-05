@@ -4,11 +4,12 @@ import { Link } from "react-router-dom";
 import Logo from "../../images/LogoMin.png"
 
 const SideBar = ({ user }) => {
+  console.log(user)
   return (
     <div className="sideBar-Container">
       <div className="sideBar-Sections">
         <div className="sideBar-Sections-UserInfo">
-        <img src={Logo} className="image" width={"40px"}/>
+        <img src={Logo} className="image" width={"50px"}/>
         <div className="leftPadding">
         <h6 className="primary-text">Metro Hope Ministries</h6>
 
@@ -16,15 +17,15 @@ const SideBar = ({ user }) => {
           {/* <h1 className="display-3 light-text">{user.firstName}</h1>
           <h6 className="light-text">{user.email}</h6>
           <h5 className="light-text">Intake Coordinator</h5>
-          <h4 className="light-text">
+          <h5 className="light-text">
             {user.Center ? user.Center : "New Hope Center"}
-          </h4> */}
+          </h5> */}
         </div>
         <div className="sideBar-Sections-Nav">
           <Link to="/dashboard/" className="nav-item">
             <div className="sideBar-Sections-Nav-Item">
-              <i className="fa fa-tachometer fa-2x primary-text" />
-              <h4 className="primary-text rightspcae-2">Dashboard</h4>
+              <i className="fa fa-users fa-2x primary-text" aria-hidden="true"/>
+              <h5 className="primary-text rightspcae-2">Residents</h5>
             </div>
           </Link>
           {user.isIntakeCoordinator && 
@@ -33,26 +34,38 @@ const SideBar = ({ user }) => {
             <i
               className="fa fa-user-plus fa-2x primary-text"
               aria-hidden="true"
-            ></i>
-            <h4 className="primary-text  rightspcae-2">Create Resident</h4>
+              ></i>
+            <h5 className="primary-text  rightspcae-2">Create Resident</h5>
           </div>
         </Link>}
+              {user.isCenterCoordinator && 
           <Link to="/dashboard/reports" className="nav-item">
             <div className="sideBar-Sections-Nav-Item">
               <i
                 className="fa fa-pie-chart fa-2x primary-text"
                 aria-hidden="true"
               ></i>
-              <h4 className="primary-text  rightspcae-2">Reports</h4>
+              <h5 className="primary-text  rightspcae-2">Reports</h5>
             </div>
           </Link>
+          }
+          {user.isAdmin && 
+          <Link to="/dashboard/user-management" className="nav-item">
+          <div className="sideBar-Sections-Nav-Item">
+            <i
+              className="fa fa-id-badge fa-2x primary-text"
+              aria-hidden="true"
+            ></i>
+            <h5 className="primary-text  rightspcae-2">User Management</h5>
+          </div>
+        </Link>}
           <Link to="/logout" className="nav-item">
             <div className="sideBar-Sections-Nav-Item">
               <i
                 className="fa fa-sign-out fa-2x primary-text"
                 aria-hidden="true"
               ></i>
-              <h4 className="primary-text  rightspcae-2">Log out</h4>
+              <h5 className="primary-text  rightspcae-2">Log out</h5>
             </div>
           </Link>
         </div>

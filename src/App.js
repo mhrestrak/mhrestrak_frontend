@@ -4,6 +4,7 @@ import auth from "./services/authService";
 import { ToastContainer } from "react-toastify";
 import LoginForm from "./components/loginForm";
 import Logout from "./components/logout";
+import CompleteSignup from "./components/completeSignup";
 import Dashbord from "./components/dashboard";
 import ProtectedRoute from "./components/common/protectedRoute";
 import NotFound from "./components/notFound";
@@ -27,6 +28,7 @@ class App extends Component {
             {/* @ts-ignore */}
             <ProtectedRoute path="/dashboard" component={Dashbord} />
             <Route path="/login" component={LoginForm} />
+            <Route path="/completeSignup" component={CompleteSignup} />
             <Route path="/logout" component={Logout} />
             <Route path="/not-found" component={NotFound} />
             <Route path="/" exact component={LoginForm} />

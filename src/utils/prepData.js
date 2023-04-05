@@ -1,11 +1,15 @@
+import { getCurrentUser } from "../services/authService";
 import uniqid from "uniqid";
 
 export function prepData(data) {
+
+  let user = getCurrentUser()
   let ResID = uniqid();
   if (data.basic) {
     data.basic.ResID = ResID;
     data.basic.IsActive = false;
     data.basic.RecentPhase = "0";
+    data.basic.Center = user.Center
   }
   if (data.family.length > 0) {
     data.family.forEach((family, i) => {

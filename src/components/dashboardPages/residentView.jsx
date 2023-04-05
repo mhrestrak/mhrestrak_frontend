@@ -24,9 +24,11 @@ import PhaseList from "../../components/common/residentView_Common_Components/ph
 import PhaseChange from "../../components/common/residentView_Common_Components/phaseChange";
 import UpdateFragment from "../../components/common/residentView_Common_Components/updateFragment";
 import { getList } from "../../services/listService";
+import { getCurrentUser } from "../../services/authService";
 
 const UpdateResident = (props) => {
   const ResID = window.location.pathname.split("/")[3];
+  const user = getCurrentUser()
   const [resident, setResident] = useState();
   const [admission, setAdmission] = useState();
   const [profileUpdateData, setProfileUpdateData] = useState(
@@ -266,7 +268,7 @@ const UpdateResident = (props) => {
           <div className="residentView-activeBadge">Active</div>
         ) : (
           resident &&
-          !resident.IsActive && (
+          !resident.IsActive && user.isCaseCoordinator && (
             <div>
               <Link
                 to={`/dashboard/create-admission/${resident.ResID}`}
@@ -296,6 +298,7 @@ const UpdateResident = (props) => {
                 onChange={handleProfileFieldUpdation}
                 submit={handleProfileUpdateSubmit}
                 buttonLabel={"Update"}
+                readOnly={!user.isCaseCoordinator}
               ></Form>
               {ProfileUpdatemessage && (
                 <div className="updateResident-footer">
@@ -354,6 +357,7 @@ const UpdateResident = (props) => {
                     phaseInfo[phaseInfo.length - 1].inDate
                   )}`}</p>
                 </div>
+                {user.isCaseCoordinator &&
                 <div className="PhaseManagement-buttons">
                   <Link to={`/dashboard/exit/${ResID}`} className="nav-item">
                     <button
@@ -367,6 +371,8 @@ const UpdateResident = (props) => {
                     Change Phase
                   </button>
                 </div>
+
+                }
               </div>
             ) : (
               <PhaseChange
@@ -397,7 +403,7 @@ const UpdateResident = (props) => {
                 <div className="residentView-sectionBox">
                   <div className="residentView-sectionBox-header">
                     <h4 className="primary">{fragment.title}</h4>
-                    {fragment.state === "View" ? (
+                    {fragment.state === "View" ? user.isCaseCoordinator ?  (
                       <button
                         className="b secondayButton"
                         onClick={() =>
@@ -406,7 +412,7 @@ const UpdateResident = (props) => {
                       >
                         Add
                       </button>
-                    ) : (
+                    ):<></> : (
                       <button
                         className="b blackButton"
                         onClick={() => setFragmentState(fragment.name, "View")}

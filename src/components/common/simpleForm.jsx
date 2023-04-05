@@ -2,7 +2,7 @@ import React from "react";
 import InputFieldLayoutRow from "./inputFieldLayoutRow";
 import  Joi  from "joi-browser";
 
-const Form = ({ onChange, data, submit, buttonLabel, secondaryActionLabel, secondaryAction }) => {
+const Form = ({ onChange, data, submit, buttonLabel, secondaryActionLabel, secondaryAction, readOnly }) => {
   const handleChange = (json, name) => {
     let itemName = name.split("_");
 
@@ -93,7 +93,7 @@ const Form = ({ onChange, data, submit, buttonLabel, secondaryActionLabel, secon
         />
       ))}
       <div className="simpleForm-Container-endSection">
-        {secondaryAction && (
+        {secondaryAction && !readOnly &&(
           <button
             className={`b blackButton`}
             onClick={secondaryAction}
@@ -101,11 +101,11 @@ const Form = ({ onChange, data, submit, buttonLabel, secondaryActionLabel, secon
             {secondaryActionLabel ? secondaryActionLabel : "Cancel"}
           </button>
         )}
-        {submit && (
+        {submit && !readOnly &&(
           <button
             className={`b ${buttonValidation() && "fadedButton"}`}
             onClick={doSubmit}
-            disabled={buttonValidation()}
+            disabled={readOnly ? true :  buttonValidation()}
           >
             {buttonLabel ? buttonLabel :"Submit"}
           </button>

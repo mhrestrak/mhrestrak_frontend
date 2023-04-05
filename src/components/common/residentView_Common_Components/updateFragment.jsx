@@ -14,6 +14,7 @@ import { getobject } from "../../../utils/residentObject";
 import { getMedicalObject } from "../../../utils/medicalObject";
 import { getLegalobject } from "../../../utils/legalCasesObject";
 import { getStatesOfCountry } from "../../../services/dropdownLocationService";
+import { getCurrentUser } from "../../../services/authService";
 
 // { title: "Medication", name: "medication", items: [], state : "View", titleName : "MedicationName" },
 // { title: "Drug", name: "drug", items: [], state : "View", titleName : "DrugOfChoice" },
@@ -22,6 +23,7 @@ import { getStatesOfCountry } from "../../../services/dropdownLocationService";
 // { title: "Medical", name: "medical", items: [], state : "View", titleName : "Illness" },
 // { title: "Legal", name: "legal", items: [], state : "View", titleName : "CaseName" },
 const UpdateFragment = ({ data, onUpdate, name, ...props }) => {
+  let user = getCurrentUser()
   const [updationObject, setUpdationObject] = useState();
   const [message, setMessage] = useState("");
   useEffect(() => {
@@ -128,6 +130,7 @@ const UpdateFragment = ({ data, onUpdate, name, ...props }) => {
           submit={handleSubmit}
           secondaryAction={deleteFragment}
           secondaryActionLabel="Delete"
+          readOnly={user.isCaseCoordinator ? false : true}
         />
       )}
       {message && <div className="updateResident-footer">{message}</div>}

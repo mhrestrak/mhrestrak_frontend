@@ -10,7 +10,8 @@ body {
   --faded-color: #8fcdcc;
   --black : #000000;
   --grey : #c7c7c7;
-  --lghtGrey : #FAFAFA
+  --lghtGrey : #FAFAFA;
+  --darkGrey : #818181;
 }
 
 .b {
@@ -35,6 +36,10 @@ body {
 }
 .secondayButton {
   background-color:  var(--seconday-color);
+}
+
+.greyText{
+  color: var(--darkGrey);
 }
 
 /* Date--ere*/
@@ -163,6 +168,14 @@ body {
   /* width: 100%; */
   /* transform: "translate(-50%, -50%)"; */
 }
+
+.cScontainer{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  padding-top: 3em;
+}
 .imageCon{
   display: flex;
   align-items: center;
@@ -240,7 +253,9 @@ body {
 .sideBar-Sections-Nav-Item {
   margin-top: 3em;
   display: flex;
-  flex-direction: row;
+  align-items: center;
+  /* flex-direction: row; */
+  /* align-items: center; */
 }
 .rightspcae-2 {
   padding-left: 1em;
@@ -284,15 +299,22 @@ body {
   display : flex;
   flex-direction: row;
   padding-right: 3em;
+  /* background-color: #028482; */
 }
 .topBar-Sections-2-profileBox {
-  align-items: center;
-  margin-right: 10em;
+  align-items: end;
+  margin-right: 2em;
+  /* background-color: #028482; */
+  /* background-color: #028482; */
 }
 .topBar-Sections-2-profileText {
   flex :1;
   display: flex;
   flex-direction: column;
+  align-items: end;
+  justify-content: center;
+  min-width: 20vh;
+  /* flex-grow: 1; */
   /* background-color: #028482; */
 }
 
@@ -305,7 +327,7 @@ body {
   align-items: center;
   justify-content: center;
   border-radius: 100em;
-  margin-right: 1em;
+  margin-right: 3em;
 }
 .user-profile-box-res {
   background-color: #028482;
@@ -320,6 +342,7 @@ body {
 }
 
 .topBar-Sections-2-Logout {
+  /* background-color: #028482; */
   flex : 1;
   display: flex;
   flex-direction: row;
@@ -617,6 +640,7 @@ body {
   flex-direction: row;
   flex-wrap: wrap;
   min-height: 86px;
+  flex :1
   /* padding-left: 1em; */
   /* align-items: center; */
   /* justify-content: space-around; */
@@ -744,11 +768,10 @@ body {
 
 .reports-Container{
   padding: 1em;
-  padding-top: 3em;
+  padding-top: 2em;
   display: flex;
   flex-direction: column;
   flex-grow: 1;
-  /* background-color: #ccdfe0; */
 }
 
 .reports-Container-Section {
@@ -837,6 +860,29 @@ body {
   width: fit-content;
   /* max-width: fit-content;*/
   min-width: 60vh; 
+  border-radius: 10px;
+  padding :1.5em;
+  padding-top: 2em;
+  padding-bottom: 2em;
+}
+
+.flex-row{
+  display: flex;
+  flex: 1;
+  flex-direction: row;
+  justify-content: space-between;
+  /* align-items: center; */
+}
+
+.profileView-sectionBox {
+  margin : 1em;
+  box-shadow: 2px 2px 6px 0px #d6d6d6;
+  flex: 1;
+  height: fit-content;
+  width: fit-content;
+  /* max-width: fit-content;*/
+  min-width: 60vh; 
+  max-width: 80vh; 
   border-radius: 10px;
   padding :1.5em;
   padding-top: 2em;
@@ -1178,30 +1224,78 @@ body {
  /* ------End-------------*/
 
  /* -------Phases Section ---------*/
-
-.PhaseManagement-Container {
-  display: flex;
-  flex-direction: column;
- }
  
-
- .PhaseManagement-currentPhase{
-   flex: 1;
+ .PhaseManagement-Container {
    display: flex;
-   flex-direction: row;
-   justify-content: space-between;
-   padding-right: 5em;
-   padding-top: 2em;
- }
- 
- .PhaseManagement-buttons {
-  flex: 1;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-evenly;
-  padding-top: 2em;
- }
- 
+   flex-direction: column;
+  }
+  
+  
+  .PhaseManagement-currentPhase{
+    flex: 1;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding-right: 5em;
+    padding-top: 2em;
+  }
+  
+  .PhaseManagement-buttons {
+    flex: 1;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    padding-top: 2em;
+  }
+  
+  /* -------User Management ---------*/
+
+  .UserManagement-FilterSection{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    flex: 1;
+    padding-top: 2em;
+  }
+
+  .UserManagement-FilterSection-inputs{
+    display: flex;
+    flex:none;
+    flex-grow: 2;
+  }
+  
+  .UserManagement-FilterSection-button{
+    display: flex;
+    flex: 1;
+    flex-grow: 2;
+    justify-content: end;
+    align-items: center;
+  }
+
+
+  /* ------No data-------------*/
+  
+  .noDataBox {
+    /* display:  flex; */
+    background-color: #f7f7f7;
+    flex: 1;
+    height :20rem;
+    border-radius: 5px;
+    border-style: none;
+    justify-content: center;
+  }
+  
+  
+  .noDataBox-Text{
+    /* background-color: #005655; */
+    flex :1;
+    display: flex;
+    padding : 10rem;
+    justify-content: center;
+    font-size: x-large;
+  }
+
+
  
  /* ------End-------------*/
 
@@ -1218,6 +1312,12 @@ body {
   font-weight: 600;
 }
 
+.grow03 {
+  flex-grow: 0.3;
+}
+.grow05 {
+  flex-grow: 0.5;
+}
 .grow1 {
   flex-grow: 1;
 }

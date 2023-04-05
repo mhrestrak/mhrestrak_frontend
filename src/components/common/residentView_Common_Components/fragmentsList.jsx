@@ -1,4 +1,5 @@
 import React from "react";
+import { getCurrentUser } from "../../../services/authService";
 
 const FragmentList = ({data,title, onManage, list :educationList}) => {
   let getName = (id) =>{
@@ -9,6 +10,8 @@ const FragmentList = ({data,title, onManage, list :educationList}) => {
     return name ? name : id
   }
 
+  let user = getCurrentUser()
+
   return (
     <div className="fragmentList-Container">
       {data.length >0  ?
@@ -18,7 +21,7 @@ const FragmentList = ({data,title, onManage, list :educationList}) => {
                     <div className="fragmentList-Item-Title">
                         {(educationList? getName(entry[title]) : (entry[title]? entry[title] : "Entry"))}
                     </div>
-                    <button className="b" onClick={() => onManage(entry)}>Manage</button>
+                    <button className="b" onClick={() => onManage(entry)}>{user.isCaseCoordinator? "Manage" : "View"}</button>
                 </div>
             ))
             }

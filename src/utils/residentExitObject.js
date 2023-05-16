@@ -39,7 +39,7 @@ export async function getResidentExitObject() {
         name: "exit_1_2_PossessionsRemovedDate",
         label: "Possessions Removed Date",
         value: null,
-        schema: Joi.date(),
+        schema: Joi.date().allow(null),
       },
     ],
     [

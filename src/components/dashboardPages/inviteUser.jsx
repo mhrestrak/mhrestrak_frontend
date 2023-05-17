@@ -12,8 +12,11 @@ import Form from "../common/simpleForm";
 import { getUserUpdateObject } from "../../utils/userUpdateObject";
 import { inviteUser } from "../../services/users/users_admin";
 import { getAllCenters } from "../../services/centerService";
+import { getCurrentUser } from "services/authService";
 
 const InviteUser = (props) => {
+  let currentUser = getCurrentUser()
+
   const [userData, setUserData] = useState([
     ...getUserUpdateObject(),
     [
@@ -53,6 +56,9 @@ const InviteUser = (props) => {
         //get Centers
         let centers = await getAllCenters();
         let tempUserData = [...userData];
+        if(!currentUser.isAdmin){
+          centers = centers.filter((center) =>center.ID === currentUser.Center)
+        }
         tempUserData[2][0].options = centers.map((center) => ({
           _id: center.ID,
           name: center.Name,

@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 // @ts-ignore
 import Logo from "../../images/LogoMin.png"
+import { level2Access, level4Access } from "utils/roles";
 
 const SideBar = ({ user }) => {
   console.log(user)
@@ -28,7 +29,7 @@ const SideBar = ({ user }) => {
               <h5 className="primary-text rightspcae-2">Residents</h5>
             </div>
           </Link>
-          {user.isIntakeCoordinator && 
+          {level2Access(user) && 
           <Link to="/dashboard/create-resident" className="nav-item">
           <div className="sideBar-Sections-Nav-Item">
             <i
@@ -38,7 +39,7 @@ const SideBar = ({ user }) => {
             <h5 className="primary-text  rightspcae-2">Create Resident</h5>
           </div>
         </Link>}
-              {user.isCenterCoordinator && 
+              {level4Access(user) && 
           <Link to="/dashboard/reports" className="nav-item">
             <div className="sideBar-Sections-Nav-Item">
               <i
@@ -49,7 +50,7 @@ const SideBar = ({ user }) => {
             </div>
           </Link>
           }
-          {user.isAdmin && 
+          {level4Access(user) && 
           <Link to="/dashboard/user-management" className="nav-item">
           <div className="sideBar-Sections-Nav-Item">
             <i

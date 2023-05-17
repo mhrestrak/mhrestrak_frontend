@@ -25,6 +25,7 @@ import PhaseChange from "../../components/common/residentView_Common_Components/
 import UpdateFragment from "../../components/common/residentView_Common_Components/updateFragment";
 import { getList } from "../../services/listService";
 import { getCurrentUser } from "../../services/authService";
+import { level3Access } from "utils/roles";
 
 const UpdateResident = (props) => {
   const ResID = window.location.pathname.split("/")[3];
@@ -268,7 +269,7 @@ const UpdateResident = (props) => {
           <div className="residentView-activeBadge">Active</div>
         ) : (
           resident &&
-          !resident.IsActive && user.isCaseCoordinator && (
+          !resident.IsActive && level3Access(user) && (
             <div>
               <Link
                 to={`/dashboard/create-admission/${resident.ResID}`}
@@ -298,7 +299,7 @@ const UpdateResident = (props) => {
                 onChange={handleProfileFieldUpdation}
                 submit={handleProfileUpdateSubmit}
                 buttonLabel={"Update"}
-                readOnly={!user.isCaseCoordinator}
+                readOnly={!level3Access(user)}
               ></Form>
               {ProfileUpdatemessage && (
                 <div className="updateResident-footer">
@@ -357,7 +358,7 @@ const UpdateResident = (props) => {
                     phaseInfo[phaseInfo.length - 1].inDate
                   )}`}</p>
                 </div>
-                {user.isCaseCoordinator &&
+                {level3Access(user) &&
                 <div className="PhaseManagement-buttons">
                   <Link to={`/dashboard/exit/${ResID}`} className="nav-item">
                     <button
@@ -403,7 +404,7 @@ const UpdateResident = (props) => {
                 <div className="residentView-sectionBox">
                   <div className="residentView-sectionBox-header">
                     <h4 className="primary">{fragment.title}</h4>
-                    {fragment.state === "View" ? user.isCaseCoordinator ?  (
+                    {fragment.state === "View" ? level3Access(user) ?  (
                       <button
                         className="b secondayButton"
                         onClick={() =>

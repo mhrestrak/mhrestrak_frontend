@@ -6,8 +6,12 @@ import NoDataBox from "../common/noDataBox";
 import InputFieldLayoutRow from "../common/inputFieldLayoutRow";
 import { getUsers } from "../../services/users/users_admin";
 import { getAllCenters } from "../../services/centerService";
+import { getCurrentUser } from "services/authService";
 
 function UserManagement(props) {
+
+  const currentUser = getCurrentUser()
+
   const [filters, setFilters] = useState([
     {
       name: "Center",
@@ -43,6 +47,13 @@ function UserManagement(props) {
     },
   ]);
 
+  // @ts-ignore
+  if(!currentUser.isAdmin){
+    let tempfilters = [...filters]
+    tempfilters.shift()
+    setFilters(tempfilters)
+  }
+
   const [users, setUsers] = useState([]);
 
   const filterChange = (data, name) => {
@@ -63,7 +74,8 @@ function UserManagement(props) {
         tempFilters[0].options = centers.map((center) => ({_id : center.ID, name : center.Name}))
         setFilters(tempFilters)
     }
-    onReady()
+    // @ts-ignore
+    if(currentUser.isAdmin) onReady()
   }, []);
 
   useEffect(() => {
@@ -83,9 +95,12 @@ function UserManagement(props) {
             selectedFilters[filter.name] = filter.value
         }
     })
+    // @ts-ignore
+    if(!currentUser.isAdmin) selectedFilters["Center"] = currentUser.Center
     try {
         let {data , error} = await getUsers(selectedFilters)
         if(error) return setUsers([])
+        if(!currentUser.isAdmin) data = data.filter((user1) => !user1.isAdmin)
         setUsers(data)
     } catch (error) {
         setUsers([])
@@ -93,7 +108,7 @@ function UserManagement(props) {
   };
 
   const getCenterName  =(id) =>{
-    let name
+   let name;
    if(filters[0].options.length >0){
        filters[0].options.forEach((filter) =>{
             if(filter._id === id){

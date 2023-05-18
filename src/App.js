@@ -10,6 +10,9 @@ import ProtectedRoute from "./components/common/protectedRoute";
 import NotFound from "./components/notFound";
 import "react-toastify/dist/ReactToastify.css";
 import "./App.css";
+import ForgotPassword from "./components/forgotPassword";
+import VerifyOTP from "./components/verifyOTP";
+import ResetPassword from "./components/resetPassword";
 
 class App extends Component {
   state = {};
@@ -28,6 +31,9 @@ class App extends Component {
             {/* @ts-ignore */}
             <ProtectedRoute path="/dashboard" component={Dashbord} />
             <Route path="/login" component={LoginForm} />
+            <Route path="/forgotPassword" component={ForgotPassword} />
+            <Route path="/verifyOTP" component={VerifyOTP} />
+            <Route path="/resetPassword" component={ResetPassword} />
             <Route path="/completeSignup" component={CompleteSignup} />
             <Route path="/logout" component={Logout} />
             <Route path="/not-found" component={NotFound} />

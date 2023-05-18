@@ -7,24 +7,31 @@ import Form from "./common/form";
 import { toast } from "react-toastify";
 //@ts-ignore
 import logo from "../images/logo.png"
-class loginForm extends Form {
+import { getCode, verifyCode } from "../services/twillioVerification";
+const UserEmail = window.location.pathname.split("/")[2];
+
+class VerifyOTP extends Form {
   //@ts-ignore
   state = {
-    data: { email: "", pass: "" },
+    data: { otp: ""},
     errors: {},
+    stage : 1
   };
 
   schema = {
-    email: Joi.string().required().email().label("Email"),
-    pass: Joi.string().required().label("password"),
+    otp: Joi.string().required().label("OTP"),
   };
 
   doSubmit = async () => {
     try {
       const { data } = this.state;
-      await auth.login(data.email, data.pass);
-      const { state } = this.props.location;
-      window.location = state ? state.from.pathname : "/";
+      let verification = await verifyCode({email: UserEmail, code : data.otp});
+      if(verification.data.status === "approved") {
+        console.log("verified!", verification.data)
+        auth.loginWithJwt(verification.data.jwt)
+        return window.location = `/resetPassword`;
+    }
+      toast.error("Invalid OTP");
     } catch (ex) {
       const errors = { ...this.state.errors };
       if (ex.response && ex.response.status === 400) {
@@ -46,22 +53,16 @@ class loginForm extends Form {
         <div className="container">
           <div className="box">
             <div className="imageCon"><img src={logo} className="image" width={"50%"}/></div>
-            {/* <h1 className="display-1">Welcome to MetroHope Ministries</h1> */}
+            <div>OTP Sent to {UserEmail}</div>
             <div className="container">
               <div className="box-input">
                 <form onSubmit={this.handleSubmit}>
-                  {this.renderInput("email", "Email")}
-                  {this.renderInput("pass", "Password", "password")}
+                  {this.renderInput("otp", "OTP")}
                   {/* {this.renderSelect("pass", "Password", "password")} */}
-                  {this.renderButton("Login")}
+                  {this.renderButton("Verify OTP")}
                 </form>
               </div>
             </div>
-            <Link to={`/forgotPassword`}>
-              <div className="forgotPass_text">
-                  Forgot Password?
-              </div>
-            </Link>
           </div>
         </div>
       </div>
@@ -69,4 +70,4 @@ class loginForm extends Form {
   }
 }
 
-export default loginForm;
+export default VerifyOTP;

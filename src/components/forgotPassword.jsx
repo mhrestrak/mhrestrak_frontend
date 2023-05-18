@@ -7,24 +7,27 @@ import Form from "./common/form";
 import { toast } from "react-toastify";
 //@ts-ignore
 import logo from "../images/logo.png"
-class loginForm extends Form {
+import { getCode } from "../services/twillioVerification";
+class ForgotPassword extends Form {
   //@ts-ignore
   state = {
-    data: { email: "", pass: "" },
+    data: { email: ""},
     errors: {},
+    err : "",
   };
 
   schema = {
     email: Joi.string().required().email().label("Email"),
-    pass: Joi.string().required().label("password"),
   };
 
   doSubmit = async () => {
     try {
       const { data } = this.state;
-      await auth.login(data.email, data.pass);
-      const { state } = this.props.location;
-      window.location = state ? state.from.pathname : "/";
+      let result = await getCode({email: data.email});
+      if(result.data.error){
+        return this.setState({err : result.data.error})
+      }
+      return window.location = `/verifyOTP/${data.email}`;
     } catch (ex) {
       const errors = { ...this.state.errors };
       if (ex.response && ex.response.status === 400) {
@@ -46,22 +49,19 @@ class loginForm extends Form {
         <div className="container">
           <div className="box">
             <div className="imageCon"><img src={logo} className="image" width={"50%"}/></div>
-            {/* <h1 className="display-1">Welcome to MetroHope Ministries</h1> */}
+            <h1 className="display-4">Recover Account</h1>
             <div className="container">
               <div className="box-input">
                 <form onSubmit={this.handleSubmit}>
                   {this.renderInput("email", "Email")}
-                  {this.renderInput("pass", "Password", "password")}
                   {/* {this.renderSelect("pass", "Password", "password")} */}
-                  {this.renderButton("Login")}
+                  {this.renderButton("Send OTP")}
                 </form>
+
+                {this.state.err &&
+                <div className="centerBox">{this.state.err}</div>}
               </div>
             </div>
-            <Link to={`/forgotPassword`}>
-              <div className="forgotPass_text">
-                  Forgot Password?
-              </div>
-            </Link>
           </div>
         </div>
       </div>
@@ -69,4 +69,4 @@ class loginForm extends Form {
   }
 }
 
-export default loginForm;
+export default ForgotPassword;

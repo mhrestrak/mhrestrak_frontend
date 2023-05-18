@@ -6,7 +6,7 @@ import NoDataBox from "../common/noDataBox";
 import InputFieldLayoutRow from "../common/inputFieldLayoutRow";
 import { getUsers } from "../../services/users/users_admin";
 import { getAllCenters } from "../../services/centerService";
-import { getCurrentUser } from "services/authService";
+import { getCurrentUser } from "../../services/authService";
 
 function UserManagement(props) {
 

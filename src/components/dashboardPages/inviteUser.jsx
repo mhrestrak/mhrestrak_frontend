@@ -12,7 +12,7 @@ import Form from "../common/simpleForm";
 import { getUserUpdateObject } from "../../utils/userUpdateObject";
 import { inviteUser } from "../../services/users/users_admin";
 import { getAllCenters } from "../../services/centerService";
-import { getCurrentUser } from "services/authService";
+import { getCurrentUser } from "../../services/authService";
 
 const InviteUser = (props) => {
   let currentUser = getCurrentUser()

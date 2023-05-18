@@ -13,6 +13,11 @@ export async function login(email, pass) {
   localStorage.setItem(tokenKey, jwt);
 }
 
+export async function resetPassword(data1) {
+  const { data } = await http.post(apiEndpoint+"/resetPassword", data1);
+  return data
+}
+
 export async function updateProfile(data) {
   const { data: jwt } = await http.put(apiEndpoint+"/updateProfile", data);
   localStorage.setItem(tokenKey, jwt);
@@ -66,5 +71,6 @@ export default {
   getCurrentUser,
   loginWithJwt,
   getJwt,
-  updateProfile
+  updateProfile,
+  resetPassword
 };

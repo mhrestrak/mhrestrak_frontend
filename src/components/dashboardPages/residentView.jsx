@@ -25,7 +25,7 @@ import PhaseChange from "../../components/common/residentView_Common_Components/
 import UpdateFragment from "../../components/common/residentView_Common_Components/updateFragment";
 import { getList } from "../../services/listService";
 import { getCurrentUser } from "../../services/authService";
-import { level3Access } from "utils/roles";
+import { level3Access } from "../../utils/roles";
 
 const UpdateResident = (props) => {
   const ResID = window.location.pathname.split("/")[3];

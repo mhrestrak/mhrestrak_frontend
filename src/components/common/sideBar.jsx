@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 // @ts-ignore
 import Logo from "../../images/LogoMin.png"
-import { level2Access, level4Access } from "utils/roles";
+import { level2Access, level4Access } from "../../utils/roles";
 
 const SideBar = ({ user }) => {
   console.log(user)

@@ -23,6 +23,7 @@ class loginForm extends Form {
     try {
       const { data } = this.state;
       await auth.login(data.email, data.pass);
+      toast.success("Logged In!");
       const { state } = this.props.location;
       window.location = state ? state.from.pathname : "/";
     } catch (ex) {

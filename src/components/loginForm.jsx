@@ -28,12 +28,12 @@ class loginForm extends Form {
     } catch (ex) {
       const errors = { ...this.state.errors };
       if (ex.response && ex.response.status === 400) {
+        console.log(ex.response.data)
         errors.data = ex.response.data;
         this.setState({ errors });
       } else {
-        errors.message = ex.message;
+        errors.message = ex.response ? ex.response.data : ex.message;
         this.setState({ errors });
-        toast.error(errors.message);
       }
     }
   };

@@ -9,7 +9,7 @@ export function prepData(data) {
     data.basic.ResID = ResID;
     data.basic.IsActive = false;
     data.basic.RecentPhase = "0";
-    data.basic.Center = user.Center
+    data.basic.Center = user.Center ? user.Center : undefined;
   }
   if (data.family.length > 0) {
     data.family.forEach((family, i) => {

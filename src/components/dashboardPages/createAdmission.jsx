@@ -8,6 +8,7 @@ import { getLegalobject } from "../../utils/legalCasesObject";
 import { getAdmissionobject } from "../../utils/admissionObject";
 import { prepAdmissionData } from "../../utils/prepAdmissionData";
 import { Redirect } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const CreateAdmission = () => {
   const ResID = window.location.pathname.split("/")[3]
@@ -129,6 +130,7 @@ const CreateAdmission = () => {
     setActiiveSession("submitting");
     let prepedData = prepAdmissionData(formData, ResID);
     await CreateResAdmission(prepedData);
+    toast.success("Resident Admitted Successfully!")
     setActiiveSession("success");
   };
 

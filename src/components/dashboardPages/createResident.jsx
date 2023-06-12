@@ -30,6 +30,7 @@ import {
   buildStyles
 } from "react-circular-progressbar";
 import 'react-circular-progressbar/dist/styles.css';
+import { toast } from "react-toastify";
 
 
 const CreateResident = () => {
@@ -308,6 +309,7 @@ const CreateResident = () => {
     let prepedData = prepData({ ...formData });
     let result = await CreateResidentWithSections(prepedData);
     if (result.ResID) {
+      toast.success("Resident Created Successfully!")
       setActiiveSession("success");
     } else {
     }

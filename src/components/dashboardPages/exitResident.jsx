@@ -12,6 +12,7 @@ import { Redirect } from "react-router-dom";
 
 import { confirmAlert } from 'react-confirm-alert'; // Import
 import 'react-confirm-alert/src/react-confirm-alert.css';
+import { toast } from "react-toastify";
 
 const UpdateResident = (props) => {
   const ResID = window.location.pathname.split("/")[3];
@@ -110,6 +111,7 @@ const UpdateResident = (props) => {
       console.log(result);
       //@ts-ignore
       setMessage("Updated");
+      toast.success("Resident Exited Successfully")
       setExited(true)
     } catch (error) {
       //@ts-ignore

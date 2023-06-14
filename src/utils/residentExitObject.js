@@ -7,20 +7,9 @@ export async function getResidentExitObject() {
   return [
     [
       {
-        type: "select",
-        size: "grow1",
-        name: "exit_0_0_ReasonForLeaving",
-        label: "Reason for Leaving",
-        options: reasonForLeaving,
-        value: undefined,
-        schema: Joi.string().required(),
-      },
-    ],
-    [
-      {
         type: "date",
         size: "grow1",
-        name: "exit_1_0_GuestInDate",
+        name: "exit_0_0_GuestInDate",
         label: "Guest In Date",
         value: null,
         schema: Joi.date(),
@@ -28,7 +17,7 @@ export async function getResidentExitObject() {
       {
         type: "date",
         size: "grow1",
-        name: "exit_1_1_DateOut",
+        name: "exit_0_1_DateOut",
         label: "Date Out",
         value: null,
         schema: Joi.date(),
@@ -36,10 +25,21 @@ export async function getResidentExitObject() {
       {
         type: "date",
         size: "grow1",
-        name: "exit_1_2_PossessionsRemovedDate",
+        name: "exit_0_2_PossessionsRemovedDate",
         label: "Possessions Removed Date",
         value: null,
         schema: Joi.date().allow(null),
+      },
+    ],
+    [
+      {
+        type: "select",
+        size: "grow1",
+        name: "exit_1_0_ReasonForLeaving",
+        label: "Reason for Leaving",
+        options: reasonForLeaving,
+        value: undefined,
+        schema: Joi.string().required(),
       },
     ],
     [

@@ -37,7 +37,7 @@ const UpdateResident = (props) => {
         tempData.formStructure = await getResidentExitObject();
         tempData.resident = user.data;
         console.log(tempData.activeAdmission);
-        tempData.formStructure[1][0]["value"] = 
+        tempData.formStructure[0][0]["value"] = 
           new Date(Date.UTC(
             parseInt(tempData.activeAdmission.GuestInDate.substring(0, 4)),
             parseInt(tempData.activeAdmission.GuestInDate.substring(5, 7)) - 1, // Subtract 1 from the month since it's zero-based
@@ -64,7 +64,7 @@ const UpdateResident = (props) => {
       console.log(name)
     updatedData.activeAdmission[name[3]] = item.value;
     if(item.value)
-    if(name[1] === "1" && name[2] ==="1"){
+    if(name[1] === "0" && name[2] ==="1"){
       if(data.activeAdmission.GuestInDate){
         const days = getDaysBetweenDates(data.activeAdmission.GuestInDate, item.value)
         setDaysHere(days)

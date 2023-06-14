@@ -17,7 +17,7 @@ export function getAdmissionobject() {
         name: "admission_0_1_ProgramInDate",
         label: "Program In Date",
         value: null,
-        schema: Joi.date().required(),
+        schema: Joi.date().allow(null),
       },
       {
         type: "date",

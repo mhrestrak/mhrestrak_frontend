@@ -7,7 +7,7 @@ export function prepAdmissionData(data, resID) {
     [
       {
         phase : data.admission.RecentPhase, 
-        inDate : data.admission.ProgramInDate
+        inDate : data.admission.ProgramInDate ? data.admission.ProgramInDate : data.admission.GuestInDate
       }
     ]
   )

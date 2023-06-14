@@ -33,7 +33,6 @@ const UpdateResident = (props) => {
       try {
         let user = await getResidentByID(ResID);
         let { data: admission } = await getAdmission(ResID);
-        console.log(admission)
         tempData.activeAdmission = admission;
         tempData.formStructure = await getResidentExitObject();
         tempData.resident = user.data;

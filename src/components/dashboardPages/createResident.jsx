@@ -70,11 +70,13 @@ const CreateResident = () => {
 //@ts-ignore
   useEffect(() => {
     const asyncfunc = async  () =>{
+      let maritalStatus = await getList(5);
       let lists = await getList(7);
       let notCategories = await getList(4);
       let AdmittedFromList = await getList(8);
       let data1 = { ...data };
       // data1.church[1][1].options = lists;
+      data1.basic[3][1].options = maritalStatus;
       data1.notes[0][0].options = notCategories;
       data1.basic[4][2].options = lists;
       data1.basic[5][2].options = AdmittedFromList;

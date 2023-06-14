@@ -112,6 +112,7 @@ const UpdateResident = (props) => {
       
       let result = await exitResident(notNullFields);
       console.log(result);
+      if(result.error) return
       //@ts-ignore
       setMessage("Updated");
       toast.success("Resident Exited Successfully")

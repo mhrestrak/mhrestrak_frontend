@@ -8,6 +8,7 @@ class FindResident extends Component {
   state = {
     query: "",
     filter : 1,
+    sort : 1,
     search: false,
     res: [],
   };
@@ -39,6 +40,36 @@ class FindResident extends Component {
     this.handleSubmit(filter)
   };
 
+  handleSortChange = ({ currentTarget: input }) => {
+    let sort = Number(input.value);
+    let data = this.sortData(this.state.res, sort)
+    this.setState({sort,res: data });
+  };
+
+  sortData = (data, sort) =>{
+    if(this.state.sort || this.state.sort === 0){
+      switch (sort) {
+        case 2: // A-Z FirstName
+        console.log(3)
+          return data.sort((a, b) => a.ResFirstName.localeCompare(b.ResFirstName));
+        case 3: // Z-A FirstName
+        console.log(4)
+          return data.sort((a, b) => b.ResFirstName.localeCompare(a.ResFirstName));
+        case 4: // A-Z LastName
+        console.log(3)
+          return data.sort((a, b) => a.ResLastName.localeCompare(b.ResLastName));
+        case 5: // Z-A LastName
+        console.log(4)
+          return data.sort((a, b) => b.ResLastName.localeCompare(a.ResLastName));
+        default:
+          console.log(5)
+          return data;
+      }
+    }else{
+      return data
+    }
+  }
+
   handleSubmit = async (filter) => {
     try {
       let { data } = await findResident(this.state.query, (filter ? filter :this.state.filter));
@@ -46,6 +77,7 @@ class FindResident extends Component {
       //   console.log("filter");
       //   data = data.filter((res) => res.IsActive !== true);
       // }
+      data = this.sortData(data, this.state.sort)
       this.setState({ res: data, search: true });
     } catch (ex) {
       console.log(ex);
@@ -56,7 +88,7 @@ class FindResident extends Component {
   handleReset = async () => {
     try {
       let { data } = await findResident();
-      this.setState({ res: data, search: false ,query: ""});
+      this.setState({ res: data, search: false ,query: "", sort :1});
     } catch (ex) {
       console.log(ex);
     }
@@ -105,10 +137,10 @@ class FindResident extends Component {
               value={this.state.query}
             />
             <div className="findResidentButtons">
-            <button className="b"  onClick={() => this.handleSubmit()}>
+            <button className="bFlex"  onClick={() => this.handleSubmit()}>
               Search
             </button>
-            <button className="b leftMargin blackButton" onClick={this.handleReset}>
+            <button className="bFlex leftMargin blackButton" onClick={this.handleReset}>
               Reset
             </button>
             </div>
@@ -124,6 +156,23 @@ class FindResident extends Component {
                 error={null}
                 onChange={this.handleFilterChange}
                 value={this.state.filter}
+                noClear
+              />
+            </div>
+            <div className="grow2 filterDropdown">
+              <Select 
+                label="Sort" 
+                options={[
+                  {name : "None", value : 1},
+                  {name : "First Name A-Z", value : 2},
+                  {name : "First Name Z-A", value : 3},
+                  {name : "Last Name A-Z", value : 4},
+                  {name : "Last Name Z-A", value : 5}
+                ]}
+                name="Sort"
+                error={null}
+                onChange={this.handleSortChange}
+                value={this.state.sort}
                 noClear
               />
             </div>

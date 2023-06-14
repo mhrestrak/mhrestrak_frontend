@@ -118,7 +118,7 @@ class FindResident extends Component {
                 options={[
                   {name : "All", value : 1},
                   {name : "Active", value : 2},
-                  {name : "In-Active", value : 3}
+                  {name : "Inactive", value : 3}
                 ]}
                 name="Status"
                 error={null}
@@ -178,7 +178,7 @@ class FindResident extends Component {
                   <div className="residentView-activeBadge grow1">Active</div>
                   </div>
                   :
-                  <div className="findResident-Container-data-Item-ind grow1 center">InActive</div>
+                  <div className="findResident-Container-data-Item-ind grow1 center">Inactive</div>
                 }
                 {res.IsActive ? 
                   <div className="findResident-Container-data-Item-ind grow1 center">{res.RecentPhase}</div> :

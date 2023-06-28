@@ -19,9 +19,12 @@ body {
   color: white;
   border-radius: 5px;
   border-style: none;
-  width: 10em;
+  /* width: 10em; */
   height: 3em;
-  padding: 0.5em;
+  padding-top: 0.5em;
+  padding-bottom: 0.5em;
+  padding-left: 1em;
+  padding-right: 1em;
 }
 
 .bFlex {
@@ -56,8 +59,9 @@ body {
 .date {
   align-items: flex-start;
   /* margin-top: -15px; */
-  margin-bottom: 15px;
+  /* margin-bottom: 15px; */
   width: 100%;
+  flex: 1;
   max-width: 18em;
 }
 
@@ -78,8 +82,8 @@ body {
 .date-item {
   padding-top: 0.6em;
   /* padding-bottom: 0.2em; */
-  /* padding-left: .3em; */
-  /* padding-right: .3em; */
+  padding-left: .4em;
+  padding-right: .4em;
 }
 /* --------------------*/
 
@@ -890,6 +894,20 @@ body {
   padding-bottom: 2em;
 }
 
+.residentView-sectionBox-Placeholder {
+  margin : 1em;
+  /* box-shadow: 2px 2px 6px 0px #d6d6d6; */
+  flex: 1;
+  height: fit-content;
+  width: fit-content;
+  /* max-width: fit-content;*/
+  min-width: 60vh; 
+  border-radius: 10px;
+  padding :1.5em;
+  padding-top: 2em;
+  padding-bottom: 2em;
+}
+
 .flex-row{
   display: flex;
   flex: 1;
@@ -1368,3 +1386,12 @@ body {
   display: flex;
   justify-content: flex-end;
 }
+
+.paddingRight01 {
+  padding-right: 1em;
+}
+
+.paddingLeft01 {
+  padding-left: 1em;
+}
+

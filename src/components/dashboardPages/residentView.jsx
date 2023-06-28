@@ -9,6 +9,8 @@ import {
   getAdmission,
   updateResident,
   getResidentFragment,
+  updateResidentPhase,
+  getResidentAdmissionRecords,
 } from "../../services/residentService";
 
 import "react-confirm-alert/src/react-confirm-alert.css";
@@ -26,6 +28,8 @@ import UpdateFragment from "../../components/common/residentView_Common_Componen
 import { getList } from "../../services/listService";
 import { getCurrentUser } from "../../services/authService";
 import { level3Access } from "../../utils/roles";
+import { toast } from "react-toastify";
+import AdmissionRecords from "../../components/common/residentView_Common_Components/AdmissionRecords";
 
 const UpdateResident = (props) => {
   const ResID = window.location.pathname.split("/")[3];
@@ -42,6 +46,8 @@ const UpdateResident = (props) => {
   const [FragmentToBeUpdated, setFragmentToBeUpdated] = useState({})
   const [phaseInfo, setPhaseInfo] = useState();
   const [PhaseState, setPhaseState] = useState("View");
+  const [AdmissionHistory, setAdmissionHistory] = useState();
+
 
   useEffect(() => {
     const getandSetResident = async () => {
@@ -63,6 +69,14 @@ const UpdateResident = (props) => {
           if (notes.data?.length > 0) setNotes(notes.data);
           //   if(notes.data?.length >0) setNotes([])
           else setNotes([]);
+
+          //get Admissions
+          const admissions = await getResidentAdmissionRecords(ResID);
+          console.log("Admissions", admissions.data)
+          if(admissions.data?.length > 1) {
+            admissions.data = admissions.data.filter((adms) => adms.DateOut ? true : false)
+            if(admissions.data?.length > 0) setAdmissionHistory(admissions.data)
+          }
 
           getFragments();
         } else {
@@ -102,6 +116,7 @@ const UpdateResident = (props) => {
       }else{
         phaseData = JSON.parse(phaseData);
       }
+      console.log(phaseData)
       setPhaseInfo(phaseData);
     }
   }, [admission]);
@@ -255,6 +270,30 @@ const UpdateResident = (props) => {
     }
   };
 
+  const updatePhase = async (date, index) =>{
+    console.log(1)
+    let tempPhaseInfo = [...phaseInfo]
+    tempPhaseInfo[index].outDate = date
+    if(tempPhaseInfo[index+1]){
+      tempPhaseInfo[index+1].inDate = date
+    }
+    const data1 = {
+      ResID : ResID,
+      phaseData : tempPhaseInfo
+    };
+    
+    try {
+      console.log(2)
+      let {data} = await updateResidentPhase(data1);
+      console.log(3)
+      phaseChanged()
+      toast.success("Phase transition date updated!")
+
+    }catch(err){
+      console.log(err)
+    }
+  }
+
   function dateFormatter(d) {
     d = new Date(d);
     return (d.getMonth() + 1) + "/" +  d.getDate()+ "/" + d.getFullYear();
@@ -272,10 +311,16 @@ const UpdateResident = (props) => {
           !resident.IsActive && level3Access(user) && (
             <div>
               <Link
+                to={`/dashboard/exit-guest/${resident.ResID}`}
+                className="nav-item paddingRight01"
+              >
+                <button className="b blackButton">Exit Guest</button>
+              </Link>
+              <Link
                 to={`/dashboard/create-admission/${resident.ResID}`}
                 className="nav-item"
               >
-                <button className="b blackButton">Create Admission</button>
+                <button className="b ">Create Admission</button>
               </Link>
             </div>
           )
@@ -387,11 +432,23 @@ const UpdateResident = (props) => {
         {phaseInfo && (
           <div className="residentView-sectionBox">
             <div className="residentView-sectionBox-header">
-              <h4 className="primary">Phase History</h4>
+              <h4 className="primary">Current Admission - Phase History</h4>
             </div>
-            <PhaseList data={phaseInfo} />
+            <PhaseList data={phaseInfo} modifyPhase={updatePhase}/>
           </div>
-        )}
+        )}{
+          AdmissionHistory && (
+            <>
+            <div className="residentView-sectionBox">
+            <div className="residentView-sectionBox-header">
+              <h4 className="primary">Admission History</h4>
+            </div>
+            <AdmissionRecords data={AdmissionHistory}/>
+          </div>
+          <div className="residentView-sectionBox-Placeholder"/>
+        </>
+          )
+        }
       </div>
       {resident && (
         <>

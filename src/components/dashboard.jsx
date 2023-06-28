@@ -15,6 +15,8 @@ import UserManagement from "./dashboardPages/userManagement";
 import ManageUser from "./dashboardPages/manageUser";
 import MyProfile from "./dashboardPages/myProfile";
 import InviteUser from "./dashboardPages/inviteUser";
+import ExitGuest from "./dashboardPages/exitGuest";
+import AdmissionRecord from "./dashboardPages/AdmissionRecord";
 
 class Dashboard extends Component {
   state = {
@@ -52,6 +54,14 @@ class Dashboard extends Component {
             <Route
               path="/dashboard/create-admission"
               component={CreateAdmission}
+            />
+            <Route
+              path="/dashboard/admission-record"
+              component={AdmissionRecord}
+            />
+            <Route
+              path="/dashboard/exit-guest"
+              component={ExitGuest}
             />
             <Route
               path="/dashboard/exit"

@@ -10,7 +10,7 @@ import {
 const Date = ({ name, label, error, ...rest }) => {
   return (
     <div className="date">
-      <p className="date-label">{label}</p>
+      {label && <p className="date-label">{label}</p>}
       <div className="date-container">
         <div className="date-item">
           <MuiPickersUtilsProvider utils={DateFnsUtils}>

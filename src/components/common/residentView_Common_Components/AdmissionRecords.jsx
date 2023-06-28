@@ -1,33 +1,27 @@
 import React from "react";
-import Date1 from "../date";
+import { Link } from "react-router-dom";
 
-const PhaseList = (props) => {
+const AdmissionRecords = (props) => {
   const data = props.data
-  
 
   return (
     <div className="fragmentList-Container">
       {data.length >0  ?
           <div className="fragmentList-List">
-            {data.map((phase, i) =>(
+            {data.map((admission, i) =>(
                 <div className="fragmentList-Item" key={i.toString()}>
                     <div className="fragmentList-Item-Title flex-start grow05">
-                        {`Phase ${phase.phase}`}
+                        {`Admission ${i+1}`}
                     </div>
                     <div className="fragmentList-Item-Title center">
-                        {phase.inDate ? dateFormatter(phase.inDate) : "-"}
+                        {admission.ProgramInDate ? dateFormatter(admission.ProgramInDate) : admission.GuestInDate ? dateFormatter(admission.GuestInDate) : "-"}
                     </div>
-                    {((data.length >1? true : i !== 0) && i !== (data.length - 1))  ?
-                      <Date1
-                      onChange={(json) => {
-                        props.modifyPhase(json, i)
-                      }}
-                      value={phase.outDate}
-                    /> :
                     <div className="fragmentList-Item-Title center">
-                        {phase.outDate ? dateFormatter(phase.outDate) : "Current"}
+                        {admission.DateOut ? dateFormatter(admission.DateOut) : "-"}
                     </div>
-                    }
+                    <Link to={`/dashboard/admission-record/${admission.AdmissionID}`} className="nav-item">
+                        <button className="b">View</button>
+                    </Link>
                 </div>
             ))
             }
@@ -45,4 +39,4 @@ function dateFormatter(d){
     return (d.getMonth() + 1) + "/" +  d.getDate() + "/" +  d.getFullYear();
 }
 
-export default PhaseList;
+export default AdmissionRecords;

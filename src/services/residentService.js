@@ -74,6 +74,11 @@ export function getAdmission(id) {
   return http.get(url);
 }
 
+export function getResidentAdmissionRecords(id) {
+  let url = `${apiEndpoint}/admission/records/${id}`;
+  return http.get(url);
+}
+
 export async function CreateResAdmission(data) {
   let AdUrl = `${apiEndpoint}/admission`;
   let AdResult = await http.post(AdUrl, data.admission);

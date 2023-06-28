@@ -11,10 +11,10 @@ import UpdateResident from "./dashboardPages/updateResident";
 import ResidentView from "./dashboardPages/residentView";
 import Reports from "./dashboardPages/reports";
 import TopBar from "./common/topBar";
-import UserManagement from "./dashboardPages/userManagement";
-import ManageUser from "./dashboardPages/manageUser";
-import MyProfile from "./dashboardPages/myProfile";
-import InviteUser from "./dashboardPages/inviteUser";
+// import UserManagement from "./dashboardPages/userManagement";
+// import ManageUser from "./dashboardPages/manageUser";
+// import MyProfile from "./dashboardPages/myProfile";
+// import InviteUser from "./dashboardPages/inviteUser";
 import ExitGuest from "./dashboardPages/exitGuest";
 import AdmissionRecord from "./dashboardPages/AdmissionRecord";
 
@@ -75,7 +75,7 @@ class Dashboard extends Component {
               path="/dashboard/reports"
               component={Reports}
             />
-            <Route
+            {/* <Route
               path="/dashboard/user-management"
               component={UserManagement}
             />
@@ -90,7 +90,7 @@ class Dashboard extends Component {
             <Route
               path="/dashboard/invite-user"
               component={InviteUser}
-            />
+            /> */}
             <Route path="/dashboard/" component={FindResident} />
           </Switch>
         </div>

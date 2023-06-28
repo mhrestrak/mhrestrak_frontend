@@ -27,7 +27,6 @@ import PhaseChange from "../../components/common/residentView_Common_Components/
 import UpdateFragment from "../../components/common/residentView_Common_Components/updateFragment";
 import { getList } from "../../services/listService";
 import { getCurrentUser } from "../../services/authService";
-import { level3Access } from "../../utils/roles";
 import { toast } from "react-toastify";
 import AdmissionRecords from "../../components/common/residentView_Common_Components/AdmissionRecords";
 import { getAdmissionRecordobject } from "../../utils/admissionRecordObject";

@@ -27,7 +27,6 @@ import PhaseChange from "../../components/common/residentView_Common_Components/
 import UpdateFragment from "../../components/common/residentView_Common_Components/updateFragment";
 import { getList } from "../../services/listService";
 import { getCurrentUser } from "../../services/authService";
-import { level3Access } from "../../utils/roles";
 import { toast } from "react-toastify";
 import AdmissionRecords from "../../components/common/residentView_Common_Components/AdmissionRecords";
 
@@ -308,7 +307,7 @@ const UpdateResident = (props) => {
           <div className="residentView-activeBadge">Active</div>
         ) : (
           resident &&
-          !resident.IsActive && level3Access(user) && (
+          !resident.IsActive  && (
             <div>
               <Link
                 to={`/dashboard/exit-guest/${resident.ResID}`}
@@ -344,7 +343,7 @@ const UpdateResident = (props) => {
                 onChange={handleProfileFieldUpdation}
                 submit={handleProfileUpdateSubmit}
                 buttonLabel={"Update"}
-                readOnly={!level3Access(user)}
+                readOnly={false}
               ></Form>
               {ProfileUpdatemessage && (
                 <div className="updateResident-footer">
@@ -403,7 +402,6 @@ const UpdateResident = (props) => {
                     phaseInfo[phaseInfo.length - 1].inDate
                   )}`}</p>
                 </div>
-                {level3Access(user) &&
                 <div className="PhaseManagement-buttons">
                   <Link to={`/dashboard/exit/${ResID}`} className="nav-item">
                     <button
@@ -417,8 +415,6 @@ const UpdateResident = (props) => {
                     Change Phase
                   </button>
                 </div>
-
-                }
               </div>
             ) : (
               <PhaseChange
@@ -461,7 +457,7 @@ const UpdateResident = (props) => {
                 <div className="residentView-sectionBox">
                   <div className="residentView-sectionBox-header">
                     <h4 className="primary">{fragment.title}</h4>
-                    {fragment.state === "View" ? level3Access(user) ?  (
+                    {fragment.state === "View" ? (
                       <button
                         className="b secondayButton"
                         onClick={() =>
@@ -470,7 +466,7 @@ const UpdateResident = (props) => {
                       >
                         Add
                       </button>
-                    ):<></> : (
+                    ) : (
                       <button
                         className="b blackButton"
                         onClick={() => setFragmentState(fragment.name, "View")}

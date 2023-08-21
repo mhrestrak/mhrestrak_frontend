@@ -82,9 +82,21 @@ export function getobject() {
           size: "grow2",
           typeName: "text",
           name: "basic_2_0_SSN",
-          label: "SSN",
+          label: "SSN (##-##-####)",
           value: undefined,
-          schema: Joi.string().required().max(12),
+          schema: Joi.string().required().max(12).regex(/^\d{2}-\d{2}-\d{4}$/).error(errors => {
+            errors.forEach(err => {
+              console.log(err)
+              switch (err.type) {
+                case "string.regex.base":
+                  err.message = "Invalid format  - (##-##-###)";
+                  break;
+                default:
+                  break;
+              }
+            });
+            return errors;
+          }),
         },
         {
           type: "input",
@@ -95,14 +107,14 @@ export function getobject() {
           value: undefined,
           schema: Joi.string().max(12),
         },
-        {
-          type: "checkbox",
-          size: "grow1",
-          name: "basic_2_2_IsPregnant",
-          label: "Is Pregnant",
-          value: false,
-          schema: Joi.boolean(),
-        },
+        // {
+        //   type: "checkbox",
+        //   size: "grow1",
+        //   name: "basic_2_2_IsPregnant",
+        //   label: "Is Pregnant",
+        //   value: false,
+        //   schema: Joi.boolean(),
+        // },
       ],
       [
         {

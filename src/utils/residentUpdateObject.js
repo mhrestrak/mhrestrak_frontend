@@ -21,15 +21,16 @@ export function getResidentUpdateObject() {
         value: undefined,
         schema: Joi.string().required().max(30),
       },],[
-      {
-        type: "input",
-        size: "grow1",
-        typeName: "text",
-        name: "resident_1_0_SSN",
-        label: "SSN",
-        value: undefined,
-        schema: Joi.string().required().max(12),
-      },
+        {
+          type: "input",
+          size: "grow3",
+          typeName: "text",
+          name: "resident_1_0_ResEmailAddr",
+          label: "Email Address",
+          value: undefined,
+          schema: Joi.string().email().max(60),
+        },
+      
       {
         type: "input",
         size: "grow1",
@@ -39,23 +40,24 @@ export function getResidentUpdateObject() {
         value: undefined,
         schema: Joi.string().max(30),
       },],[
-      {
-        type: "input",
-        size: "grow3",
-        typeName: "text",
-        name: "resident_2_0_ResEmailAddr",
-        label: "Email Address",
-        value: undefined,
-        schema: Joi.string().email().max(60),
-      },
-      {
-        type: "checkbox",
-        size: "grow1",
-        name: "resident_2_1_IsPregnant",
-        label: "Is Pregnant",
-        value: false,
-        schema: Joi.boolean(),
-      },],[
+        {
+          type: "input",
+          size: "grow1",
+          typeName: "text",
+          name: "resident_2_0_SSN",
+          label: "SSN",
+          value: undefined,
+          schema: Joi.string().required().max(12),
+        },
+      // {
+      //   type: "checkbox",
+      //   size: "grow1",
+      //   name: "resident_2_1_IsPregnant",
+      //   label: "Is Pregnant",
+      //   value: false,
+      //   schema: Joi.boolean(),
+      // },
+    ],[
       {
         type: "checkbox",
         size: "grow1",

@@ -14,6 +14,7 @@ import { getobject } from "../../../utils/residentObject";
 import { getMedicalObject } from "../../../utils/medicalObject";
 import { getLegalobject } from "../../../utils/legalCasesObject";
 import { getStatesOfCountry } from "../../../services/dropdownLocationService";
+import { getContactObject } from "../../../utils/contactObject";
 
 // { title: "Medication", name: "medication", items: [], state : "View", titleName : "MedicationName" },
 // { title: "Drug", name: "drug", items: [], state : "View", titleName : "DrugOfChoice" },
@@ -28,6 +29,13 @@ const UpdateFragment = ({ data, onUpdate, name, ...props }) => {
     const asyncFunc = async () => {
       let object;
       switch (name) {
+        case "contacts":
+          object = getContactObject();
+          let states1 = await getStatesOfCountry("United States");
+          object[3][0].options = states1;
+          let lists1 = await getList(11);
+          object[0][0]["options"] = lists1;
+          break;
         case "medication":
           object = getMedicationObject();
           break;

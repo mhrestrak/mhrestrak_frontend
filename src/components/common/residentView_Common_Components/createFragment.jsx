@@ -15,6 +15,7 @@ import { getobject } from "../../../utils/residentObject";
 import { getMedicalObject } from "../../../utils/medicalObject";
 import { getLegalobject } from "../../../utils/legalCasesObject";
 import { getStatesOfCountry } from "../../../services/dropdownLocationService";
+import { getContactObject } from "../../../utils/contactObject";
 
 // { title: "Medication", name: "medication", items: [], state : "View", titleName : "MedicationName" },
 // { title: "Drug", name: "drug", items: [], state : "View", titleName : "DrugOfChoice" },
@@ -28,6 +29,14 @@ const CreateFragment = ({ onCreate, ResId, name, ...props }) => {
 
   useEffect(() => {
     const asyncFunc = async () => {
+      if (name === "contacts") {
+        let object = getContactObject();
+        let states1 = await getStatesOfCountry("United States");
+        object[3][0].options = states1;
+        let lists1 = await getList(11);
+        object[0][0]["options"] = lists1;
+        setCreationObject(object);
+      }
       if (name === "medication") {
         let object = getMedicationObject();
         setCreationObject(object);
@@ -38,13 +47,13 @@ const CreateFragment = ({ onCreate, ResId, name, ...props }) => {
       }
       if (name === "education") {
         let object = getEducationObject();
-        let lists = await getList(2)
-        object[0][0]["options"] = lists
+        let lists = await getList(2);
+        object[0][0]["options"] = lists;
         setCreationObject(object);
       }
       if (name === "employment") {
         let object = getobject();
-        object = object.employment
+        object = object.employment;
         setCreationObject(object);
       }
       if (name === "medical") {
@@ -73,7 +82,7 @@ const CreateFragment = ({ onCreate, ResId, name, ...props }) => {
 
   const handleSubmit = async ({ validation, errorData }) => {
     if (validation) {
-        console.log("ddfdfdf")
+      console.log("ddfdfdf");
       let tempObject = {
         ResID: ResId,
         ID: uniqid(),
@@ -85,33 +94,35 @@ const CreateFragment = ({ onCreate, ResId, name, ...props }) => {
           tempObject[key] = item.value;
         });
       });
-      
+
       //remove Null
-      tempObject =  Object.fromEntries(Object.entries(tempObject).filter(([_, v]) => v != null));
+      tempObject = Object.fromEntries(
+        Object.entries(tempObject).filter(([_, v]) => v != null)
+      );
 
       try {
-            let {data} = await createResidentFragment(name, tempObject);
-            if (data) onCreate(name);
-            else setMessage("Failed to create Fragment");
+        let { data } = await createResidentFragment(name, tempObject);
+        if (data) onCreate(name);
+        else setMessage("Failed to create Fragment");
       } catch (error) {
         //@ts-ignore
         setMessage("Failed to create Fragment");
       }
     } else setCreationObject(errorData);
   };
-  
+
   return (
-      <div className="notesCreation-Container">
-          {creationObject && (
+    <div className="notesCreation-Container">
+      {creationObject && (
         <Form
           buttonLabel={"Add"}
           data={creationObject}
           onChange={handleChange}
           submit={handleSubmit}
         />
-        )}
-        {message && <div className="updateResident-footer">{message}</div>}
-      </div>
+      )}
+      {message && <div className="updateResident-footer">{message}</div>}
+    </div>
   );
 };
 

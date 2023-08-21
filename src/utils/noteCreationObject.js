@@ -21,7 +21,7 @@ export function getNoteCreationObject() {
         name: "note_1_0_NoteSubject",
         label: "Subject",
         value: undefined,
-        schema: Joi.string().max(30).required(),
+        schema: Joi.string().max(70).required(),
       },
     ],
     [

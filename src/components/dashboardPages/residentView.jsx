@@ -123,7 +123,17 @@ const UpdateResident = (props) => {
 
   const getFragments = async () => {
     let educationList = await getList(2);
+    let conatctTypeList = await getList(11);
+    console.log(conatctTypeList)
     const fragmentsArray = [
+      {
+        title: "Contacts",
+        name: "contacts",
+        items: [],
+        state: "View",
+        titleName: "ContactFirstName",
+        list : conatctTypeList
+      },
       {
         title: "Medication",
         name: "medication",
@@ -144,7 +154,7 @@ const UpdateResident = (props) => {
         items: [],
         state: "View",
         titleName: "EducationLevel",
-        educationList
+        list : educationList
       },
       {
         title: "Employment",
@@ -310,12 +320,12 @@ const UpdateResident = (props) => {
           resident &&
           !resident.IsActive && level3Access(user) && (
             <div>
-              <Link
+              {/* <Link
                 to={`/dashboard/exit-guest/${resident.ResID}`}
                 className="nav-item paddingRight01"
               >
                 <button className="b blackButton">Exit Guest</button>
-              </Link>
+              </Link> */}
               <Link
                 to={`/dashboard/create-admission/${resident.ResID}`}
                 className="nav-item"
@@ -483,7 +493,7 @@ const UpdateResident = (props) => {
                     <FragmentList
                       data={fragment.items}
                       title={fragment.titleName}
-                      list={fragment.educationList}
+                      list={fragment.list}
                       onManage={(data) => setFragmentToUpdated(fragment.name, data)}
                     />
                   ) : fragment.state === "Manage" ? 

@@ -10,9 +10,13 @@ const SideBar = ({ user }) => {
     <div className="sideBar-Container">
       <div className="sideBar-Sections">
         <div className="sideBar-Sections-UserInfo">
+        <Link to="/dashboard/">
         <img src={Logo} className="image" width={"50px"}/>
+        </Link>
         <div className="leftPadding">
+        <Link to="/dashboard/" style={{textDecoration:"none"}}>
         <h6 className="primary-text">Metro Hope Ministries</h6>
+        </Link>
 
         </div>
           {/* <h1 className="display-3 light-text">{user.firstName}</h1>

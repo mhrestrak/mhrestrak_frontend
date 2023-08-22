@@ -22,7 +22,7 @@ export function getLegalobject() {
         name: "legal_1_0_ChargesSummary",
         label: "Charges Summary",
         value: undefined,
-        schema: Joi.string().max(50),
+        schema: Joi.string().max(70),
       },
     ],
     [
@@ -33,7 +33,7 @@ export function getLegalobject() {
         name: "legal_2_0_ProbationCounty",
         label: "Probation County",
         value: undefined,
-        schema: Joi.string().max(50),
+        schema: Joi.string().max(70),
       },
       {
         type: "input",
@@ -42,7 +42,7 @@ export function getLegalobject() {
         name: "legal_2_1_ProbationOfficer",
         label: "Probation Officer",
         value: undefined,
-        schema: Joi.string().max(50),
+        schema: Joi.string().max(70),
       },
     ],[
       {
@@ -52,7 +52,7 @@ export function getLegalobject() {
         name: "legal_3_0_Contact",
         label: "Probation/Parole Contact",
         value: undefined,
-        schema: Joi.string().max(50),
+        schema: Joi.string().max(70),
       },
       {
         type: "yesNo",
@@ -87,7 +87,7 @@ export function getLegalobject() {
         name: "legal_4_2_CourtCasesPending",
         label: "Number of Court Cases Pending",
         value: undefined,
-        schema: Joi.string().max(50),
+        schema: Joi.string().max(70),
       },
     ],
     [

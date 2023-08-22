@@ -19,7 +19,7 @@ const FragmentList = ({data,title, onManage, list :educationList}) => {
             {data.map((entry) =>(
                 <div className="fragmentList-Item" key={entry.ID}>
                     <div className="fragmentList-Item-Title">
-                        {(educationList? getName(entry[title]) : (entry[title]? entry[title] : "Entry"))}
+                        {(educationList? getName(entry[title]) : (entry[title]? entry[title] : "-"))}
                     </div>
                     <button className="b" onClick={() => onManage(entry)}>{user.isCaseCoordinator? "Manage" : "View"}</button>
                 </div>

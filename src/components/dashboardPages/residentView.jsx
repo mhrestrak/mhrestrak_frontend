@@ -175,7 +175,7 @@ const UpdateResident = (props) => {
         name: "legal",
         items: [],
         state: "View",
-        titleName: "CaseNumber",
+        titleName: "CaseName",
       },
       //   { title: "Family", name: "family", items: [], state : "View", titleName : "" },
       //   { title: "Contacts", name: "contacts", items: [], state : "View", titleName : "" },

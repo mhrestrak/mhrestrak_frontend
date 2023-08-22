@@ -82,14 +82,14 @@ export function getobject() {
           size: "grow2",
           typeName: "text",
           name: "basic_2_0_SSN",
-          label: "SSN (##-##-####)",
+          label: "SSN (###-##-####)",
           value: undefined,
-          schema: Joi.string().required().max(12).regex(/^\d{2}-\d{2}-\d{4}$/).error(errors => {
+          schema: Joi.string().required().max(12).regex(/^\d{3}-\d{2}-\d{4}$/).error(errors => {
             errors.forEach(err => {
               console.log(err)
               switch (err.type) {
                 case "string.regex.base":
-                  err.message = "Invalid format  - (##-##-###)";
+                  err.message = "Invalid format  - (###-##-###)";
                   break;
                 default:
                   break;
@@ -213,7 +213,7 @@ export function getobject() {
           schema: Joi.string().max(30),
         },
         {
-          type: "select",
+          type: "input",
           size: "grow1",
           name: "basic_6_1_ResCity",
           label: "Resident City",
@@ -364,7 +364,7 @@ export function getobject() {
           schema: Joi.string().max(30),
         },
         {
-          type: "select",
+          type: "input",
           size: "grow1",
           name: "contact_3_1_City",
           label: "City",

@@ -5,32 +5,35 @@ import React from "react";
 import { useState } from "react";
 import { useEffect } from "react";
 import {
-  getResidentByID,
+  // getResidentByID,
   getAdmission,
-  updateResident,
-  getResidentFragment,
-  updateResidentPhase,
-  getResidentAdmissionRecords,
+  // updateResident,
+  // getResidentFragment,
+  // updateResidentPhase,
+  // getResidentAdmissionRecords,
 } from "../../services/residentService";
 
 import "react-confirm-alert/src/react-confirm-alert.css";
-import { Link } from "react-router-dom";
+// import { Link } from "react-router-dom";
 import Form from "../common/simpleForm";
-import { getResidentUpdateObject } from "../../utils/residentUpdateObject";
-import { getResidentNotes } from "../../services/residentFragments/frag_notes";
-import NotesList from "../../components/common/residentView_Common_Components/notesList";
-import CreateNote from "../../components/common/residentView_Common_Components/createNote";
-import FragmentList from "../../components/common/residentView_Common_Components/fragmentsList";
-import CreateFragment from "../../components/common/residentView_Common_Components/createFragment";
-import PhaseList from "../../components/common/residentView_Common_Components/phaseList";
-import PhaseChange from "../../components/common/residentView_Common_Components/phaseChange";
-import UpdateFragment from "../../components/common/residentView_Common_Components/updateFragment";
-import { getList } from "../../services/listService";
-import { getCurrentUser } from "../../services/authService";
-import { level3Access } from "../../utils/roles";
-import { toast } from "react-toastify";
-import AdmissionRecords from "../../components/common/residentView_Common_Components/AdmissionRecords";
+// import { getResidentUpdateObject } from "../../utils/residentUpdateObject";
+// import { getResidentNotes } from "../../services/residentFragments/frag_notes";
+// import NotesList from "../../components/common/residentView_Common_Components/notesList";
+// import CreateNote from "../../components/common/residentView_Common_Components/createNote";
+// import FragmentList from "../../components/common/residentView_Common_Components/fragmentsList";
+// import CreateFragment from "../../components/common/residentView_Common_Components/createFragment";
+// import PhaseList from "../../components/common/residentView_Common_Components/phaseList";
+// import PhaseChange from "../../components/common/residentView_Common_Components/phaseChange";
+// import UpdateFragment from "../../components/common/residentView_Common_Components/updateFragment";
+// import { getList } from "../../services/listService";
+// import { getCurrentUser } from "../../services/authService";
+// import { level3Access } from "../../utils/roles";
+// import { toast } from "react-toastify";
+// import AdmissionRecords from "../../components/common/residentView_Common_Components/AdmissionRecords";
 import { getAdmissionRecordobject } from "../../utils/admissionRecordObject";
+
+import { getList } from "../../services/listService";
+
 
 const AdmissionRecord = (props) => {
   const AdmissionID = window.location.pathname.split("/")[3];
@@ -42,7 +45,24 @@ const AdmissionRecord = (props) => {
     const getandSetResident = async () => {
       try {
         let { data: queriedAdmission } = await getAdmission(AdmissionID);
+        
+        
         if (queriedAdmission) {
+          let reasonForLeaving = await getList(9);
+          let dischargeLocations = await getList(10);
+          console.log("1", queriedAdmission)
+          reasonForLeaving.forEach((item) =>{
+            if(item.value == queriedAdmission.ReasonForLeaving){
+              queriedAdmission.ReasonForLeaving = item.name
+            }
+          })
+  
+           dischargeLocations.forEach((item) =>{
+            if(item.value == queriedAdmission.DischargeLocation){
+              queriedAdmission.DischargeLocation = item.name
+            }
+          })
+          
           let object = await getAdmissionRecordobject();
           object.forEach((row, i) => {
             row.forEach((item, index) => {
@@ -52,7 +72,6 @@ const AdmissionRecord = (props) => {
               }
             });
           });
-
           setAdmission(object);
         }
       } catch (error) {

@@ -312,7 +312,7 @@ const UpdateResident = (props) => {
   return (
     <div className="residentView-Container">
       <div className="residentView-Header">
-        <h2 className="primary">Resident View</h2>
+        <h2 className="primary">Resident Summary</h2>
         {admission && <h4>{`Phase ${resident?.RecentPhase}`}</h4>}
         {admission ? (
           <div className="residentView-activeBadge">Active</div>
@@ -463,7 +463,9 @@ const UpdateResident = (props) => {
       {resident && (
         <>
           <div className="residentView-SubTitle">
-            <h3 className="primary">Resident Fragments</h3>
+          <div className="residentView-Header">
+        <h2 className="primary">Resident Fragments</h2>
+        </div>
           </div>
           <div className="residentView-Sections">
             {Fragments.length > 0 ? (

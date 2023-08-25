@@ -172,7 +172,7 @@ export function getAdmissionRecordobject() {
     {
         type: "date",
         size: "grow1",
-        name: "admission_6_0_ateOut",
+        name: "admission_6_0_DateOut",
         label: "Date Out",
         value: null,
         schema: Joi.date(),

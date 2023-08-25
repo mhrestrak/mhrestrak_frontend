@@ -210,7 +210,7 @@ export function getobject() {
           label: "Resident State",
           options: [],
           value: undefined,
-          schema: Joi.string().max(30),
+          schema: Joi.string().max(70),
         },
         {
           type: "input",
@@ -219,7 +219,7 @@ export function getobject() {
           label: "Resident City",
           options: [],
           value: undefined,
-          schema: Joi.string().max(30),
+          schema: Joi.string().max(70),
         },
         {
           type: "input",
@@ -228,7 +228,7 @@ export function getobject() {
           name: "basic_6_2_ResCounty",
           label: "Resident County",
           value: undefined,
-          schema: Joi.string().max(30),
+          schema: Joi.string().max(70),
         },
       ],
       [

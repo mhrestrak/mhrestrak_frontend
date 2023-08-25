@@ -82,7 +82,7 @@ export function getContactObject() {
         options: [],
         // options: [],
         value: undefined,
-        schema: Joi.string().max(30),
+        schema: Joi.string().max(70),
       },
       {
         type: "input",
@@ -90,7 +90,7 @@ export function getContactObject() {
         name: "contact_3_1_City",
         label: "City",
         value: undefined,
-        schema: Joi.string().max(30),
+        schema: Joi.string().max(70),
       },
       {
         type: "input",

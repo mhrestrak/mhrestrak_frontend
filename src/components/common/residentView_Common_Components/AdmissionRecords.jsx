@@ -14,10 +14,7 @@ const AdmissionRecords = (props) => {
                         {`Admission ${i+1}`}
                     </div>
                     <div className="fragmentList-Item-Title center">
-                        {admission.ProgramInDate ? dateFormatter(admission.ProgramInDate) : admission.GuestInDate ? dateFormatter(admission.GuestInDate) : "-"}
-                    </div>
-                    <div className="fragmentList-Item-Title center">
-                        {admission.DateOut ? dateFormatter(admission.DateOut) : "-"}
+                        {admission.ProgramInDate ? dateFormatter(admission.ProgramInDate) : admission.GuestInDate ? dateFormatter(admission.GuestInDate) : "-"} - {admission.DateOut ? dateFormatter(admission.DateOut) : "-"}
                     </div>
                     <Link to={`/dashboard/admission-record/${admission.AdmissionID}`} className="nav-item">
                         <button className="b">View</button>

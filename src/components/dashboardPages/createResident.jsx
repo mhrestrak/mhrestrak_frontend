@@ -87,7 +87,29 @@ const CreateResident = () => {
   }, []);
 
   const handleChange = (json, name) => {
+    
     let itemName = name.split("_");
+
+    if(itemName[3] === "SSN"){
+      const formatNumber = (inputValue) =>{
+        let numericValue = inputValue.replace(/\D/g, ''); // Remove non-numeric characters
+        let formattedValue = "";
+    
+        for (let i = 0; i < numericValue.length; i++) {
+            if (i === 3 || i === 5) {
+                formattedValue += "-";
+            }
+            formattedValue += numericValue[i];
+        }
+    
+        if (formattedValue.length > 11) {
+            formattedValue = formattedValue.slice(0, 11);
+        }
+    
+        return formattedValue;
+    }
+    json.currentTarget.value = formatNumber(json.currentTarget.value)
+    }
 
     let item =
       data[itemName[0]][parseInt(itemName[1], 10)][parseInt(itemName[2], 10)];

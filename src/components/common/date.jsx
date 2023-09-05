@@ -7,7 +7,12 @@ import {
   KeyboardDatePicker
 } from "@material-ui/pickers";
 
-const Date = ({ name, label, error, ...rest }) => {
+const Date = ({ name, label, error, value, ...rest }) => {
+  console.log(value)
+  if(typeof value === "string"){
+    value = value.split('T')[0]
+  }
+  console.log(value)
   return (
     <div className="date">
       {label && <p className="date-label">{label}</p>}
@@ -23,6 +28,7 @@ const Date = ({ name, label, error, ...rest }) => {
               //   "aria-label": "change date",
               // }}
               clearable
+              value={value}
               {...rest}
             />
           </MuiPickersUtilsProvider>

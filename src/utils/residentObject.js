@@ -213,7 +213,7 @@ export function getobject() {
           schema: Joi.string().max(70),
         },
         {
-          type: "input",
+          type: "select",
           size: "grow1",
           name: "basic_6_1_ResCity",
           label: "Resident City",
@@ -224,8 +224,16 @@ export function getobject() {
         {
           type: "input",
           size: "grow1",
+          name: "basic_6_2_ResCity",
+          label: "Other City",
+          value: undefined,
+          schema: Joi.string().max(70),
+        },
+        {
+          type: "input",
+          size: "grow1",
           typeName: "text",
-          name: "basic_6_2_ResCounty",
+          name: "basic_6_3_ResCounty",
           label: "Resident County",
           value: undefined,
           schema: Joi.string().max(70),

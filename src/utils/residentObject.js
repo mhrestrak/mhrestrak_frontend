@@ -224,7 +224,7 @@ export function getobject() {
         {
           type: "input",
           size: "grow1",
-          name: "basic_6_2_ResCity",
+          name: "basic_6_2_OtherCity",
           label: "Other City",
           value: undefined,
           schema: Joi.string().max(70),

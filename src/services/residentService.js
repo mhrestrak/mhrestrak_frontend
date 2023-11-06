@@ -225,3 +225,24 @@ export function getDischargeLocationData(startDate, EndDate) {
   let url = `${apiEndpoint}/basic/DL_Report`;
   return http.post(url, {startDate,EndDate});
 }
+
+export function getActiveResidentsWithDevices(){
+  let url = `${apiEndpoint}/admission/records/activeresidentswithdevices`;
+  return http.get(url);
+}
+
+export function addDeviceToAdmission(data){
+  let url = `${apiEndpoint}/admission/addDeviceToAdmission`;
+  return http.put(url, data);
+}
+
+export function toggleCheckInResidentDevice(data){
+  let url = `${apiEndpoint}/admission/toggleCheckInResidentDevice`;
+  return http.put(url, data);
+}
+
+export function removeDeviceFromAdmission(data){
+  let url = `${apiEndpoint}/admission/removeDeviceFromAdmission`;
+  return http.put(url, data);
+}
+

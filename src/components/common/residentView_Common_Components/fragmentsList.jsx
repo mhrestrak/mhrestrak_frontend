@@ -1,7 +1,7 @@
 import React from "react";
 import { getCurrentUser } from "../../../services/authService";
 
-const FragmentList = ({data,title, onManage, list :educationList}) => {
+const FragmentList = ({data,title, onManage, list :educationList, filter}) => {
   let getName = (id) =>{
     let name = ""
     educationList.forEach((list) =>{
@@ -11,6 +11,10 @@ const FragmentList = ({data,title, onManage, list :educationList}) => {
   }
 
   let user = getCurrentUser()
+
+  if(filter){
+    if(filter !== "all") data = data.filter((frag) => frag.AdmissionID === filter)
+  }
 
   return (
     <div className="fragmentList-Container">

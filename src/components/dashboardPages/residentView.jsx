@@ -30,6 +30,7 @@ import { getCurrentUser } from "../../services/authService";
 import { level3Access } from "../../utils/roles";
 import { toast } from "react-toastify";
 import AdmissionRecords from "../../components/common/residentView_Common_Components/AdmissionRecords";
+import Select from "../../components/common/select";
 
 const UpdateResident = (props) => {
   const ResID = window.location.pathname.split("/")[3];
@@ -47,7 +48,8 @@ const UpdateResident = (props) => {
   const [phaseInfo, setPhaseInfo] = useState();
   const [PhaseState, setPhaseState] = useState("View");
   const [AdmissionHistory, setAdmissionHistory] = useState();
-
+  const [FragmentFilter, setFragmentFilter] = useState("all");
+  const [FragmentFilterDropdownOptions, setFragmentFilterDropdownOptions] = useState([{_id : "all", name : "All Fragments", value : "all"}]);
 
   useEffect(() => {
     const getandSetResident = async () => {
@@ -73,7 +75,7 @@ const UpdateResident = (props) => {
           //get Admissions
           const admissions = await getResidentAdmissionRecords(ResID);
           console.log("Admissions", admissions.data)
-          if(admissions.data?.length > 1) {
+          if(admissions.data?.length > 0) {
             admissions.data = admissions.data.filter((adms) => adms.DateOut ? true : false)
             if(admissions.data?.length > 0) setAdmissionHistory(admissions.data)
           }
@@ -88,6 +90,42 @@ const UpdateResident = (props) => {
     };
     getandSetResident();
   }, []);
+  
+  useEffect(() =>{
+    if(!AdmissionHistory) return 
+    let admissionData = AdmissionHistory.map((admission) =>(
+      {
+        _id : admission.AdmissionID,
+        out : admission.DateOut,
+        in : admission.ProgramInDate ? admission.ProgramInDate : admission.GuestInDate,
+      }
+    ))
+    admissionData.sort((a,b) =>  new Date(b.in) - new Date(a.in));
+    let dropdownOptions = [{_id : "all", name : "All Admissions", value : "all"}]
+    if(admission) dropdownOptions.push({
+      _id : "current", 
+      name : "Current Admission", 
+      value : admission.AdmissionID
+    })
+    console.log(dropdownOptions)
+    admissionData.forEach((add, i ) =>{
+      let string = `Admission ${admissionData.length-i} :  ${dateFormatter(add.in)} - ${dateFormatter(add.out)}`
+      dropdownOptions.push({
+        _id : add._id,
+        name : i === admissionData.length-1 ? add.out ? string : "Current Admission" :  string,
+        value : add._id
+      })
+    })
+    setFragmentFilterDropdownOptions(dropdownOptions)
+  }, [AdmissionHistory])
+
+  function dateFormatter(d){
+    if(typeof d === "string"){
+      d = d.split('T')[0]
+    }
+      d = new Date(d)
+      return (d.getMonth() + 1) + "/" +  d.getDate() + "/" +  d.getFullYear();
+  }
 
   useEffect(() => {
     //setProfile
@@ -466,8 +504,19 @@ const UpdateResident = (props) => {
       {resident && (
         <>
           <div className="residentView-SubTitle">
-          <div className="residentView-Header">
+          <div className="residentView-Header row">
         <h2 className="primary">Resident Fragments</h2>
+        <div className="checkin-Container-Section backgroundLight marginBottom roundedCorners paddingRight01 paddingLeft01 paddingVertical  alignCenter">
+        <h5>Filter Fragments by Admission</h5>
+        <div className="checkin-Contianer-Dropdown">
+          <Select 
+            // options={WithoutDevice.map((res) =>({_id : res.ResID, name : `${res.ResFirstName} ${res.ResLastName}`, value : res.AdmissionID}))}
+            options={FragmentFilterDropdownOptions}
+            onChange={(value) => setFragmentFilter(value.currentTarget.value)}
+            value={FragmentFilter}
+          />
+        </div>
+      </div>
         </div>
           </div>
           <div className="residentView-Sections">
@@ -476,7 +525,7 @@ const UpdateResident = (props) => {
                 <div className="residentView-sectionBox">
                   <div className="residentView-sectionBox-header">
                     <h4 className="primary">{fragment.title}</h4>
-                    {fragment.state === "View" ? level3Access(user) ?  (
+                    {fragment.state === "View" ? level3Access(user) ?  (resident.IsActive &&
                       <button
                         className="b secondayButton"
                         onClick={() =>
@@ -497,6 +546,7 @@ const UpdateResident = (props) => {
                   {fragment.state === "View" ? (
                     <FragmentList
                       data={fragment.items}
+                      filter={FragmentFilter}
                       title={fragment.titleName}
                       list={fragment.list}
                       onManage={(data) => setFragmentToUpdated(fragment.name, data)}
@@ -511,6 +561,7 @@ const UpdateResident = (props) => {
                       onCreate={fragmentCreated}
                       ResId={ResID}
                       name={fragment.name}
+                      AdmissionID={admission ? admission.AdmissionID : undefined}
                     />
                   )}
                 </div>

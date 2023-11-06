@@ -15,6 +15,7 @@ import UserManagement from "./dashboardPages/userManagement";
 import ManageUser from "./dashboardPages/manageUser";
 import MyProfile from "./dashboardPages/myProfile";
 import InviteUser from "./dashboardPages/inviteUser";
+import CheckIn from "./dashboardPages/checkIn";
 import ExitGuest from "./dashboardPages/exitGuest";
 import AdmissionRecord from "./dashboardPages/AdmissionRecord";
 
@@ -90,6 +91,10 @@ class Dashboard extends Component {
             <Route
               path="/dashboard/invite-user"
               component={InviteUser}
+            />
+            <Route
+              path="/dashboard/checkin"
+              component={CheckIn}
             />
             <Route path="/dashboard/" component={FindResident} />
           </Switch>

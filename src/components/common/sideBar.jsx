@@ -64,6 +64,15 @@ const SideBar = ({ user }) => {
             <h5 className="primary-text  rightspcae-2">User Management</h5>
           </div>
         </Link>}
+          <Link to="/dashboard/checkin" className="nav-item">
+          <div className="sideBar-Sections-Nav-Item">
+            <i
+              className="fa fa-mobile fa-3x primary-text"
+              aria-hidden="true"
+            ></i>
+            <h5 className="primary-text  rightspcae-2">Device Check In</h5>
+          </div>
+        </Link>
           <Link to="/logout" className="nav-item">
             <div className="sideBar-Sections-Nav-Item">
               <i

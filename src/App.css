@@ -50,6 +50,13 @@ body {
 .secondayButton {
   background-color:  var(--seconday-color);
 }
+.primaryOutlineButton {
+  background-color: #00000000;
+  color:#216160;
+  border: #216160;
+  border-width: 1px;
+  border-style:solid;
+}
 
 .greyText{
   color: var(--darkGrey);
@@ -258,6 +265,10 @@ body {
   color: #216160;
 }
 
+.danger-text {
+  color: rgb(219, 74, 74);
+}
+
 .sideBar-Sections-UserInfo {
   display: flex;
   flex-direction: row;
@@ -266,7 +277,7 @@ body {
 }
 
 .sideBar-Sections-Nav {
-  margin-top: 8em;
+  margin-top: 3em;
   display: flex;
 
   flex-direction: column;
@@ -845,6 +856,82 @@ body {
 
 /* ------End-------------*/
 
+/* ------Checkin View-------------*/
+
+.checkin-Container-Section {
+  display: flex;
+  flex-direction: row;
+  max-width: 1300px;
+  /* min-width: 1000px; */
+  justify-content: space-between;
+  gap: 2em;
+}
+
+.checkin-Container-Section-Individual {
+  display: flex;
+  background-color: var(--lghtGrey);
+  flex-direction: column;
+  /* justify-content: center; */
+  align-items: center;
+  padding: 3em;
+  flex: 1;
+  /* margin: 0.6em; */
+  border-radius: 1em;
+}
+
+.checkin-HeadTextContainer{
+display: flex;
+gap: 1em;
+}
+
+.checkin-Container-headSection {
+  display: flex;
+  max-width: 1300px;
+  /* min-width: 1000px; */
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.checkin-Contianer-Dropdown{
+  display: flex;
+  flex :1;
+  flex-direction: row;
+  gap :1em;
+  max-width: 40%;
+}
+.justifyCenter {
+  justify-content: center;
+}
+
+.checkin-button{
+  width: 170px;
+}
+
+/* ------End-------------*/
+
+/* ------Toggle Resident View-------------*/
+
+.toggle-Container{
+  display : flex;
+  width: 100%;
+}
+
+.toggle-List{
+  flex: 1;
+  overflow-y: auto;
+  /* max-height: 30vh; */
+  /* min-height: 25vh; */
+  margin : -1em;
+  margin-top : 1em
+}
+
+.toggle-buttonContainer{
+  display: flex;
+  gap :2em
+}
+
+/* ------End-------------*/
 /* ------REsident View-------------*/
 
 .residentView-Container {
@@ -963,6 +1050,7 @@ body {
   justify-content: stretch;
   align-items: center; */
 }
+
 .multiItem-container-Items {
   display: flex;
   justify-content: center;
@@ -1210,7 +1298,7 @@ body {
    padding-bottom: 0.5em;
    flex :1;
    /* max-width: 50px; */
-   background-color: var(--lghtGrey);
+   /* background-color: var(--lghtGrey); */
    box-shadow: 2px 2px 6px 0px #d6d6d6;
  
    /* margin-bottom : 1em; */
@@ -1393,3 +1481,40 @@ body {
   padding-left: 1em;
 }
 
+.marginVertical{
+  margin-top: 2em;
+  margin-bottom: 2em;
+}
+
+.marginBottom{
+  margin-bottom: 2em;
+}
+
+.paddingVertical{
+  padding-top: 1.5em;
+  padding-bottom: 1.5em;
+}
+
+.fullHeight{
+  height : 100%
+}
+
+.backgroundWhite {
+  background-color: white;
+}
+
+.backgroundLight {
+  background-color: var(--lghtGrey);
+}
+
+.roundedCorners {
+  border-radius: 15px;
+}
+
+.alignCenter {
+  align-items: center;
+}
+
+.row{
+  flex-direction: row;
+}

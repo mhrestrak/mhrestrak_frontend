@@ -23,7 +23,7 @@ import { getContactObject } from "../../../utils/contactObject";
 // { title: "Employment", name: "employment", items: [], state : "View", titleName : "JobTitle" },
 // { title: "Medical", name: "medical", items: [], state : "View", titleName : "Illness" },
 // { title: "Legal", name: "legal", items: [], state : "View", titleName : "CaseName" },
-const CreateFragment = ({ onCreate, ResId, name, ...props }) => {
+const CreateFragment = ({ onCreate, ResId, AdmissionID,name, ...props }) => {
   const [creationObject, setCreationObject] = useState();
   const [message, setMessage] = useState("");
 
@@ -86,6 +86,7 @@ const CreateFragment = ({ onCreate, ResId, name, ...props }) => {
       let tempObject = {
         ResID: ResId,
         ID: uniqid(),
+        AdmissionID,
         // LastModifiedDateTime: name !== "education"  ? new Date() : undefined,
       };
       creationObject.forEach((row) => {

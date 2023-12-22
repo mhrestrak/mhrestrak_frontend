@@ -31,12 +31,14 @@ import { level3Access } from "../../utils/roles";
 import { toast } from "react-toastify";
 import AdmissionRecords from "../../components/common/residentView_Common_Components/AdmissionRecords";
 import Select from "../../components/common/select";
+import DisciplinaryClipboard from "../../components/common/residentView_Common_Components/disciplinaryClipboard";
 
 const UpdateResident = (props) => {
   const ResID = window.location.pathname.split("/")[3];
   const user = getCurrentUser()
   const [resident, setResident] = useState();
   const [admission, setAdmission] = useState();
+  const [totalPoints, setTotalPoints] = useState(0);
   const [profileUpdateData, setProfileUpdateData] = useState(
     getResidentUpdateObject()
   );
@@ -156,6 +158,18 @@ const UpdateResident = (props) => {
       }
       console.log(phaseData)
       setPhaseInfo(phaseData);
+
+      let tempPoints = admission.DisciplinaryPoints;
+      if(tempPoints) tempPoints = JSON.parse(tempPoints)
+      if (tempPoints?.length > 0) {
+        let tempTotal = 0;
+        tempPoints.forEach((temp) => {
+          tempTotal = tempTotal + temp.points;
+        });
+        setTotalPoints(tempTotal);
+      } else {
+        setTotalPoints(0);
+      }
     }
   }, [admission]);
 
@@ -355,6 +369,7 @@ const UpdateResident = (props) => {
       <div className="residentView-Header">
         <h2 className="primary">Resident Summary</h2>
         {admission && <h4>{`Phase ${resident?.RecentPhase}`}</h4>}
+        {(totalPoints >= 21) &&  <div className="residentView-DangerBadge">Disciplinary Points {totalPoints}</div>}
         {admission ? (
           <div className="residentView-activeBadge">Active</div>
         ) : (
@@ -481,8 +496,8 @@ const UpdateResident = (props) => {
           </div>
         )}
         {phaseInfo && (
-          <div className="residentView-sectionBox">
-            <div className="residentView-sectionBox-header">
+              <div className="residentView-sectionBox">
+          <div className="residentView-sectionBox-header">
               <h4 className="primary">Current Admission - Phase History</h4>
             </div>
             <PhaseList data={phaseInfo} modifyPhase={updatePhase}/>
@@ -496,8 +511,13 @@ const UpdateResident = (props) => {
             </div>
             <AdmissionRecords data={AdmissionHistory}/>
           </div>
-          <div className="residentView-sectionBox-Placeholder"/>
+          {/* <div className="residentView-sectionBox-Placeholder"/> */}
         </>
+          )
+        }
+        {
+          admission && (
+            <DisciplinaryClipboard ResID={ResID} updateed={(add) => setAdmission(add)}/>
           )
         }
       </div>

@@ -105,6 +105,15 @@ export async function exitResident(admission) {
   }
 }
 
+export async function updateResidentDisciplinaryPoints(admission){
+  let url = `${apiEndpoint}/admission/updateResidentDisciplinaryPoints`;
+  try {
+    return await http.put(url, admission);
+  } catch (error) {
+    return { error };
+  }
+}
+
 export async function CreateResidentWithSections(data) {
   if (data.basic.SSN) {
     try {

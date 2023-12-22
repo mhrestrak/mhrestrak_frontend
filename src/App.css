@@ -12,6 +12,7 @@ body {
   --grey : #c7c7c7;
   --lghtGrey : #FAFAFA;
   --darkGrey : #818181;
+  --danger : rgb(219, 74, 74);
 }
 
 .b {
@@ -447,7 +448,6 @@ body {
   /* flex-grow: 1; */
   max-height: 70vh;
   overflow-y: scroll;
-  /* background-color: black; */
 }
 
 .findResident-Container-searchSection {
@@ -961,6 +961,19 @@ gap: 1em;
   display: flex;
   border-radius: 30em;
 }
+
+.residentView-DangerBadge {
+  height : 2.7em;
+  /* width : 9em; */
+  background-color: var(--danger);
+  color: #FAFAFA;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  padding-left: 1.5em;
+  padding-right: 1.5em;
+  border-radius: 30em;
+}
 .residentView-Sections{
   display :flex;
   flex-wrap: wrap;
@@ -1167,6 +1180,62 @@ gap: 1em;
 
 /* ------End-------------*/
 
+/* -------Serach Resident---------*/
+
+.searchResident-Container {
+  display: flex;
+  /* flex-wrap: wrap; */
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.searchResident-Container-searchSection {
+  display: flex;
+  /* flex-wrap: wrap; */
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+
+.searchResident-Container-searchSection-searchBox{
+  width : 20em;
+}
+
+.searchResident-Container-searchSection-searchButton{
+  padding-left: 2em;
+  padding-bottom: 1em;
+}
+
+.searchResident-scrollable {
+  /* flex-grow: 1; */
+  max-height: 70vh;
+  width : 80%;
+  overflow-y: scroll;
+}
+
+.searchResident-Container-data{
+  /* padding: 1em; */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.searchResident-NotFound-container{
+  background-color: var(--lghtGrey);
+  height : 18em;
+  width : 18em;
+  padding : 2em;
+  border-radius: 15px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around  ;
+}
+
+
+/* ------End-------------*/
+
 /* -------Simple Form ---------*/
 
 .simpleForm-Container-formSection {
@@ -1296,6 +1365,25 @@ gap: 1em;
    padding-right: 1em;
    padding-top: 0.5em;
    padding-bottom: 0.5em;
+   flex :1;
+   /* max-width: 50px; */
+   /* background-color: var(--lghtGrey); */
+   box-shadow: 2px 2px 6px 0px #d6d6d6;
+ 
+   /* margin-bottom : 1em; */
+   border-radius: 10px;
+ }
+ 
+ .fragmentList-Item-NoMargin {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+   margin-top: 1em;
+   padding-left: 1em;
+   padding-right: 1em;
+   padding-top: 1em;
+   padding-bottom: 1em;
    flex :1;
    /* max-width: 50px; */
    /* background-color: var(--lghtGrey); */
@@ -1479,6 +1567,10 @@ gap: 1em;
 
 .paddingLeft01 {
   padding-left: 1em;
+}
+
+.paddingTop01 {
+  padding-top: 1em;
 }
 
 .marginVertical{

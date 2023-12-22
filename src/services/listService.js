@@ -10,6 +10,7 @@ export async function getList(id) {
       _id: data.ListValueID,
       name: data.ListValue,
       value: data.ListValueID,
+      subValue : data.ListSubValue
     }));
   } else {
     return [];

@@ -34,7 +34,16 @@ export function getAdmissionobject() {
           name: "admission_1_0_WhoReferred",
           label: "Who Referred",
           value: undefined,
-          schema: Joi.string().max(30),
+          schema: Joi.string().max(50),
+        },
+        {
+          type: "input",
+          typeName: "text",
+          size: "grow1",
+          name: "admission_1_0_WhoReferredRelationship",
+          label: "Who Referred - Relationship",
+          value: undefined,
+          schema: Joi.string().max(36),
         },
       {
         type: "select",

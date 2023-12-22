@@ -204,7 +204,7 @@ class FindResident extends Component {
                 <div className="findResident-Container-data-Item-ind grow2 bold">Name</div>
                 <div className="findResident-Container-data-Item-ind grow1 center bold">Status</div>
                 <div className="findResident-Container-data-Item-ind grow1 center bold">Phase</div>
-                <div className="findResident-Container-data-Item-ind grow2 center bold">SSN</div>
+                <div className="findResident-Container-data-Item-ind grow1 center bold">No. of Stays</div>
                 <div className="findResident-Container-data-Item-ind grow1"/>
             </div>
           </div>
@@ -233,8 +233,8 @@ class FindResident extends Component {
                   <div className="findResident-Container-data-Item-ind grow1 center">{res.RecentPhase}</div> :
                   <div className="findResident-Container-data-Item-ind grow1 center">-</div>
                 }
-                <div className="findResident-Container-data-Item-ind grow2 center">
-                  {res.SSN ? res.SSN :"-"}
+                <div className="findResident-Container-data-Item-ind grow1 center">
+                  {res.admissions ? res.admissions : "-"}
                 </div>
                 <div className="findResident-Container-data-Item-ind grow1">
                 <Link

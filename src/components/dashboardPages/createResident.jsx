@@ -31,6 +31,7 @@ import {
 } from "react-circular-progressbar";
 import 'react-circular-progressbar/dist/styles.css';
 import { toast } from "react-toastify";
+import ResidentSearch from  "../../components/residentSearch";
 
 
 const CreateResident = () => {
@@ -63,6 +64,8 @@ const CreateResident = () => {
     medical: [],
     medication: [],
   });
+  const [searchExisting, setSearchExisting] = useState(true)
+
   const [activeSession, setActiiveSession] = useState("basic");
 
   const [data, setData] = useState(getobject());
@@ -347,7 +350,7 @@ const CreateResident = () => {
     }
     return false;
   })[0];
-
+  if(searchExisting) return <ResidentSearch continueToCreate={setSearchExisting}/>
   return (
     <div className="createResident-Container">
       <div className="createResident-Container-headSection">

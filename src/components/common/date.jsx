@@ -7,12 +7,9 @@ import {
   KeyboardDatePicker
 } from "@material-ui/pickers";
 
-const Date = ({ name, label, error, value, ...rest }) => {
-  console.log(value)
-  if(typeof value === "string"){
-    value = value.split('T')[0]
-  }
-  console.log(value)
+const Date1 = ({ name, label, error, value, ...rest }) => {
+  if(typeof value === "string") value = value.split('T')[0]
+  
   return (
     <div className="date">
       {label && <p className="date-label">{label}</p>}
@@ -29,6 +26,20 @@ const Date = ({ name, label, error, value, ...rest }) => {
               // }}
               clearable
               value={value}
+              // onChange={(data) => {
+              //   if(data !== null){
+              //     if(data?.toString() !== "Invalid Date"){
+              //       return onChange(`${data.getFullYear()}-${data.getMonth()+1}-${data.getDate()}`)
+              //       let year = data.getFullYear() === data.getUTCFullYear() ? data.getFullYear() : data.getFullYear() + 1
+              //       let date = data.getDate() === data.getUTCDate() ? data.getDate() : data.getDate() + 1
+              //       let month = data.getMonth() === data.getUTCMonth() ? data.getMonth() : data.getMonth() + 1
+              //       // console.log(data.getDate(), data.getMonth(), data.getFullYear(), data.toISOString().split('T')[0], "dddddddd")
+              //       onChange(new Date(year, month, date).to)
+              //     }
+              //   }
+              // }
+              
+            // }
               {...rest}
             />
           </MuiPickersUtilsProvider>
@@ -39,4 +50,4 @@ const Date = ({ name, label, error, value, ...rest }) => {
   );
 };
 
-export default Date;
+export default Date1;

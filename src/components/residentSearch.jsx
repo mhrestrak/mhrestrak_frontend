@@ -65,7 +65,55 @@ const ResidentSearch = (props) => {
             </div>
           </div>
         )}
-        {searchResult?.length > 0 && (
+        {searchResult?.length > 0 && 
+        <div className="searchResident-scrollable">
+        <div className="searchResident-Container-data">
+        <div className="findResident-Container-data-bold">
+            <div id={uniqId()} className="findResident-Container-data-header">
+                <div className="findResident-Container-data-Item-ind grow2 bold">Name</div>
+                <div className="findResident-Container-data-Item-ind grow1 center bold">Status</div>
+                <div className="findResident-Container-data-Item-ind grow1 center bold">Phase</div>
+                <div className="findResident-Container-data-Item-ind grow1 center bold">No. of Stays</div>
+                <div className="findResident-Container-data-Item-ind grow1"/>
+            </div>
+          </div>
+          {searchResult.map((res) =>(
+          <div id={uniqId()} className="findResident-Container-data-Item">
+          <div className="findResident-Container-data-Item-ind grow2">
+            {res.ResLastName || res.ResFirstName
+              ? (res.ResLastName ? res.ResLastName : "") +
+                (res.ResFirstName ? " " + res.ResFirstName : "")
+              : "No Name"}
+          </div>
+          {res.IsActive ?
+            <div className="findResident-Container-data-Item-ind grow1 center">
+            <div className="residentView-activeBadge grow1">Active</div>
+            </div>
+            :
+            <div className="findResident-Container-data-Item-ind grow1 center">Inactive</div>
+          }
+          {res.IsActive ? 
+            <div className="findResident-Container-data-Item-ind grow1 center">{res.RecentPhase}</div> :
+            <div className="findResident-Container-data-Item-ind grow1 center">-</div>
+          }
+          <div className="findResident-Container-data-Item-ind grow1 center">
+            {res.admissions ? res.admissions : "-"}
+          </div>
+          <div className="findResident-Container-data-Item-ind grow1">
+          <Link
+                to={`/dashboard/resident/${res.ResID}`}
+                className="nav-item"
+              >
+          <button className="b">
+            Manage
+          </button>
+              </Link>
+              </div>
+        </div>)
+        )}
+        </div></div>
+        }
+        {/* {searchResult?.length > 0 && (
           <div className="searchResident-scrollable">
             <div className="searchResident-Container-data">
               {searchResult.map((res) => (
@@ -91,7 +139,7 @@ const ResidentSearch = (props) => {
               ))}
             </div>
           </div>
-        )}
+        )} */}
       </div>
     </div>
   );

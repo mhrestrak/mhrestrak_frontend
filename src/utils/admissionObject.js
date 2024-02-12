@@ -40,7 +40,7 @@ export function getAdmissionobject() {
           type: "input",
           typeName: "text",
           size: "grow1",
-          name: "admission_1_0_WhoReferredRelationship",
+          name: "admission_1_1_WhoReferredRelationship",
           label: "Who Referred - Relationship",
           value: undefined,
           schema: Joi.string().max(36),
@@ -48,7 +48,7 @@ export function getAdmissionobject() {
       {
         type: "select",
         size: "grow1",
-        name: "admission_1_1_RecentPhase",
+        name: "admission_1_2_RecentPhase",
         label: "Phase",
         options : [
           {_id: "0", name: "0",value: "0"},

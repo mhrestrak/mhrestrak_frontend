@@ -8,8 +8,8 @@ import {
 } from "@material-ui/pickers";
 
 const Date1 = ({ name, label, error, value, ...rest }) => {
-  if(typeof value === "string") value = value.split('T')[0]
-  
+  // if(typeof value === "string") value = value.split('T')[0]
+  console.log(value)
   return (
     <div className="date">
       {label && <p className="date-label">{label}</p>}
@@ -24,7 +24,8 @@ const Date1 = ({ name, label, error, value, ...rest }) => {
               // KeyboardButtonProps={{
               //   "aria-label": "change date",
               // }}
-              clearable
+              clearable={false}
+              allowKeyboardControl={false}
               value={value}
               // onChange={(data) => {
               //   if(data !== null){

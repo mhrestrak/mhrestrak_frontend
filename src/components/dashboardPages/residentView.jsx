@@ -122,9 +122,6 @@ const UpdateResident = (props) => {
   }, [AdmissionHistory])
 
   function dateFormatter(d){
-    if(typeof d === "string"){
-      d = d.split('T')[0]
-    }
       d = new Date(d)
       return (d.getMonth() + 1) + "/" +  d.getDate() + "/" +  d.getFullYear();
   }
@@ -357,9 +354,6 @@ const UpdateResident = (props) => {
   }
 
   function dateFormatter(d) {
-    if(typeof d === "string"){
-      d = d.split('T')[0]
-    }
     d = new Date(d);
     return (d.getMonth() + 1) + "/" +  d.getDate()+ "/" + d.getFullYear();
   }

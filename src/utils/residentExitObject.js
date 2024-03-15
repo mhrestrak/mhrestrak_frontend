@@ -9,15 +9,7 @@ export async function getResidentExitObject() {
       {
         type: "date",
         size: "grow1",
-        name: "exit_0_0_GuestInDate",
-        label: "Guest In Date",
-        value: null,
-        schema: Joi.date(),
-      },
-      {
-        type: "date",
-        size: "grow1",
-        name: "exit_0_1_DateOut",
+        name: "exit_0_0_DateOut",
         label: "Date Out",
         value: null,
         schema: Joi.date(),
@@ -25,7 +17,7 @@ export async function getResidentExitObject() {
       {
         type: "date",
         size: "grow1",
-        name: "exit_0_2_PossessionsRemovedDate",
+        name: "exit_0_1_PossessionsRemovedDate",
         label: "Possessions Removed Date",
         value: null,
         schema: Joi.date().allow(null),

@@ -36,13 +36,6 @@ const UpdateResident = (props) => {
         tempData.activeAdmission = admission;
         tempData.formStructure = await getResidentExitObject();
         tempData.resident = user.data;
-        console.log(tempData.activeAdmission);
-        tempData.formStructure[0][0]["value"] = 
-          new Date(Date.UTC(
-            parseInt(tempData.activeAdmission.GuestInDate.substring(0, 4)),
-            parseInt(tempData.activeAdmission.GuestInDate.substring(5, 7)) - 1, // Subtract 1 from the month since it's zero-based
-            parseInt(tempData.activeAdmission.GuestInDate.substring(8, 10))
-          ));
         tempData.resFound = 2;
         tempData.admissionFound = 2;
         setData(tempData);

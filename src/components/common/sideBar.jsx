@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 // @ts-ignore
 import Logo from "../../images/LogoMin.png"
-import { level2Access, level4Access } from "../../utils/roles";
+import { level1Access, level3Access, level4Access } from "../../utils/roles";
 
 const SideBar = ({ user }) => {
   console.log(user)
@@ -33,7 +33,7 @@ const SideBar = ({ user }) => {
               <h5 className="primary-text rightspcae-2">Residents</h5>
             </div>
           </Link>
-          {level2Access(user) && 
+          {level3Access(user) && 
           <Link to="/dashboard/create-resident" className="nav-item">
           <div className="sideBar-Sections-Nav-Item">
             <i
@@ -43,7 +43,7 @@ const SideBar = ({ user }) => {
             <h5 className="primary-text  rightspcae-2">Create Resident</h5>
           </div>
         </Link>}
-              {level4Access(user) && 
+              {level1Access(user) && 
           <Link to="/dashboard/reports" className="nav-item">
             <div className="sideBar-Sections-Nav-Item">
               <i
@@ -54,6 +54,17 @@ const SideBar = ({ user }) => {
             </div>
           </Link>
           }
+            {level1Access(user) && 
+          <Link to="/dashboard/checkin" className="nav-item">
+          <div className="sideBar-Sections-Nav-Item">
+            <i
+              className="fa fa-mobile fa-3x primary-text"
+              aria-hidden="true"
+            ></i>
+            <h5 className="primary-text  rightspcae-2">Device Check In</h5>
+          </div>
+        </Link>
+        }
           {level4Access(user) && 
           <Link to="/dashboard/user-management" className="nav-item">
           <div className="sideBar-Sections-Nav-Item">
@@ -64,15 +75,6 @@ const SideBar = ({ user }) => {
             <h5 className="primary-text  rightspcae-2">User Management</h5>
           </div>
         </Link>}
-          <Link to="/dashboard/checkin" className="nav-item">
-          <div className="sideBar-Sections-Nav-Item">
-            <i
-              className="fa fa-mobile fa-3x primary-text"
-              aria-hidden="true"
-            ></i>
-            <h5 className="primary-text  rightspcae-2">Device Check In</h5>
-          </div>
-        </Link>
           <Link to="/logout" className="nav-item">
             <div className="sideBar-Sections-Nav-Item">
               <i

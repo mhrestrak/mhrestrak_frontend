@@ -1,7 +1,10 @@
 import React from "react";
 import Date1 from "../date";
+import { level2Access } from "../../../utils/roles";
+import { getCurrentUser } from "../../../services/authService";
 
 const PhaseList = (props) => {
+  const user = getCurrentUser()
   const data = props.data
   
 
@@ -17,7 +20,7 @@ const PhaseList = (props) => {
                     <div className="fragmentList-Item-Title center">
                         {phase.inDate ? dateFormatter(phase.inDate) : "-"}
                     </div>
-                    {((data.length >1? true : i !== 0) && i !== (data.length - 1))  ?
+                    {((data.length >1? true : i !== 0) && i !== (data.length - 1)) && level2Access(user)  ?
                       <Date1
                       onChange={(json) => {
                         props.modifyPhase(json, i)

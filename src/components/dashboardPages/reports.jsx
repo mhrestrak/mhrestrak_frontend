@@ -4,8 +4,11 @@ import React from "react";
 import { useState } from "react";
 import { CSVLink } from "react-csv";
 import { getActiveResidents, getDischargeLocationData } from "../../services/residentService";
+import { getCurrentUser } from "../../services/authService";
+import { level2Access } from "../../utils/roles";
 
 function Reports(props) {
+  const user = getCurrentUser()
   let minusoneMonth = new Date()
   minusoneMonth.setDate(minusoneMonth.getDate()-30)
   const [DL_Dates, setDL_Dates] = useState({
@@ -214,6 +217,7 @@ const AppKey = "pamhzojpeq49ubv"
           )}
         </div>
       </div>
+      {level2Access(user) &&
       <div className="reports-Container-Section">
         <div className="reports-Container-Section-Individual">
           <div className="reports-Container-Section-Individual-Text">
@@ -248,6 +252,7 @@ const AppKey = "pamhzojpeq49ubv"
               )}
         </div>
       </div>
+      }
       {message && <div className="updateResident-footer">{message}</div>}
     </div>
   );

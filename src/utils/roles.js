@@ -24,7 +24,7 @@ export function level2Access(user) {
 }
 
 export function level3Access(user) {
-  if (user.isCaseCoordinator || user.isCenterCoordinator || user.isAdmin) {
+  if (user.isIntakeCoordinator || user.isCenterCoordinator || user.isAdmin) {
     return true;
   }
   return false;

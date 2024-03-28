@@ -138,7 +138,7 @@ const UpdateFragment = ({ data, onUpdate, name, ...props }) => {
           submit={handleSubmit}
           secondaryAction={deleteFragment}
           secondaryActionLabel="Delete"
-          readOnly={user.isCaseCoordinator ||  user.isAdmin ? false : true}
+          readOnly={(user.isCaseCoordinator ||  user.isAdmin || user.isCenterCoordinator) ? false : true}
         />
       )}
       {message && <div className="updateResident-footer">{message}</div>}

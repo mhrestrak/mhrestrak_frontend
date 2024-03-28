@@ -27,7 +27,7 @@ import PhaseChange from "../../components/common/residentView_Common_Components/
 import UpdateFragment from "../../components/common/residentView_Common_Components/updateFragment";
 import { getList } from "../../services/listService";
 import { getCurrentUser } from "../../services/authService";
-import { level3Access } from "../../utils/roles";
+import { level1Access, level2Access, level3Access } from "../../utils/roles";
 import { toast } from "react-toastify";
 import AdmissionRecords from "../../components/common/residentView_Common_Components/AdmissionRecords";
 import Select from "../../components/common/select";
@@ -61,28 +61,41 @@ const UpdateResident = (props) => {
         if (queriedResident) {
           console.log(queriedResident)
           setResident(queriedResident);
-
+          
           //get Admission
+          let tempAdmission;
           if (queriedResident.IsActive) {
             let { data: queriedAdmission } = await getAdmission(ResID);
-            console.log(queriedAdmission)
+            tempAdmission = queriedAdmission
             if (queriedAdmission) setAdmission(queriedAdmission);
           }
           //get Notes
-          const notes = await getResidentNotes(ResID);
-          if (notes.data?.length > 0) setNotes(notes.data);
-          //   if(notes.data?.length >0) setNotes([])
-          else setNotes([]);
-
-          //get Admissions
-          const admissions = await getResidentAdmissionRecords(ResID);
-          console.log("Admissions", admissions.data)
-          if(admissions.data?.length > 0) {
-            admissions.data = admissions.data.filter((adms) => adms.DateOut ? true : false)
-            if(admissions.data?.length > 0) setAdmissionHistory(admissions.data)
+          if(level1Access(user)){
+            const notes = await getResidentNotes(ResID);
+            if (notes.data?.length > 0) setNotes(notes.data);
+            //   if(notes.data?.length >0) setNotes([])
+            else setNotes([]);
           }
 
-          getFragments();
+          //get Admissions
+          if(level2Access(user)){
+            const admissions = await getResidentAdmissionRecords(ResID);
+            console.log("Admissions", admissions.data)
+            if(admissions.data?.length > 0) {
+              admissions.data = admissions.data.filter((adms) => adms.DateOut ? true : false)
+              if(admissions.data?.length > 0) setAdmissionHistory(admissions.data)
+            }
+        }else{
+          if(tempAdmission) {
+            //   setFragmentFilterDropdownOptions([{
+              //   _id : "current", 
+              //   name : "Current Admission", 
+              //   value : tempAdmission.AdmissionID
+              // }])
+              setFragmentFilter(tempAdmission.AdmissionID)
+            }
+          }
+          if(level2Access(user) || tempAdmission) getFragments();
         } else {
           //
         }
@@ -404,7 +417,7 @@ const UpdateResident = (props) => {
                 onChange={handleProfileFieldUpdation}
                 submit={handleProfileUpdateSubmit}
                 buttonLabel={"Update"}
-                readOnly={!level3Access(user)}
+                readOnly={!level2Access(user)}
               ></Form>
               {ProfileUpdatemessage && (
                 <div className="updateResident-footer">
@@ -463,16 +476,18 @@ const UpdateResident = (props) => {
                     phaseInfo[phaseInfo.length - 1].inDate
                   )}`}</p>
                 </div>
-                {level3Access(user) &&
+                {level2Access(user) &&
                 <div className="PhaseManagement-buttons">
-                  <Link to={`/dashboard/exit/${ResID}`} className="nav-item">
-                    <button
-                      className="b blackButton"
-                      onClick={() => console.log("Df")}
-                    >
-                      Exit Resident
-                    </button>
-                  </Link>
+                  {level3Access(user) &&
+                    <Link to={`/dashboard/exit/${ResID}`} className="nav-item">
+                      <button
+                        className="b blackButton"
+                        onClick={() => console.log("Df")}
+                      >
+                        Exit Resident
+                      </button>
+                    </Link>
+                  }
                   <button className="b" onClick={() => setPhaseState("Change")}>
                     Change Phase
                   </button>
@@ -515,23 +530,25 @@ const UpdateResident = (props) => {
           )
         }
       </div>
-      {resident && (
+      {resident && (level2Access(user) || admission) &&(
         <>
           <div className="residentView-SubTitle">
-          <div className="residentView-Header row">
-        <h2 className="primary">Resident Fragments</h2>
-        <div className="checkin-Container-Section backgroundLight marginBottom roundedCorners paddingRight01 paddingLeft01 paddingVertical  alignCenter">
-        <h5>Filter Fragments by Admission</h5>
-        <div className="checkin-Contianer-Dropdown">
-          <Select 
-            // options={WithoutDevice.map((res) =>({_id : res.ResID, name : `${res.ResFirstName} ${res.ResLastName}`, value : res.AdmissionID}))}
-            options={FragmentFilterDropdownOptions}
-            onChange={(value) => setFragmentFilter(value.currentTarget.value)}
-            value={FragmentFilter}
-          />
+            <div className="residentView-Header row">
+          <h2 className="primary">Resident Fragments</h2>
+            {level2Access(user) && 
+          <div className="checkin-Container-Section backgroundLight marginBottom roundedCorners paddingRight01 paddingLeft01 paddingVertical  alignCenter">
+          <h5>Filter Fragments by Admission</h5>
+          <div className="checkin-Contianer-Dropdown">
+            <Select 
+              // options={WithoutDevice.map((res) =>({_id : res.ResID, name : `${res.ResFirstName} ${res.ResLastName}`, value : res.AdmissionID}))}
+              options={FragmentFilterDropdownOptions}
+              onChange={(value) => setFragmentFilter(value.currentTarget.value)}
+              value={FragmentFilter}
+            />
+          </div>
         </div>
-      </div>
-        </div>
+            }
+          </div>
           </div>
           <div className="residentView-Sections">
             {Fragments.length > 0 ? (
@@ -539,7 +556,7 @@ const UpdateResident = (props) => {
                 <div className="residentView-sectionBox">
                   <div className="residentView-sectionBox-header">
                     <h4 className="primary">{fragment.title}</h4>
-                    {fragment.state === "View" ? level3Access(user) ?  (resident.IsActive &&
+                    {fragment.state === "View" ? (user.isCaseCoordinator ||  user.isAdmin || user.isCenterCoordinator) ?  (resident.IsActive &&
                       <button
                         className="b secondayButton"
                         onClick={() =>

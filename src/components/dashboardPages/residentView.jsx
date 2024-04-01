@@ -31,14 +31,16 @@ import { level1Access, level2Access, level3Access } from "../../utils/roles";
 import { toast } from "react-toastify";
 import AdmissionRecords from "../../components/common/residentView_Common_Components/AdmissionRecords";
 import Select from "../../components/common/select";
-import DisciplinaryClipboard from "../../components/common/residentView_Common_Components/disciplinaryClipboard";
+//===========================[ DisciplinaryPoints ]===========================
+// import DisciplinaryClipboard from "../../components/common/residentView_Common_Components/disciplinaryClipboard";
 
 const UpdateResident = (props) => {
   const ResID = window.location.pathname.split("/")[3];
   const user = getCurrentUser()
   const [resident, setResident] = useState();
   const [admission, setAdmission] = useState();
-  const [totalPoints, setTotalPoints] = useState(0);
+  //===========================[ DisciplinaryPoints ]===========================
+  // const [totalPoints, setTotalPoints] = useState(0);
   const [profileUpdateData, setProfileUpdateData] = useState(
     getResidentUpdateObject()
   );
@@ -169,17 +171,19 @@ const UpdateResident = (props) => {
       console.log(phaseData)
       setPhaseInfo(phaseData);
 
-      let tempPoints = admission.DisciplinaryPoints;
-      if(tempPoints) tempPoints = JSON.parse(tempPoints)
-      if (tempPoints?.length > 0) {
-        let tempTotal = 0;
-        tempPoints.forEach((temp) => {
-          tempTotal = tempTotal + temp.points;
-        });
-        setTotalPoints(tempTotal);
-      } else {
-        setTotalPoints(0);
-      }
+      //===========================[ DisciplinaryPoints ]===========================
+
+      // let tempPoints = admission.DisciplinaryPoints;
+      // if(tempPoints) tempPoints = JSON.parse(tempPoints)
+      // if (tempPoints?.length > 0) {
+      //   let tempTotal = 0;
+      //   tempPoints.forEach((temp) => {
+      //     tempTotal = tempTotal + temp.points;
+      //   });
+      //   setTotalPoints(tempTotal);
+      // } else {
+      //   setTotalPoints(0);
+      // }
     }
   }, [admission]);
 
@@ -376,7 +380,8 @@ const UpdateResident = (props) => {
       <div className="residentView-Header">
         <h2 className="primary">Resident Summary</h2>
         {admission && <h4>{`Phase ${resident?.RecentPhase}`}</h4>}
-        {(totalPoints >= 21) &&  <div className="residentView-DangerBadge">Disciplinary Points {totalPoints}</div>}
+        {/* //===========================[ DisciplinaryPoints ]===========================
+        {(totalPoints >= 21) &&  <div className="residentView-DangerBadge">Disciplinary Points {totalPoints}</div>} */}
         {admission ? (
           <div className="residentView-activeBadge">Active</div>
         ) : (
@@ -524,11 +529,12 @@ const UpdateResident = (props) => {
         </>
           )
         }
+        {/* //===========================[ DisciplinaryPoints ]===========================
         {
           admission && (
             <DisciplinaryClipboard ResID={ResID} updateed={(add) => setAdmission(add)}/>
           )
-        }
+        } */}
       </div>
       {resident && (level2Access(user) || admission) &&(
         <>

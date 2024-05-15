@@ -23,7 +23,7 @@ export function getPhaseChangeObject() {
             type: "date",
             size: "grow1",
             name: "phaseChange_0_1_TransitionDate",
-            label: "Transition Date",
+            label: "Start Date",
             value: null,
             schema: Joi.date().required(),
           },

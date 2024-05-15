@@ -279,13 +279,13 @@ const UpdateResident = (props) => {
         let { data } = await updateResident(tempResident);
         if (data) {
           setResident(data);
-          setProfileUpdatemessage("Updated!");
+          setProfileUpdatemessage("Saved!");
         } else {
-          setProfileUpdatemessage("Failed to Update Resident");
+          setProfileUpdatemessage("Failed to Save Resident");
         }
       } catch (error) {
         //@ts-ignore
-        setProfileUpdatemessage("Failed to Update Resident");
+        setProfileUpdatemessage("Failed to Save Resident");
       }
     } else {
       return setProfileUpdateData(errorData);
@@ -363,7 +363,7 @@ const UpdateResident = (props) => {
       let {data} = await updateResidentPhase(data1);
       console.log(3)
       phaseChanged()
-      toast.success("Phase transition date updated!")
+      toast.success("Phase transition date Saved!")
 
     }catch(err){
       console.log(err)
@@ -421,7 +421,7 @@ const UpdateResident = (props) => {
                 data={profileUpdateData}
                 onChange={handleProfileFieldUpdation}
                 submit={handleProfileUpdateSubmit}
-                buttonLabel={"Update"}
+                buttonLabel={"Save"}
                 readOnly={!level2Access(user)}
               ></Form>
               {ProfileUpdatemessage && (

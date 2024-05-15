@@ -56,11 +56,11 @@ const MyProfile = (props) => {
 
       try {
         await auth.updateProfile(tempUser);
-        setProfileUpdatemessage("Updated!");
+        setProfileUpdatemessage("Saved!");
       } catch (error) {
         console.log(error)
         //@ts-ignore
-        setProfileUpdatemessage("Failed to Update Profile");
+        setProfileUpdatemessage("Failed to Save Profile");
       }
     } else {
       return setProfileUpdateData(errorData);
@@ -81,7 +81,7 @@ const MyProfile = (props) => {
                   data={profileUpdateData}
                   onChange={handleProfileFieldUpdation}
                   submit={handleProfileUpdateSubmit}
-                  buttonLabel={"Update"}
+                  buttonLabel={"Save"}
                 ></Form>
                 {ProfileUpdatemessage && (
                   <div className="updateResident-footer">

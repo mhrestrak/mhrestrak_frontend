@@ -130,7 +130,7 @@ const ManageUser = (props) => {
 
       try {
         await updateUser(tempUser);
-        setProfileUpdatemessage("Updated!");
+        setProfileUpdatemessage("Saved!");
         let { data: queriedUser } = await getUserByID(UserID);
         if (queriedUser) {
           console.log(queriedUser);
@@ -138,7 +138,7 @@ const ManageUser = (props) => {
         }
       } catch (error) {
         //@ts-ignore
-        setProfileUpdatemessage("Failed to Update User");
+        setProfileUpdatemessage("Failed to Save User");
       }
     } else {
       return setProfileUpdateData(errorData);
@@ -169,7 +169,7 @@ const ManageUser = (props) => {
 
       try {
         await updateUser(tempUser);
-        setRoleUpdatemessage("Updated!");
+        setRoleUpdatemessage("Saved!");
         let { data: queriedUser } = await getUserByID(UserID);
         if (queriedUser) {
           console.log(queriedUser);
@@ -177,7 +177,7 @@ const ManageUser = (props) => {
         }
       } catch (error) {
         //@ts-ignore
-        setRoleUpdatemessage("Failed to Update User Role");
+        setRoleUpdatemessage("Failed to Save User Role");
       }
     } else {
       return setRoleUpdateData(errorData);
@@ -199,7 +199,7 @@ const ManageUser = (props) => {
                   data={profileUpdateData}
                   onChange={handleProfileFieldUpdation}
                   submit={handleProfileUpdateSubmit}
-                  buttonLabel={"Update"}
+                  buttonLabel={"Save"}
                 ></Form>
                 {ProfileUpdatemessage && (
                   <div className="updateResident-footer">
@@ -215,7 +215,7 @@ const ManageUser = (props) => {
                   data={RoleUpdateData}
                   onChange={handleRoleFieldUpdate}
                   submit={handleRoleFieldSubmit}
-                  buttonLabel={"Update Role"}
+                  buttonLabel={"Save Role"}
                 ></Form>
                 {RoleUpdatemessage && (
                   <div className="updateResident-footer">

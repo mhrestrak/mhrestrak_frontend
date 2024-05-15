@@ -54,10 +54,10 @@ const UpdateResident = (props) => {
             let result = await updateResident(data.resident);
             console.log(result)
             //@ts-ignore
-            setMessage("Updated");
+            setMessage("Saved");
         } catch (error) {
             //@ts-ignore
-            setMessage("Failed to Update Resident");
+            setMessage("Failed to Save Resident");
         }
     }else{
         updatedData.formStructure = errorData
@@ -84,7 +84,7 @@ const UpdateResident = (props) => {
                 data={data.formStructure}
                 onChange={handleChange}
                 submit={doSubmit}
-                buttonLabel={"Update"}
+                buttonLabel={"Save"}
             >
             </Form>
             {message &&  

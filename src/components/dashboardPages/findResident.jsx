@@ -8,7 +8,9 @@ class FindResident extends Component {
   state = {
     query: "",
     filter : 1,
-    sort : 1,
+    sort : 2,
+    page : 1,
+    noMorePages : false,
     search: false,
     res: [],
   };
@@ -21,7 +23,7 @@ class FindResident extends Component {
       //   console.log("filter");
       //   data = data.filter((res) => res.IsActive !== true);
       // }
-      this.setState({ res: data, search: false });
+      this.setState({ res: data, search: false, noMorePages :  (data.length < 20) });
     } catch (ex) {
       console.log(ex);
       // toast.error(ex.message);
@@ -31,54 +33,53 @@ class FindResident extends Component {
   handleChange = ({ currentTarget: input }) => {
     let query = this.state.query;
     query = input.value;
-    this.setState({ query, search: false });
+    this.setState({ query, search: false, page : 1});
   };
 
   handleFilterChange = ({ currentTarget: input }) => {
     let filter = input.value;
-    this.setState({ filter, search: false });
+    this.setState({ filter, search: false, page : 1 });
     this.handleSubmit(filter)
   };
 
   handleSortChange = ({ currentTarget: input }) => {
     let sort = Number(input.value);
-    let data = this.sortData(this.state.res, sort)
-    this.setState({sort,res: data });
+    this.setState({sort,page :1 });
+    this.handleSubmit(undefined,sort)
   };
 
-  sortData = (data, sort) =>{
-    if(this.state.sort || this.state.sort === 0){
-      switch (sort) {
-        case 2: // A-Z FirstName
-        console.log(3)
-          return data.sort((a, b) => a.ResFirstName.localeCompare(b.ResFirstName));
-        case 3: // Z-A FirstName
-        console.log(4)
-          return data.sort((a, b) => b.ResFirstName.localeCompare(a.ResFirstName));
-        case 4: // A-Z LastName
-        console.log(3)
-          return data.sort((a, b) => a.ResLastName.localeCompare(b.ResLastName));
-        case 5: // Z-A LastName
-        console.log(4)
-          return data.sort((a, b) => b.ResLastName.localeCompare(a.ResLastName));
-        default:
-          console.log(5)
-          return data;
-      }
-    }else{
-      return data
-    }
-  }
+  // sortData = (data, sort) =>{
+  //   if(this.state.sort || this.state.sort === 0){
+  //     switch (sort) {
+  //       case 2: // A-Z FirstName
+  //       console.log(3)
+  //         return data.sort((a, b) => a.ResFirstName.localeCompare(b.ResFirstName));
+  //       case 3: // Z-A FirstName
+  //       console.log(4)
+  //         return data.sort((a, b) => b.ResFirstName.localeCompare(a.ResFirstName));
+  //       case 4: // A-Z LastName
+  //       console.log(3)
+  //         return data.sort((a, b) => a.ResLastName.localeCompare(b.ResLastName));
+  //       case 5: // Z-A LastName
+  //       console.log(4)
+  //         return data.sort((a, b) => b.ResLastName.localeCompare(a.ResLastName));
+  //       default:
+  //         console.log(5)
+  //         return data;
+  //     }
+  //   }else{
+  //     return data
+  //   }
+  // }
 
-  handleSubmit = async (filter) => {
+  handleSubmit = async (filter, sort) => {
     try {
-      let { data } = await findResident(this.state.query, (filter ? filter :this.state.filter));
+      let { data } = await findResident(this.state.query, (filter ? filter :this.state.filter),sort ? sort : this.state.sort, this.state.page);
       // if (this.state.data.ssn && !this.state.data.name) {
       //   console.log("filter");
       //   data = data.filter((res) => res.IsActive !== true);
       // }
-      data = this.sortData(data, this.state.sort)
-      this.setState({ res: data, search: true });
+      this.setState({ res: data, search: true, noMorePages :  (data.length < 20) });
     } catch (ex) {
       console.log(ex);
       // toast.error(ex.message);
@@ -88,11 +89,25 @@ class FindResident extends Component {
   handleReset = async () => {
     try {
       let { data } = await findResident();
-      this.setState({ res: data, search: false ,query: "", sort :1});
+      this.setState({ res: data, search: false ,query: "", sort :2, page : 1, noMorePages :  (data.length < 20)});
     } catch (ex) {
       console.log(ex);
     }
   };
+
+  loadMore = async () =>{
+    try {
+      let { data } = await findResident(this.state.query, this.state.filter,this.state.sort, this.state.page+1);
+      // if (this.state.data.ssn && !this.state.data.name) {
+      //   console.log("filter");
+      //   data = data.filter((res) => res.IsActive !== true);
+      // }
+      this.setState({ res: [...this.state.res, ...data], search: true, page : this.state.page+1 , noMorePages :  (data.length < 20)});
+    } catch (ex) {
+      console.log(ex);
+      // toast.error(ex.message);
+    }
+  }
 
   handleAdmissionRedirect = async () => {};
 
@@ -204,7 +219,7 @@ class FindResident extends Component {
                 <div className="findResident-Container-data-Item-ind grow2 bold">Name</div>
                 <div className="findResident-Container-data-Item-ind grow1 center bold">Status</div>
                 <div className="findResident-Container-data-Item-ind grow1 center bold">Phase</div>
-                <div className="findResident-Container-data-Item-ind grow1 center bold">No. of Stays</div>
+                <div className="findResident-Container-data-Item-ind grow1 center bold">Days in Program</div>
                 <div className="findResident-Container-data-Item-ind grow1"/>
             </div>
           </div>
@@ -218,8 +233,8 @@ class FindResident extends Component {
               <div id={uniqId()} className="findResident-Container-data-Item">
                 <div className="findResident-Container-data-Item-ind grow2">
                   {res.ResLastName || res.ResFirstName
-                    ? (res.ResLastName ? res.ResLastName : "") +
-                      (res.ResFirstName ? " " + res.ResFirstName : "")
+                    ? (res.ResFirstName ? res.ResFirstName : "") +
+                      (res.ResLastName ? " " + res.ResLastName : "")
                     : "No Name"}
                 </div>
                 {res.IsActive ?
@@ -234,7 +249,7 @@ class FindResident extends Component {
                   <div className="findResident-Container-data-Item-ind grow1 center">-</div>
                 }
                 <div className="findResident-Container-data-Item-ind grow1 center">
-                  {res.admissions ? res.admissions : "-"}
+                  {res.daysInProgram ? res.daysInProgram : "-"}
                 </div>
                 <div className="findResident-Container-data-Item-ind grow1">
                 <Link
@@ -282,7 +297,14 @@ class FindResident extends Component {
                 )} */}
               </div>
             ))}
-          </div>
+            {!this.state.noMorePages && 
+              <div style={{paddingTop : 10}}>
+              <button className="b" onClick={this.loadMore}>
+                    Load More
+                    </button>
+              </div>
+            }
+            </div>
         )}
         </div>
         </div>

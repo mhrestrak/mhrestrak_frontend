@@ -132,7 +132,7 @@ const UpdateFragment = ({ data, onUpdate, name, ...props }) => {
     <div className="notesCreation-Container">
       {updationObject && (
         <Form
-          buttonLabel={"Update"}
+          buttonLabel={"Save"}
           data={updationObject}
           onChange={handleChange}
           submit={handleSubmit}

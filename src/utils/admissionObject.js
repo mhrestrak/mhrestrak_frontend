@@ -58,7 +58,7 @@ export function getAdmissionobject() {
           {_id: "4", name: "4",value: "4"},
           {_id: "5", name: "5",value: "5"},
         ],
-        value: undefined,
+        value: "0",
         schema: Joi.string().max(30).required(),
       }
     ],

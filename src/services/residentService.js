@@ -46,6 +46,15 @@ export async function updateResident(resident) {
   }
 }
 
+export async function updateResidentImage(data) {
+  let url = `${apiEndpoint}/basic/imageUpdate`;
+  try {
+    return await http.put(url, data);
+  } catch (error) {
+    return { error };
+  }
+}
+
 
 export async function updateResidentPhase(data) {
   let url = `${apiEndpoint}/basic/phaseUpdate`;

@@ -24,6 +24,7 @@ const CreateAdmission = () => {
       IsRestricted: true,
       IsApprovedPartner: false,
       CanSelfSignout: false,
+      RecentPhase : "0"
     },
     legal: [],
   });
@@ -80,7 +81,16 @@ const CreateAdmission = () => {
     });
 
     const { error } = Joi.validate(validationData, schema, options);
-    if (!error) return true;
+    if (!error) {
+      if(data[1][2].value && data[1][2].value !== "0"){
+        if(!data[0][1].value){
+          data1[0][1].error = "Date required for phase data";
+          setData(data1);
+          return false
+        }
+      }
+      return true;
+    }
 
     data.forEach((row, rowI) => {
       row.forEach((item, itemI) => {
@@ -91,7 +101,7 @@ const CreateAdmission = () => {
         });
       });
     });
-    setData(data1);
+    
     return false;
   };
 

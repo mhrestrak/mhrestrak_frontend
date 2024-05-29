@@ -11,6 +11,7 @@ import {
   getResidentFragment,
   updateResidentPhase,
   getResidentAdmissionRecords,
+  updateResidentImage
 } from "../../services/residentService";
 
 import "react-confirm-alert/src/react-confirm-alert.css";
@@ -31,6 +32,8 @@ import { level1Access, level2Access, level3Access } from "../../utils/roles";
 import { toast } from "react-toastify";
 import AdmissionRecords from "../../components/common/residentView_Common_Components/AdmissionRecords";
 import Select from "../../components/common/select";
+import AWSImagePicker from "../../components/common/awsImagePicker";
+import awsService from "../../services/awsService";
 //===========================[ DisciplinaryPoints ]===========================
 // import DisciplinaryClipboard from "../../components/common/residentView_Common_Components/disciplinaryClipboard";
 
@@ -278,6 +281,7 @@ const UpdateResident = (props) => {
       try {
         let { data } = await updateResident(tempResident);
         if (data) {
+          console.log(data)
           setResident(data);
           setProfileUpdatemessage("Saved!");
         } else {
@@ -375,6 +379,19 @@ const UpdateResident = (props) => {
     return (d.getMonth() + 1) + "/" +  d.getDate()+ "/" + d.getFullYear();
   }
 
+  const updateResImage = async ({url, value, error}) => {
+      if(error) return toast.error("Failed to update Image");
+      
+      try {
+        let {data : updatedImageResident} = await updateResidentImage({key : value, ResID })
+        toast.success("Updated Image")
+        return setResident(updatedImageResident)
+      } catch (error) {
+        if(!value) await awsService.deleteObject(value);
+        return toast.error("Failed to update Image");
+      }
+  }
+
   return (
     <div className="residentView-Container">
       <div className="residentView-Header">
@@ -408,14 +425,15 @@ const UpdateResident = (props) => {
         {resident && (
           <div className="residentView-sectionBox">
             <div>
-                <div className="ImagePicker-Box">
+              <AWSImagePicker label={"Update Image"} showLabel={false} name={"resImage"} value={resident.ResPictureKey} onChange={updateResImage} url={resident.ResPictureUrl} />
+                {/* <div className="ImagePicker-Box">
                 {resident.ResPictureKey ?
             <img src={resident.ResPictureKey} className="image" width={"200px"} />
          : 
         <div className="user-profile-box-res">
           <i className="fa fa-user fa-2x light-text" aria-hidden="true"></i>
         </div>
-        }
+        } */}
                 </div>
               <Form
                 data={profileUpdateData}
@@ -429,7 +447,6 @@ const UpdateResident = (props) => {
                   {ProfileUpdatemessage}
                 </div>
               )}
-            </div>
           </div>
         )}
         {Notes && (

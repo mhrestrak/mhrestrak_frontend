@@ -2,7 +2,7 @@ import React, { useRef, useState } from "react";
 import awsService from "../../services/awsService";
 import { uploadtoAws } from "../../services/awsUploadService";
 
-const AWSImagePicker = ({ name, label, error, showLabel, value, onChange, url }) => {
+const AWSImagePicker = ({ name, label, error, showLabel, value, onChange, url, buttonText }) => {
   const [uploading, setUploading] = useState(false);
 
   const myRef = useRef(null);
@@ -50,8 +50,7 @@ const AWSImagePicker = ({ name, label, error, showLabel, value, onChange, url })
       )}
       <div className="ImagePicker-Box">
         <button className="b" onClick={handleClick} disabled={uploading}>
-          {" "}
-          + Choose Image
+          {buttonText ? buttonText : "+ Choose Image"}
         </button>
         <input
           ref={myRef}
@@ -61,7 +60,7 @@ const AWSImagePicker = ({ name, label, error, showLabel, value, onChange, url })
           style={{ display: "none" }}
         />
         {url ? (
-          <img src={url} className="image" width={"100px"} alt="Resident"/>
+          <img src={url} className="image" width={"80px"} height={"80px"} style={{objectFit : "cover", borderRadius : 10}} alt="Resident"/>
         ) : (
           <div className="user-profile-box">
             <i className="fa fa-user fa-2x light-text" aria-hidden="true"></i>

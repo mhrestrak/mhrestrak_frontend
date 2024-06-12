@@ -425,7 +425,7 @@ const UpdateResident = (props) => {
         {resident && (
           <div className="residentView-sectionBox">
             <div>
-              <AWSImagePicker label={"Update Image"} showLabel={false} name={"resImage"} value={resident.ResPictureKey} onChange={updateResImage} url={resident.ResPictureUrl} />
+              <AWSImagePicker label={"Update Image"} showLabel={false} name={"resImage"} value={resident.ResPictureKey} onChange={updateResImage} url={resident.ResPictureUrl} buttonText={"+ Change picture"}/>
                 {/* <div className="ImagePicker-Box">
                 {resident.ResPictureKey ?
             <img src={resident.ResPictureKey} className="image" width={"200px"} />

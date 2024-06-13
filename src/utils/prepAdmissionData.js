@@ -7,23 +7,30 @@ export function prepAdmissionData(data, resID) {
   let phaseData = [];
 
   let phase = data.admission.RecentPhase;
-  phaseData.push({
-    phase: phase,
-    inDate: data.admission.GuestInDate,
-  });
-  if (phase) {
-    if (phase !== "0") {
+
+  let stage2AndAboveDate = new Date()
+  if(phase !== 0){
+    phaseData.push({
+        phase: "0",
+        inDate: data.admission.GuestInDate,
+        outDate : data.admission.ProgramInDate
+    });
+    if(phase !== "1"){
       phaseData.push({
         phase: "1",
         inDate: data.admission.ProgramInDate,
-      });
-      if (phase !== "1") {
-        phaseData.push({
-          phase: phase,
-          inDate: new Date(),
-        });
-      }
+        outDate : stage2AndAboveDate
+    });
     }
+    phaseData.push({
+      phase,
+      inDate: phase === "1" ? data.admission.ProgramInDate : stage2AndAboveDate
+    });
+  }else{
+    phaseData.push({
+      phase: "0",
+      inDate: data.admission.GuestInDate,
+  });
   }
 
   data.admission.PhaseData = JSON.stringify(phaseData);

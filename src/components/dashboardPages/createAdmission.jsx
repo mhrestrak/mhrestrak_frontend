@@ -101,7 +101,7 @@ const CreateAdmission = () => {
         });
       });
     });
-    
+    setData(data1);
     return false;
   };
 

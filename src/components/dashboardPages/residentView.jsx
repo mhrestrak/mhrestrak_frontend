@@ -34,6 +34,7 @@ import AdmissionRecords from "../../components/common/residentView_Common_Compon
 import Select from "../../components/common/select";
 import AWSImagePicker from "../../components/common/awsImagePicker";
 import awsService from "../../services/awsService";
+import AWSImagePickerEdit from "../../components/common/awsImagePickerEdit";
 //===========================[ DisciplinaryPoints ]===========================
 // import DisciplinaryClipboard from "../../components/common/residentView_Common_Components/disciplinaryClipboard";
 
@@ -394,8 +395,37 @@ const UpdateResident = (props) => {
 
   return (
     <div className="residentView-Container">
-      <div className="residentView-Header">
-        <h2 className="primary">Resident Summary</h2>
+      <div className="residentView-Sections">
+        {resident && (
+          <div className="residentView-sectionBox">
+            <div>
+              <AWSImagePickerEdit label={"Update Image"} showLabel={false} name={"resImage"} value={resident.ResPictureKey} onChange={updateResImage} url={resident.ResPictureUrl} buttonText={"+ Change picture"}/>
+                {/* <div className="ImagePicker-Box">
+                {resident.ResPictureKey ?
+            <img src={resident.ResPictureKey} className="image" width={"200px"} />
+         : 
+        <div className="user-profile-box-res">
+          <i className="fa fa-user fa-2x light-text" aria-hidden="true"></i>
+        </div>
+        } */}
+                </div>
+              <Form
+                data={profileUpdateData}
+                onChange={handleProfileFieldUpdation}
+                submit={handleProfileUpdateSubmit}
+                buttonLabel={"Save"}
+                readOnly={!level2Access(user)}
+              ></Form>
+              {ProfileUpdatemessage && (
+                <div className="updateResident-footer">
+                  {ProfileUpdatemessage}
+                </div>
+              )}
+          </div>
+        )}
+        {Notes && (
+          <div>
+            <div className="residentView-Header">
         {admission && <h4>{`Phase ${resident?.RecentPhase}`}</h4>}
         {/* //===========================[ DisciplinaryPoints ]===========================
         {(totalPoints >= 21) &&  <div className="residentView-DangerBadge">Disciplinary Points {totalPoints}</div>} */}
@@ -421,57 +451,29 @@ const UpdateResident = (props) => {
           )
         )}
       </div>
-      <div className="residentView-Sections">
-        {resident && (
-          <div className="residentView-sectionBox">
-            <div>
-              <AWSImagePicker label={"Update Image"} showLabel={false} name={"resImage"} value={resident.ResPictureKey} onChange={updateResImage} url={resident.ResPictureUrl} buttonText={"+ Change picture"}/>
-                {/* <div className="ImagePicker-Box">
-                {resident.ResPictureKey ?
-            <img src={resident.ResPictureKey} className="image" width={"200px"} />
-         : 
-        <div className="user-profile-box-res">
-          <i className="fa fa-user fa-2x light-text" aria-hidden="true"></i>
-        </div>
-        } */}
-                </div>
-              <Form
-                data={profileUpdateData}
-                onChange={handleProfileFieldUpdation}
-                submit={handleProfileUpdateSubmit}
-                buttonLabel={"Save"}
-                readOnly={!level2Access(user)}
-              ></Form>
-              {ProfileUpdatemessage && (
-                <div className="updateResident-footer">
-                  {ProfileUpdatemessage}
-                </div>
-              )}
-          </div>
-        )}
-        {Notes && (
-          <div className="residentView-sectionBox">
-            <div className="residentView-sectionBox-header">
-              <h4 className="primary">Notes</h4>
+            <div className="residentView-sectionBox">
+              <div className="residentView-sectionBox-header">
+                <h4 className="primary">Notes</h4>
+                {NotesState === "View" ? (
+                  <button className="b" onClick={() => setNotesState("Create")}>
+                    Add Note
+                  </button>
+                ) : (
+                  <button
+                    className="b blackButton"
+                    onClick={() => setNotesState("View")}
+                  >
+                    Cancel
+                  </button>
+                )}
+              </div>
               {NotesState === "View" ? (
-                <button className="b" onClick={() => setNotesState("Create")}>
-                  Add Note
-                </button>
+                <NotesList data={Notes} />
               ) : (
-                <button
-                  className="b blackButton"
-                  onClick={() => setNotesState("View")}
-                >
-                  Cancel
-                </button>
+                <CreateNote onCreate={noteCreated} ResId={ResID} />
               )}
             </div>
-            {NotesState === "View" ? (
-              <NotesList data={Notes} />
-            ) : (
-              <CreateNote onCreate={noteCreated} ResId={ResID} />
-            )}
-          </div>
+            </div>
         )}
         {phaseInfo && (
           <div className="residentView-sectionBox">

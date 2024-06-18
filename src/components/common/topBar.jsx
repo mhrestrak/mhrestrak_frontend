@@ -1,9 +1,17 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { getAllCenters } from "../../services/centerService";
 
 const TopBar = ({ user }) => {
   const [userCenter, setUserCenter] = useState("Dashboard")
+  const location = useLocation()
+
+  function checkSecondPath(url) {
+    // Split the string by '/' and filter out empty strings
+    const parts = url.split('/').filter(part => part);
+    // Check if the second part is 'resident'
+    return parts.length > 1 && parts[1] === 'resident';
+}
 
   useEffect(() => {
     const getandSetUser = async () => {
@@ -33,6 +41,9 @@ const TopBar = ({ user }) => {
                             "Admin Dashboard" : user.Center ? userCenter : "New Hope Center"}`}
           </h4>
         </div>
+          <div className="primary-text">
+              {location && checkSecondPath(location.pathname) ? "Resident Summary" : ""}
+          </div>
         <div className="topBar-Sections-2">
           <div className="topBar-Sections-2-profileBox flex">
             <div className="topBar-Sections-2-profileText">
